@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../constants.dart';
 import '../widgets/book_rating.dart';
@@ -27,7 +30,97 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: size.height * .1),
+                  SizedBox(height: size.height * .07),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.menu,
+                              color: kBlackColor,
+                              size: 26.0,
+                              // semanticLabel:
+                              //     'Text to announce in accessibility modes',
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Hello, Thanh Tâm",
+                                  style: TextStyle(fontSize: 22),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(height: size.height * .02),
+                        Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 15),
+                                blurRadius: 30,
+                                color: Color(0xFF666666).withOpacity(.11),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 11),
+                                child: Icon(
+                                  Icons.search,
+                                  color: kBlackColor,
+                                  size: 30.0,
+                                  // semanticLabel:
+                                  //     'Text to announce in accessibility modes',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: PageView.builder(
+                              itemBuilder: (context, index) {
+                                //   final item = controller
+                                //   .projectPropertyType[index];
+                                return Container(
+                                  height: 121.w,
+                                  child: Image.asset("assets/images/mo.png"),
+                                );
+                              },
+                              controller: PageController(),
+                              itemCount: 6,
+                              physics: const BouncingScrollPhysics()),
+                        ),
+                        SmoothPageIndicator(
+                          controller: PageController(),
+                          count: 6,
+                          axisDirection: Axis.horizontal,
+                          effect: WormEffect(
+                              spacing: 8.0,
+                              radius: 10.0,
+                              dotWidth: 10.0,
+                              dotHeight: 10.0,
+                              paintStyle: PaintingStyle.stroke,
+                              strokeWidth: 1.5,
+                              dotColor: Colors.grey,
+                              activeDotColor: Colors.indigo),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: size.height * .02),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: RichText(
