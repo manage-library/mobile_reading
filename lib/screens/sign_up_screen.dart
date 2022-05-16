@@ -110,6 +110,7 @@ class SignUpScreen extends StatelessWidget {
                   color: const Color(0xffFAFAFA),
                 ),
                 child: const TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Password',
