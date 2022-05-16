@@ -59,23 +59,6 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 100,),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * .6,
-              //   child: RoundedButton(
-              //     text: "start reading",
-              //     fontSize: 20,
-              //     press: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) {
-              //             return HomeScreen();
-              //           },
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, AppRoutes.signInScreen),
                 child: Container(
@@ -107,7 +90,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: 25,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, AppRoutes.signUpScreen),
                 child: Container(
                   alignment: Alignment.center,
                   height: 50,
