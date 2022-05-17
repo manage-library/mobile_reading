@@ -11,5 +11,5 @@ class AppRoutes {
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.introScreen: (context) => WelcomeScreen(),
-  AppRoutes.signInScreen: (context) => const SignInScreen(),
+  AppRoutes.signInScreen: (context) => SignInScreen(),
 };

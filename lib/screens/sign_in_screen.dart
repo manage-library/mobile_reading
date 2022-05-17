@@ -1,9 +1,15 @@
+import 'package:book_reading_mobile_app/controller/auth_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
 
+  final TextEditingController controlEmail = TextEditingController();
+  final TextEditingController controlPassword = TextEditingController();
+
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +46,9 @@ class SignInScreen extends StatelessWidget {
                   border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                   color: const Color(0xffFAFAFA),
                 ),
-                child: const TextField(
-                  decoration: InputDecoration(
+                child: TextField(
+                  controller: controlEmail,
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'youremail@example.com',
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -51,7 +58,7 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
-              const Text('Email'),
+              const Text('Password'),
               const SizedBox(
                 height: 8,
               ),
@@ -63,8 +70,10 @@ class SignInScreen extends StatelessWidget {
                   border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                   color: const Color(0xffFAFAFA),
                 ),
-                child: const TextField(
-                  decoration: InputDecoration(
+                child: TextField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: controlPassword,
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Your password',
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -81,34 +90,39 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(
                 height: 32,
               ),
-              Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  gradient: const LinearGradient(
-                      colors: [
-                        Color(0xff51C1B0),
-                        Color(0xff4FC1B4),
-                        Color(0xff4BC1BE),
-                        Color(0xff42C2CF),
-                        Color(0xff2BAFCC),
-                      ],
-                      begin: FractionalOffset(
-                        0.0,
-                        0.0,
-                      ),
-                      end: FractionalOffset(
-                        0.0,
-                        0.0,
-                      ),
-                      stops: [0.5, 1.0, 0.5, 1.0, 0.5],
-                      tileMode: TileMode.clamp),
-                ),
-                child: const Text(
-                  'Sign in',
-                  style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+              InkWell(
+                onTap: () {
+                  authController.signIn(email: controlEmail.text, password: controlPassword.text);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    gradient: const LinearGradient(
+                        colors: [
+                          Color(0xff51C1B0),
+                          Color(0xff4FC1B4),
+                          Color(0xff4BC1BE),
+                          Color(0xff42C2CF),
+                          Color(0xff2BAFCC),
+                        ],
+                        begin: FractionalOffset(
+                          0.0,
+                          0.0,
+                        ),
+                        end: FractionalOffset(
+                          0.0,
+                          0.0,
+                        ),
+                        stops: [0.5, 1.0, 0.5, 1.0, 0.5],
+                        tileMode: TileMode.clamp),
+                  ),
+                  child: const Text(
+                    'Sign in',
+                    style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                  ),
                 ),
               ),
               const SizedBox(
