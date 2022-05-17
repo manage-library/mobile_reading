@@ -1,17 +1,14 @@
 # book_reading_mobile_app
 
-A new Flutter project.
+How to build API?
++ Step 1: To define API url in configs/api_config.dart
++ Step 2: To create an abstract class in domain/repositories. Example: auth_repository.dart
++ Step 3: To create an implement of abstract class in data/repositories_impl. Example: auth_repository_impl.dart
++ Step 4: In implement class, declare an instance of RestClient(). 
++ Step 5: Writing method to call API from backend. The method is based on form which i wrote. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# mobile_reading
+Dow you want to add new entity?
++ Step 1: To create new class and declare attribute in domain/entities. Example: user.dart
++ Step 2: Typing two lines on the top of file: "part 'user.g.dart';" and "@JsonSerializable(explicitToJson: true)"
++ Step 3: Type this command line in the terminal: "flutter pub run build_runner build --delete-conflicting-outputs" to auto generate file convert json. Example: user.g.dart
++ Step 4: In your class, coding the fromJson method and toJson method.  

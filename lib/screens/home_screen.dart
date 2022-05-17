@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../constants.dart';
 import '../widgets/book_rating.dart';
@@ -20,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/main_page_bg.png"),
                   alignment: Alignment.topCenter,
@@ -95,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                                 //   final item = controller
                                 //   .projectPropertyType[index];
                                 return Container(
-                                  height: 121.w,
+                                  height: 121,
                                   child: Image.asset("assets/images/mo.png"),
                                 );
                               },
@@ -103,20 +101,20 @@ class HomeScreen extends StatelessWidget {
                               itemCount: 6,
                               physics: const BouncingScrollPhysics()),
                         ),
-                        SmoothPageIndicator(
-                          controller: PageController(),
-                          count: 6,
-                          axisDirection: Axis.horizontal,
-                          effect: WormEffect(
-                              spacing: 8.0,
-                              radius: 10.0,
-                              dotWidth: 10.0,
-                              dotHeight: 10.0,
-                              paintStyle: PaintingStyle.stroke,
-                              strokeWidth: 1.5,
-                              dotColor: Colors.grey,
-                              activeDotColor: Colors.indigo),
-                        )
+                        // SmoothPageIndicator(
+                        //   controller: PageController(),
+                        //   count: 6,
+                        //   axisDirection: Axis.horizontal,
+                        //   effect: WormEffect(
+                        //       spacing: 8.0,
+                        //       radius: 10.0,
+                        //       dotWidth: 10.0,
+                        //       dotHeight: 10.0,
+                        //       paintStyle: PaintingStyle.stroke,
+                        //       strokeWidth: 1.5,
+                        //       dotColor: Colors.grey,
+                        //       activeDotColor: Colors.indigo),
+                        // )
                       ],
                     ),
                   ),
@@ -126,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                     child: RichText(
                       text: TextSpan(
                         style: Theme.of(context).textTheme.displaySmall,
-                        children: [
+                        children: const [
                           TextSpan(text: "What are you \nreading "),
                           TextSpan(
                               text: "today?",
@@ -137,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -158,13 +156,13 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        ReadingListCard(
+                        const ReadingListCard(
                           image: "assets/images/book-2.png",
                           title: "Top Ten Business Hacks",
                           auth: "Herman Joel",
                           rating: 4.8,
                         ),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                       ],
                     ),
                   ),
@@ -176,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.displaySmall,
-                            children: [
+                            children: const [
                               TextSpan(text: "Best of the "),
                               TextSpan(
                                 text: "day",
@@ -198,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Container(
                           height: 80,
                           width: double.infinity,
