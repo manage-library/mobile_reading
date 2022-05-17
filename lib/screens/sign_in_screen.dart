@@ -74,6 +74,7 @@ class SignInScreen extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   controller: controlPassword,
                   decoration: const InputDecoration(
+
                     border: InputBorder.none,
                     hintText: 'Your password',
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
