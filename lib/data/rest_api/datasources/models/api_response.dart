@@ -1,6 +1,5 @@
 import 'package:book_reading_mobile_app/data/rest_api/datasources/models/api_result.dart';
 
-import '../../../../domain/entities/user.dart';
 import 'api_error.dart';
 
 class ApiResponse<T> {

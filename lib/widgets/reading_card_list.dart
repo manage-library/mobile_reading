@@ -24,7 +24,7 @@ class ReadingListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 24, bottom: 40),
+      margin: const EdgeInsets.only(left: 24, bottom: 40),
       height: 245,
       width: 202,
       child: Stack(
@@ -40,7 +40,7 @@ class ReadingListCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(29),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                     blurRadius: 33,
                     color: kShadowColor,
                   ),
@@ -58,7 +58,7 @@ class ReadingListCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.favorite_border,
                   ),
                   onPressed: () {},
@@ -69,28 +69,28 @@ class ReadingListCard extends StatelessWidget {
           ),
           Positioned(
             top: 160,
-            child: Container(
+            child: SizedBox(
               height: 85,
               width: 202,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: 24),
+                    padding: const EdgeInsets.only(left: 24),
                     child: RichText(
                       maxLines: 2,
                       text: TextSpan(
-                        style: TextStyle(color: kBlackColor),
+                        style: const TextStyle(color: kBlackColor),
                         children: [
                           TextSpan(
                             text: "$title\n",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
                             text: auth,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: kLightBlackColor,
                             ),
                           ),
@@ -98,16 +98,16 @@ class ReadingListCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Row(
                     children: <Widget>[
                       GestureDetector(
                         onTap: pressDetails,
                         child: Container(
                           width: 101,
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.center,
-                          child: Text("Details"),
+                          child: const Text("Details"),
                         ),
                       ),
                       Expanded(

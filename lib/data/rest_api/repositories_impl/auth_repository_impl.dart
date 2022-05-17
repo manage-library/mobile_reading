@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:book_reading_mobile_app/data/rest_api/datasources/models/api_error.dart';
 import 'package:book_reading_mobile_app/data/rest_api/datasources/models/api_response.dart';
 import 'package:book_reading_mobile_app/data/rest_api/datasources/rest_client.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';

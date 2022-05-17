@@ -19,7 +19,7 @@ class TwoSideRoundedButton extends StatelessWidget {
       onTap: press,
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: kBlackColor,
           borderRadius: BorderRadius.only(
@@ -29,7 +29,7 @@ class TwoSideRoundedButton extends StatelessWidget {
         ),
         child: Text(
           text ?? '',
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

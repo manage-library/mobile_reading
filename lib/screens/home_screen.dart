@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -36,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.menu,
                               color: kBlackColor,
                               size: 26.0,
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                               //     'Text to announce in accessibility modes',
                             ),
                             Row(
-                              children: [
+                              children: const [
                                 Text(
                                   "Hello, Thanh Tâm",
                                   style: TextStyle(fontSize: 22),
@@ -57,25 +56,25 @@ class HomeScreen extends StatelessWidget {
                         Container(
                           width: double.infinity,
                           alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(vertical: 10),
                           height: 50,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(0, 15),
+                                offset: const Offset(0, 15),
                                 blurRadius: 30,
-                                color: Color(0xFF666666).withOpacity(.11),
+                                color: const Color(0xFF666666).withOpacity(.11),
                               ),
                             ],
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                            children: const [
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 11),
+                                    EdgeInsets.symmetric(horizontal: 11),
                                 child: Icon(
                                   Icons.search,
                                   color: kBlackColor,
@@ -92,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 //   final item = controller
                                 //   .projectPropertyType[index];
-                                return Container(
+                                return SizedBox(
                                   height: 121,
                                   child: Image.asset("assets/images/mo.png"),
                                 );
@@ -167,7 +166,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -187,7 +186,7 @@ class HomeScreen extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.displaySmall,
-                            children: [
+                            children: const [
                               TextSpan(text: "Continue "),
                               TextSpan(
                                 text: "reading...",
@@ -205,9 +204,9 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(38.5),
                             boxShadow: [
                               BoxShadow(
-                                offset: Offset(0, 10),
+                                offset: const Offset(0, 10),
                                 blurRadius: 33,
-                                color: Color(0xFFD3D3D3).withOpacity(.84),
+                                color: const Color(0xFFD3D3D3).withOpacity(.84),
                               ),
                             ],
                           ),
@@ -219,7 +218,7 @@ class HomeScreen extends StatelessWidget {
                                 Expanded(
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 30, right: 20),
+                                        const EdgeInsets.only(left: 30, right: 20),
                                     child: Row(
                                       children: <Widget>[
                                         Expanded(
@@ -228,7 +227,7 @@ class HomeScreen extends StatelessWidget {
                                                 MainAxisAlignment.end,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: <Widget>[
+                                            children: const <Widget>[
                                               Text(
                                                 "Crushing & Influence",
                                                 style: TextStyle(
@@ -276,7 +275,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
                       ],
                     ),
                   ),
@@ -291,7 +290,7 @@ class HomeScreen extends StatelessWidget {
 
   Container bestOfTheDayCard(Size size, BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(vertical: 20),
       width: double.infinity,
       height: 245,
       child: Stack(
@@ -309,15 +308,15 @@ class HomeScreen extends StatelessWidget {
               height: 230,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFFEAEAEA).withOpacity(.45),
+                color: const Color(0xFFEAEAEA).withOpacity(.45),
                 borderRadius: BorderRadius.circular(29),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: Text(
+                    margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: const Text(
                       "New York Time Best For 11th March 2020",
                       style: TextStyle(
                         fontSize: 9,
@@ -325,18 +324,18 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "How To Win \nFriends &  Influence",
                     //      style: Theme.of(context).textTheme.title,
                   ),
-                  Text(
+                  const Text(
                     "Gary Venchuk",
                     style: TextStyle(color: kLightBlackColor),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10.0),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10.0),
                     child: Row(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
                           child: BookRating(score: 4.9),

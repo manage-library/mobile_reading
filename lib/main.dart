@@ -1,8 +1,5 @@
 import 'package:book_reading_mobile_app/core/api_const.dart';
-import 'package:book_reading_mobile_app/screens/home_screen.dart';
-import 'package:book_reading_mobile_app/screens/sign_in_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
-import 'package:book_reading_mobile_app/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -10,7 +7,7 @@ import 'constants.dart';
 
 void main() {
   APIConst.setBaseUrl(Enviroment.LOCAL);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
