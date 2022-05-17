@@ -29,7 +29,7 @@ class RestClient {
 
     final String? accessToken = await _authenticationStorage.getToken();
     if (accessToken != null) {
-      _dio.options.headers["Bearer"] = accessToken;
+      _dio.options.headers["Authorization"] = "Bearer $accessToken";
     }
   }
 

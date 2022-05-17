@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 class ApiError {
   int? _statusCode;
   bool? _status;
+  String? _message;
+  String? _context;
   ApiError({dynamic error}) {
     if (error != null) _handleError(error);
   }
@@ -10,7 +12,9 @@ class ApiError {
   factory ApiError.fromJson(Map<String, dynamic> json) {
     return ApiError()
         .._statusCode = json['statusCode'] as int
-        .._status = json['status'] as bool;
+        .._status = json['status'] as bool
+        .._message = json['message'] as String?
+        .._context = json['context'] as String?;
   }
 
   _handleError(dynamic error) {

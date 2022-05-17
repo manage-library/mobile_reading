@@ -10,8 +10,6 @@ class AuthController extends GetxController {
   final AuthRepositoryImpl _authRepositoryImpl = AuthRepositoryImpl();
   final AuthenticationStorage _authenticationStorage = AuthenticationStorage();
 
-  String _loginStatus = '';
-
   void signIn({
     required String email,
     required String password,
@@ -20,29 +18,13 @@ class AuthController extends GetxController {
       email: email,
       password: password,
     );
-    Security? apiResponse = await _authRepositoryImpl.login(
-        user: _user);
-    if (apiResponse != null) {
+    Security? security = await _authRepositoryImpl.login(user: _user);
+    if (security != null) {
+      _authenticationStorage.updateToken(security.accessToken!);
+    }
+    if (security != null) {
       Get.to(HomeScreen());
     }
-    print('apiResponse?.result?.data: ${apiResponse?.toJson()}');
-  }
-
-  Future<bool> autoLogin() async {
-    LoginInfo? loginInfo = await _authenticationStorage.getLoginInfo();
-    print(loginInfo.toString());
-    if (loginInfo != null) {
-      User? user = await _authRepositoryImpl.autoLogin(
-        user: User(
-          email: loginInfo.loginEmail,
-        ),);
-
-      if (user != null) {
-        _loginStatus = LoginStatus.LOGIN_SUCCESS;
-        return true;
-      }
-    }
-    return false;
   }
 }
 

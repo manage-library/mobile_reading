@@ -16,9 +16,6 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Security?> login({required User user}) async {
     try {
       var response = await _restClient.postMethod(ApiConfig.login, data: user.toJson());
-      print('response: $response');
-      String? accessToken = response.data['data']['accessToken'];
-      print('accessToken: $accessToken');
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle<Security>(
