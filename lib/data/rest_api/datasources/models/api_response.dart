@@ -5,19 +5,17 @@ import 'api_error.dart';
 
 class ApiResponse<T> {
   bool? _status;
-  int? _statusCode;
+  bool? _statusCode;
   ApiResult<T>? _result;
   ApiError? _error;
 
   bool get hasData => _result?.data != null;
 
-  bool get hasError => _error != null;
+  //bool get hasError => _error != null;
 
   bool get isSucceeded => _status != null && _status == true;
 
   bool get isFailed => _status == null || _status == false;
-
-  bool get hasMessage => _statusCode == 201;
 
   ApiResponse();
 
@@ -35,6 +33,7 @@ class ApiResponse<T> {
     else {
       return ApiResponse()
           .._status = status
+          .._statusCode = response['statusCode']
           .._error = ApiError.fromJson(response);
     }
   }
