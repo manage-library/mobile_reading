@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../domain/entities/user.dart';
+
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
@@ -93,7 +95,8 @@ class SignInScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  authController.signIn(email: controlEmail.text, password: controlPassword.text);
+                  //authController.signIn(email: controlEmail.text, password: controlPassword.text);
+                  authController.signIn(email: User.fakeUser.email!, password: User.fakeUser.password!);
                 },
                 child: Container(
                   alignment: Alignment.center,
