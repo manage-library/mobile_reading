@@ -15,7 +15,9 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Security?> login({required User user}) async {
     try {
-      var response = await _restClient.postMethod(ApiConfig.login, data: user.toJson());
+      var response =
+          await _restClient.postMethod(ApiConfig.login, data: user.toJson());
+      print("response login : ${response.toString()}");
       return ApiResponse.withResult(
         response: response.data,
         resultConverter: (json) => ApiResultSingle<Security>(
@@ -25,7 +27,7 @@ class AuthRepositoryImpl extends AuthRepository {
       ).result?.data;
     } catch (error) {
       ApiResponse apiResponse = ApiResponse.withError(error);
-      print('apiResponse.error: ${apiResponse.error}');
+      print('apiResponse.error: ${apiResponse.error.toString()}');
     }
     return null;
   }
@@ -35,5 +37,4 @@ class AuthRepositoryImpl extends AuthRepository {
     // TODO: implement autoLogin
     throw UnimplementedError();
   }
-
 }

@@ -12,7 +12,8 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<User?> getInfoUser() async {
     try {
-      var response = await _restClient.getMethod(ApiConfig.getInfoUser, params: {});
+      var response =
+          await _restClient.getMethod(ApiConfig.getInfoUser, params: {});
       print('response: $response');
       return ApiResponse.withResult(
         response: response.data,
@@ -27,5 +28,4 @@ class UserRepositoryImpl extends UserRepository {
     }
     return null;
   }
-
 }

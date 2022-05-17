@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../domain/entities/user.dart';
+
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
@@ -74,7 +76,6 @@ class SignInScreen extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   controller: controlPassword,
                   decoration: const InputDecoration(
-
                     border: InputBorder.none,
                     hintText: 'Your password',
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -93,7 +94,12 @@ class SignInScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  authController.signIn(email: controlEmail.text, password: controlPassword.text);
+                  authController.signIn(
+                      email: User.fakeUser.email!,
+                      password: User.fakeUser.password!);
+                  /*authController.signIn(
+                      email: controlEmail.text, password: controlPassword
+                      .text);*/
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -122,7 +128,8 @@ class SignInScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Sign in',
-                    style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.white),
                   ),
                 ),
               ),
@@ -132,7 +139,9 @@ class SignInScreen extends StatelessWidget {
               Center(
                 child: RichText(
                     text: TextSpan(children: <TextSpan>[
-                  const TextSpan(text: 'Don\'t have an account? ', style: TextStyle(color: Colors.black)),
+                  const TextSpan(
+                      text: 'Don\'t have an account? ',
+                      style: TextStyle(color: Colors.black)),
                   TextSpan(
                       text: 'Sign up',
                       style: const TextStyle(color: Colors.deepPurpleAccent),
