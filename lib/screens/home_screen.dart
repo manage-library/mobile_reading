@@ -1,295 +1,152 @@
+import 'package:book_reading_mobile_app/controller/home_controller.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/home_continue_reading.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/home_list_authors.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/lhome_list_category.dart';
+import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../constants.dart';
 import '../widgets/book_rating.dart';
 import '../widgets/reading_card_list.dart';
 import '../widgets/two_side_rounded_button.dart';
 import 'details_screen.dart';
+import 'package:get/get.dart';
+
+import 'widget_home_screen/home_book_item.dart';
+import 'widget_home_screen/home_search_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
+  final pageController = PageController(viewportFraction: 0.8, keepPage: true);
+  final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/main_page_bg.png"),
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fitWidth,
+    List<String> assetImage = [
+      "assets/images/magic_book.jpg",
+      "assets/images/magic_book.jpg",
+      "assets/images/magic_book.jpg",
+      "assets/images/magic_book.jpg",
+      "assets/images/magic_book.jpg",
+      "assets/images/magic_book.jpg",
+    ];
+
+    return GestureDetector(
+      onTap: () {
+        Get.focusScope?.unfocus();
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/main_page_bg.png"),
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: size.height * .1),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.displaySmall,
-                        children: const [
-                          TextSpan(text: "What are you \nreading "),
-                          TextSpan(
-                              text: "today?",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Obx(
+                      () => SearchHomeScreen(name: controller.userInfor.value.fullName),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 200,
+                            child: PageView.builder(
+                              controller: pageController,
+                              itemCount: assetImage.length,
+                              itemBuilder: (_, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  child: Container(
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                                    height: 280,
+                                    child: Image.asset(assetImage[index], fit: BoxFit.fill),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: Center(
+                              child: SmoothPageIndicator(
+                                controller: pageController,
+                                count: 6,
+                                axisDirection: Axis.horizontal,
+                                effect: const JumpingDotEffect(
+                                  activeDotColor: kProgressIndicator,
+                                  dotHeight: 10,
+                                  dotWidth: 10,
+                                  jumpScale: .7,
+                                  verticalOffset: 15,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: <Widget>[
-                        ReadingListCard(
-                          image: "assets/images/book-1.png",
-                          title: "Crushing & Influence",
-                          auth: "Gary Venchuk",
-                          rating: 4.9,
-                          pressDetails: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return DetailsScreen();
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        const ReadingListCard(
-                          image: "assets/images/book-2.png",
-                          title: "Top Ten Business Hacks",
-                          auth: "Herman Joel",
-                          rating: 4.8,
-                        ),
-                        const SizedBox(width: 30),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.displaySmall,
-                            children: const [
-                              TextSpan(text: "Best of the "),
-                              TextSpan(
-                                text: "day",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        bestOfTheDayCard(size, context),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.displaySmall,
-                            children: [
-                              TextSpan(text: "Continue "),
-                              TextSpan(
-                                text: "reading...",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          height: 80,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(38.5),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(0, 10),
-                                blurRadius: 33,
-                                color: Color(0xFFD3D3D3).withOpacity(.84),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(38.5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 30, right: 20),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                "Crushing & Influence",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                "Gary Venchuk",
-                                                style: TextStyle(
-                                                  color: kLightBlackColor,
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: Text(
-                                                  "Chapter 7 of 10",
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: kLightBlackColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 5),
-                                            ],
-                                          ),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/book-1.png",
-                                          width: 55,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 7,
-                                  width: size.width * .65,
-                                  decoration: BoxDecoration(
-                                    color: kProgressIndicator,
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
+                    ListOfAuthors(),
+                    Obx(() => ListCategory(
+                        categoryName: controller.bookCategory.value, listBooks: controller.listBooks.value)),
+                    // const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          RichText(
+                            text: const TextSpan(
+                              style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.w400),
+                              children: [
+                                TextSpan(text: "Best of the "),
+                                TextSpan(
+                                  text: "day",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(height: 40),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Container bestOfTheDayCard(Size size, BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      width: double.infinity,
-      height: 245,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.only(
-                left: 24,
-                top: 24,
-                right: size.width * .35,
-              ),
-              height: 230,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Color(0xFFEAEAEA).withOpacity(.45),
-                borderRadius: BorderRadius.circular(29),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: Text(
-                      "New York Time Best For 11th March 2020",
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: kLightBlackColor,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    "How To Win \nFriends &  Influence",
-                    //      style: Theme.of(context).textTheme.title,
-                  ),
-                  Text(
-                    "Gary Venchuk",
-                    style: TextStyle(color: kLightBlackColor),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 10.0),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                          child: BookRating(score: 4.9),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "When the earth was flat and everyone wanted to win the game of the best and people….",
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: kLightBlackColor,
+                          BookItems(),
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(fontSize: 25, color: Colors.black),
+                              children: [
+                                TextSpan(text: "Continue "),
+                                TextSpan(
+                                  text: "reading...",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          ContinueReading(),
+                          SizedBox(height: 40),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Image.asset(
-              "assets/images/book-3.png",
-              width: size.width * .37,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: SizedBox(
-              height: 40,
-              width: size.width * .3,
-              child: TwoSideRoundedButton(
-                text: "Read",
-                radious: 24,
-                press: () {},
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -4,6 +4,9 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<String>Photo Library Usage Warning</String>
+	<key>NSCameraUsageDescription</key>
 	<key>CFBundleDisplayName</key>
 	<string>Book Reading Mobile App</string>
 	<key>CFBundleExecutable</key>

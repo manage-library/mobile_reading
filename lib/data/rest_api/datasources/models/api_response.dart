@@ -5,7 +5,7 @@ import 'api_error.dart';
 
 class ApiResponse<T> {
   bool? _status;
-  bool? _statusCode;
+  int? _statusCode;
   ApiResult<T>? _result;
   ApiError? _error;
 
@@ -19,23 +19,34 @@ class ApiResponse<T> {
 
   ApiResponse();
 
-  factory ApiResponse.withResult(
-      {Map<String, dynamic>? response,
-      ApiResult Function(dynamic json)? resultConverter,}) {
+  factory ApiResponse.withResult({
+    Map<String, dynamic>? response,
+    ApiResult Function(dynamic json)? resultConverter,
+  }) {
     bool status = response!['status'] as bool;
     if (status) {
       return ApiResponse()
         .._status = status
-        .._result = (resultConverter != null
-            ? resultConverter(response['data'])
-            : null) as ApiResult<T>?;
-    }
-    else {
+        .._result = (resultConverter != null ? resultConverter(response['data']) : null) as ApiResult<T>?;
+    } else {
       return ApiResponse()
-          .._status = status
-          .._statusCode = response['statusCode']
-          .._error = ApiError.fromJson(response);
+        .._status = status
+        .._statusCode = response['statusCode']
+        .._error = ApiError.fromJson(response);
     }
+  }
+
+  factory ApiResponse.catchError({Map<String, dynamic>? response}) {
+    return ApiResponse()
+      .._status = response!['status'] as bool
+      .._error = ApiError.fromJson(response);
+  }
+
+  factory ApiResponse.noData({Map<String, dynamic>? response}) {
+    bool status = response!['status'] as bool;
+    return ApiResponse()
+      .._status = status
+      .._statusCode = response['statusCode'];
   }
 
   factory ApiResponse.withError(dynamic error) {
@@ -43,12 +54,7 @@ class ApiResponse<T> {
       .._status = false
       .._error = ApiError(error: error);
   }
-
-  factory ApiResponse.catchError({Map<String, dynamic>? response}) {
-    return ApiResponse()
-        .._status = response!['status'] as bool
-        .._error = ApiError.fromJson(response);
-  }
+  int? get statusCode => _statusCode;
 
   ApiResult<T>? get result => _result;
 

@@ -10,6 +10,7 @@ class User {
   final DateTime? dateOfBirth;
   final String? gender;
   final String? avatar;
+  final int? vip_id;
 
   User({
     this.email,
@@ -18,6 +19,7 @@ class User {
     this.dateOfBirth,
     this.gender = UserGender.female,
     this.avatar,
+    this.vip_id = 0,
   });
 
   static final User fakeUser = User(
@@ -33,6 +35,7 @@ class User {
     String? fullName,
     DateTime? dateOfBirth,
     String? avatar,
+    int? vip_id,
   }) {
     return User(
       email: email ?? this.email,
@@ -41,12 +44,14 @@ class User {
       fullName: fullName ?? this.fullName,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       avatar: avatar ?? this.avatar,
+      vip_id: vip_id ?? this.vip_id
     );
   }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
 }
 
 class UserGender {

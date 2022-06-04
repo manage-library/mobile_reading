@@ -13,17 +13,19 @@ class ApiResultList<T> extends ApiResult<List<T>> {
   Metadata? _metadata;
 
   ApiResultList({
-    required Map<String, dynamic> json,
-    required String rootName,
-    required T Function(dynamic json) jsonConverter,
+    List? json,
+   // required String rootName,
+    required T Function(dynamic json1) jsonConverter,
   }) {
-    if (json.containsKey('metadata')) {
-      _metadata = Metadata.fromJson(json['metadata']);
-    }
-    var dataJson = json[rootName];
-    if (dataJson is List) {
+    // if (json.containsKey('metadata')) {
+    //   _metadata = Metadata.fromJson(json['metadata']);
+    // }
+  //  var dataJson = json[rootName];
+//  print("category json : $json");
+  var dataJson = json as List;
+    //if (dataJson is List) {
       _data = dataJson.map(jsonConverter).toList();
-    }
+  //  }
   }
 }
 
@@ -37,3 +39,4 @@ class ApiResultSingle<T> extends ApiResult<T> {
     _data = jsonConverter(json);
   }
 }
+

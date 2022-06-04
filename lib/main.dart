@@ -67,9 +67,12 @@ class WelcomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 100,),
+              const SizedBox(
+                height: 100,
+              ),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, AppRoutes.signInScreen),
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.signInScreen),
                 child: Container(
                   alignment: Alignment.center,
                   width: double.infinity,
@@ -84,14 +87,21 @@ class WelcomeScreen extends StatelessWidget {
                           Color(0xff42C2CF),
                           Color(0xff2BAFCC),
                         ],
-                        begin: FractionalOffset(0.0, 0.0,),
-                        end: FractionalOffset(0.0, 0.0,),
+                        begin: FractionalOffset(
+                          0.0,
+                          0.0,
+                        ),
+                        end: FractionalOffset(
+                          0.0,
+                          0.0,
+                        ),
                         stops: [0.5, 1.0, 0.5, 1.0, 0.5],
                         tileMode: TileMode.clamp),
                   ),
                   child: const Text(
                     'Sign in',
-                    style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.white),
                   ),
                 ),
               ),
@@ -99,18 +109,21 @@ class WelcomeScreen extends StatelessWidget {
                 height: 25,
               ),
               GestureDetector(
-                onTap: () => Navigator.pushNamed(context, AppRoutes.signUpScreen),
+                onTap: () =>
+                    Navigator.pushNamed(context, AppRoutes.signUpScreen),
                 child: Container(
                   alignment: Alignment.center,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+                    border:
+                        Border.all(color: const Color(0xffDBDBDB), width: 1),
                     color: const Color(0xffFAFAFA),
                   ),
                   child: const Text(
                     'Sign up',
-                    style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xff5A6273)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400, color: Color(0xff5A6273)),
                   ),
                 ),
               ),

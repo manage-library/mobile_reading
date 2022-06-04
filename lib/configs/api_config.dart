@@ -8,7 +8,7 @@ class ApiConfig {
   static const String register = '/auth/register';
 
   ///Users
-  static const String getInfoUser = '/users';
+  static const String getInfoUser = '/users/profile';
   static const String changePassword = '/users/change-password';
 
   ///Books
@@ -28,4 +28,7 @@ class ApiConfig {
   static const String addNewComment = '/comments';
   static const String changeCommentById = '/comments/';
   static const String deleteCommentById = '/comments/';
+
+  /// Category
+  static const String getCategory = '/categories';
 }

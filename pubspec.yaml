@@ -38,6 +38,9 @@ dependencies:
   json_annotation: ^4.4.0
   flutter_secure_storage: ^5.0.2 # this library for save token. This library requests that the minSdkVersion is >= 18
   get:
+  flutter_svg: ^0.23.0+1
+  smooth_page_indicator: ^1.0.0+2
+  image_picker: ^0.8.5+3 # this library for  import image 
     
 dev_dependencies:
   flutter_test:

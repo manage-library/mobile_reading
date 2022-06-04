@@ -30,7 +30,7 @@ class RestClient {
     final String? accessToken = await _authenticationStorage.getToken();
     if (accessToken != null) {
       _dio.options.headers["Authorization"] = "Bearer $accessToken";
-    }
+    } 
   }
 
   Future<Response<T>> getMethod<T>(String uri, {required Map<String, dynamic> params}) async {
