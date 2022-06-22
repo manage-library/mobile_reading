@@ -41,7 +41,14 @@ dependencies:
   flutter_svg: ^0.23.0+1
   smooth_page_indicator: ^1.0.0+2
   image_picker: ^0.8.5+3 # this library for  import image 
-    
+  flutter_profile_picture: ^2.0.0
+  sprintf: ^6.0.0
+  flutter_screenutil: ^5.5.3+2
+  flutter_share: ^2.0.0
+  number_paginator: ^0.0.2
+  encrypt: ^5.0.1
+  easy_rich_text: ^1.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

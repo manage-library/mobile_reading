@@ -1,4 +1,4 @@
-import 'package:book_reading_mobile_app/screens/home_screen.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +27,8 @@ class AuthController extends GetxController {
   }
 
   bool get _isValidated {
-    return (validateEmail == null && validatePassword == null);
+    return true;
+//    return (validateEmail == null && validatePassword == null);
   }
 
   String? get validateEmail {
@@ -60,7 +61,8 @@ class AuthController extends GetxController {
       email: email,
       password: password,
     );
-    Security? security = await _authRepositoryImpl.login(user: _user);
+   // Security? security = await _authRepositoryImpl.login(user: _user);
+    Security? security = await _authRepositoryImpl.login(user: User.fakeUser);
     if (security != null) {
       _authenticationStorage.updateToken(security.accessToken!);
       Get.to(HomeScreen());

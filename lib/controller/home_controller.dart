@@ -1,23 +1,36 @@
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/home_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
+import 'package:book_reading_mobile_app/domain/entities/enum.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
 import 'package:get/get.dart';
-
 
 class HomeController extends GetxController {
   final HomeRepositoryImpl _homeRepositoryImpl = HomeRepositoryImpl();
   var userInfor = User().obs;
   RxList<Category?> bookCategory = RxList();
-   RxList<Book?> listBooks = RxList();
+  RxList<Book?> listBooks = RxList();
+  RxList<User?> authorList = RxList();
+  var bestOfBook = Book().obs;
+  Rx<bool> isSelect = false.obs;
+  var selectedCategoryId = 0.obs;
+  var bookById = Book().obs;
 
   @override
   void onInit() {
     getInfoUser();
     getCategory();
     getBooks();
+    getBestOfBook();
+    getListAthor();
     super.onInit();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void getInfoUser() async {
     User? user = await _homeRepositoryImpl.getUserInfo();
     userInfor.value = user ?? User();
@@ -33,4 +46,36 @@ class HomeController extends GetxController {
     List<Book?> bookList = await _homeRepositoryImpl.getBooks();
     listBooks.value = bookList;
   }
+
+  void getBestOfBook() async {
+    List<Book?> bookList = (await _homeRepositoryImpl.getBooks(
+        isVip: false, sortBy: ESortBy.like.eSortByteNumber, sortType: ESortType.asc.eSortType));
+    bestOfBook.value = bookList.first ?? Book();
+  }
+
+  void getBookByCategory(int? categoryId) async {
+    if (categoryId != null) {
+      List<Book?> bookList = await _homeRepositoryImpl.getBooks(categoryId: categoryId);
+      listBooks.value = bookList;
+    } else {
+      getBooks();
+    }
+  }
+
+  void getListAthor() async {
+    List<User?> listAuthor = await _homeRepositoryImpl.getListAuthor();
+    authorList.value = listAuthor;
+  }
+
+  void getBookById({String? bookId, id}) async {
+    Book? book = await _homeRepositoryImpl.getBookById(id: bookId.toString());
+    bookById.value = book ?? Book();
+  }
+
+  // void
+
+  // RxBool togleSelect() {
+  //   print(isSelect.value);
+  //   return (isSelect.value = !isSelect.value).obs;
+  // }
 }

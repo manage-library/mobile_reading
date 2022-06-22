@@ -2,19 +2,21 @@ import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/home_continue_reading.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/home_list_authors.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/lhome_list_category.dart';
+import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../constants.dart';
-import '../widgets/book_rating.dart';
-import '../widgets/reading_card_list.dart';
-import '../widgets/two_side_rounded_button.dart';
-import 'details_screen.dart';
+import '../../constants.dart';
+import '../../widgets/book_rating.dart';
+import '../../widgets/reading_card_list.dart';
+import '../../widgets/two_side_rounded_button.dart';
+import '../detail_book_screen/details_screen.dart';
 import 'package:get/get.dart';
 
-import 'widget_home_screen/home_book_item.dart';
-import 'widget_home_screen/home_search_text_field.dart';
+import 'home_book_item.dart';
+import 'home_search_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
   final pageController = PageController(viewportFraction: 0.8, keepPage: true);
@@ -101,9 +103,14 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    ListOfAuthors(),
+                    Obx(() => ListOfAuthors(
+                          userName: controller.authorList.value,
+                        )),
                     Obx(() => ListCategory(
-                        categoryName: controller.bookCategory.value, listBooks: controller.listBooks.value)),
+                          categoryName: controller.bookCategory.value,
+                          listBooks: controller.listBooks.value,
+                          controller: controller,
+                        )),
                     // const SizedBox(height: 30),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -122,7 +129,18 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          BookItems(),
+                          Obx(
+                            () => BookItems(
+                              title: controller.bestOfBook.value.name,
+                              description: controller.bestOfBook.value.description,
+                              imageUrl: controller.bestOfBook.value.image,
+                              authorName: controller.bestOfBook.value.author?.fullName,
+                              pressDetails: () {
+                                print('best of book');
+                                Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
+                              },
+                            ),
+                          ),
                           RichText(
                             text: TextSpan(
                               style: TextStyle(fontSize: 25, color: Colors.black),

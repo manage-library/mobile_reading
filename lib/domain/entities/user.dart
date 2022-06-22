@@ -23,7 +23,7 @@ class User {
   });
 
   static final User fakeUser = User(
-    email: "test@gmail.com",
+    email: "huetransky@gmail.com",
     password: "123456",
     gender: UserGender.female,
   );

@@ -1,9 +1,12 @@
+
+
 import 'package:book_reading_mobile_app/main.dart';
+import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:book_reading_mobile_app/screens/profile_screen.dart';
+import 'package:book_reading_mobile_app/screens/reading_chapter/reading_chapter.dart';
 import 'package:book_reading_mobile_app/screens/search_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_in_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_up_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRoutes {
@@ -14,6 +17,8 @@ class AppRoutes {
   static const signUpScreen = '/sign_up';
   static const menuProfile = '/menuProfile';
   static const searchScreen = '/search';
+  static const detailBook = '/detail_book';
+  static const readingChapter = '/reading_chapter';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -22,4 +27,6 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.signUpScreen: (context) => SignUpScreen(),
   AppRoutes.menuProfile: (context) => MenuProfile(),
   AppRoutes.searchScreen: (context) => SearchScreen(),
+  AppRoutes.detailBook : (context) => DetailsScreen(),
+  AppRoutes.readingChapter : (context) => ReadingChapter()
 };

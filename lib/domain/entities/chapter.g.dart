@@ -7,12 +7,14 @@ part of 'chapter.dart';
 // **************************************************************************
 
 Chapter _$ChapterFromJson(Map<String, dynamic> json) => Chapter(
+      id: json['id'] as int?,
       name: json['name'] as String?,
       description: json['description'] as String?,
       content: json['content'] as String?,
     );
 
 Map<String, dynamic> _$ChapterToJson(Chapter instance) => <String, dynamic>{
+      'id' : instance.id,
       'name': instance.name,
       'description': instance.description,
       'content': instance.content,

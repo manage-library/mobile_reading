@@ -1,11 +1,17 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/widgets/book_rating.dart';
 import 'package:book_reading_mobile_app/widgets/two_side_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookItems extends StatelessWidget {
-  const BookItems({Key? key}) : super(key: key);
+  final String? title;
+  final String? authorName;
+  final String? description;
+  final String? imageUrl;
+  final VoidCallback? pressDetails;
+  const BookItems({Key? key, this.title, this.authorName, this.description, this.imageUrl, this.pressDetails}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class BookItems extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: 24,
                 top: 24,
-                right: size.width * .35,
+                right: size.width * .32,
               ),
               height: 230,
               width: double.infinity,
@@ -37,7 +43,7 @@ class BookItems extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: Text(
+                    child: const Text(
                       "New York Time Best For 11th March 2020",
                       style: TextStyle(
                         fontSize: 9,
@@ -46,11 +52,12 @@ class BookItems extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "How To Win \nFriends &  Influence",
-                    //      style: Theme.of(context).textTheme.title,
+                    title ?? 
+                   "How To Win \nFriends &  Influence",
+                        //  style: Theme.of(context).textTheme.title,
                   ),
                   Text(
-                    "Gary Venchuk",
+                    authorName ?? '---',
                     style: TextStyle(color: kLightBlackColor),
                   ),
                   Padding(
@@ -63,6 +70,7 @@ class BookItems extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
+                            description ?? 
                             "When the earth was flat and everyone wanted to win the game of the best and people….",
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -82,9 +90,10 @@ class BookItems extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: Image.asset(
-              "assets/images/book-3.png",
-              width: size.width * .37,
+            child: Image.network(
+              imageUrl ?? '---',
+             // "assets/images/book-3.png",
+              width: size.width * .3,
             ),
           ),
           Positioned(
@@ -96,7 +105,7 @@ class BookItems extends StatelessWidget {
               child: TwoSideRoundedButton(
                 text: "Read",
                 radious: 24,
-                press: () {},
+                press: pressDetails,
               ),
             ),
           ),

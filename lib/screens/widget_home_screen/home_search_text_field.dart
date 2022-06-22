@@ -59,7 +59,7 @@ class SearchHomeScreen extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: (() => Navigator.push(context, new MaterialPageRoute(builder: (context) => new SearchScreen()))),
+          onTap: (() => Navigator.push(context, new MaterialPageRoute(builder: (context) => SearchScreen()))),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 24.0),
             child: Container(

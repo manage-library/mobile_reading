@@ -1,5 +1,6 @@
 import 'package:book_reading_mobile_app/domain/entities/author.dart';
 import 'package:book_reading_mobile_app/domain/entities/bookCategory.dart';
+import 'package:book_reading_mobile_app/domain/entities/chapter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'book.g.dart';
@@ -18,13 +19,14 @@ class Book {
   final int? countChapter;
   final int? countLike;
   final int? countDownload;
+  final List<Chapter>? listChapter;
 
-  Book(
+    Book({
     this.bookCategory,
     this.isLike,
     this.countChapter,
     this.countLike,
-    this.countDownload, {
+    this.countDownload, 
     this.description,
     this.name,
     this.id,
@@ -32,6 +34,7 @@ class Book {
     this.isVip,
     this.author,
     this.releaseStatus,
+    this.listChapter,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

@@ -1,8 +1,11 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/domain/entities/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
 class ListOfAuthors extends StatelessWidget {
-  const ListOfAuthors({Key? key}) : super(key: key);
+  final List<User?>? userName;
+  const ListOfAuthors({Key? key, this.userName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,33 +37,45 @@ class ListOfAuthors extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 150,
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 15.0, left: 14),
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 90,
-                    width: 90,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: CircleAvatar(
-                        backgroundColor: kProgressIndicator,
-                        backgroundImage: AssetImage("assets/images/book-1.png"),
-                      ),
+            height: 150,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(8),
+                itemCount: userName?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: 100,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Table(
+                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                      children: <TableRow>[
+                        _exampleRandomColor(name: userName?.elementAt(index)?.fullName),
+                      ],
                     ),
-                  ),
-                  Text('Jame')
-                ],
-              );
-            },
-          ),
-        ),
+                  );
+                })
+                ),
       ],
     );
   }
+}
+
+TableRow _exampleRandomColor({String? name}) {
+  return TableRow(
+    children: <Widget>[
+      Container(
+        // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        // set random = true
+        // default is false
+        child: ProfilePicture(
+          name: name ?? 'Aditya Dharmawan Saputra',
+          // role: name,
+          radius: 35,
+          fontsize: 21,
+          random: true,
+          tooltip: true,
+        ),
+      ),
+    ],
+  );
 }

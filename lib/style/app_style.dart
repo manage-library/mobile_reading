@@ -116,12 +116,14 @@ class AppStyles {
     color: AppColors.colorTextSubTitle,
   );
 
-  static TextStyle styleTextDescription = TextStyle(fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorOverlayLight);
+  static TextStyle styleTextDescription =
+      TextStyle(fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorOverlayLight);
 
-  static TextStyle styleNumberFavorite = TextStyle(fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorTextSubTitleClever);
+  static TextStyle styleNumberFavorite =
+      TextStyle(fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorTextSubTitleClever);
 
-  static TextStyle styleNFTNumberFavorite =
-      TextStyle(fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorBackgroundAuthenticationMethod);
+  static TextStyle styleNFTNumberFavorite = TextStyle(
+      fontSize: fontSizeSM, fontWeight: fontWeightRegular, color: AppColors.colorBackgroundAuthenticationMethod);
 
   static TextStyle styleTextSmall = TextStyle(
     color: AppColors.colorOverlayLight,
@@ -172,7 +174,7 @@ class AppStyles {
   );
 
   static TextStyle styleSize16Regular = TextStyle(
-    color: AppColors.colorOverlayLight,
+    color: AppColors.colorOverlayLighter,
     fontSize: fontSizeBase,
     fontWeight: fontWeightRegular,
   );
@@ -190,7 +192,7 @@ class AppStyles {
   );
 
   static TextStyle styleSecondaryRegularSize16 = TextStyle(
-    color: AppColors.colorOverlayLight,
+    color: AppColors.colorTextContrast,
     fontSize: fontSizeBase,
     fontWeight: fontWeightRegular,
   );
@@ -243,15 +245,16 @@ class AppStyles {
     color: AppColors.colorOverlayLighter,
   );
 
-  static TextStyle styleTextSize14WithOverlayLight = TextStyle(fontSize: fontSizeSM, color: AppColors.colorTextTitleMethod);
+  static TextStyle styleTextSize14WithOverlayLight =
+      TextStyle(fontSize: fontSizeSM, color: AppColors.colorTextTitleMethod);
 
-  static TextStyle styleTextSizeSM =
-      TextStyle(fontSize: AppStyles.fontSizeMin, color: AppColors.colorTextContrast, fontWeight: AppStyles.fontWeightRegular);
+  static TextStyle styleTextSizeSM = TextStyle(
+      fontSize: AppStyles.fontSizeMin, color: AppColors.colorTextContrast, fontWeight: AppStyles.fontWeightRegular);
 
   static TextStyle styleCounterAppbar = TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500);
 
-  static TextStyle styleIconNFT =
-      TextStyle(color: AppColors.colorOverlayLight, fontSize: AppStyles.fontSizeSM, fontWeight: AppStyles.fontWeightRegular);
+  static TextStyle styleIconNFT = TextStyle(
+      color: AppColors.colorOverlayLight, fontSize: AppStyles.fontSizeSM, fontWeight: AppStyles.fontWeightRegular);
 
   static TextStyle styleTextNFTPrice = TextStyle(
     fontSize: fontSizeXS,
@@ -259,8 +262,8 @@ class AppStyles {
     color: AppColors.colorOverlayLight,
   );
 
-  static TextStyle hyperLinkText =
-      TextStyle(fontSize: AppStyles.fontSizeSM, fontWeight: AppStyles.fontWeightRegular, color: AppColors.colorOverlayLight);
+  static TextStyle hyperLinkText = TextStyle(
+      fontSize: AppStyles.fontSizeSM, fontWeight: AppStyles.fontWeightRegular, color: AppColors.colorOverlayLight);
 
   static TextStyle styleTextNFTBids = TextStyle(
     fontSize: fontSizeXS,

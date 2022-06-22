@@ -1,13 +1,16 @@
 import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/widgets/book_rating.dart';
+import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:book_reading_mobile_app/widgets/two_side_rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ReadingListCard extends StatelessWidget {
   final String? image;
   final String? title;
   final String? auth;
   final double? rating;
+  final bool? isFavorite;
   final VoidCallback? pressDetails;
   final VoidCallback? pressRead;
 
@@ -19,6 +22,7 @@ class ReadingListCard extends StatelessWidget {
      this.rating,
      this.pressDetails,
      this.pressRead,
+     this.isFavorite,
   }) : super(key: key);
 
   @override
@@ -58,10 +62,10 @@ class ReadingListCard extends StatelessWidget {
             right: 10,
             child: Column(
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                  ),
+               IconButton(
+                  icon: isFavorite ?? false ? Icon(
+                    Icons.favorite_border, 
+                  ) :  SvgPicture.asset('assets/images/ic_nft_heart_fill.svg',color: Colors.red,),
                   onPressed: () {},
                 ),
                 BookRating(score: rating ?? 0.0),

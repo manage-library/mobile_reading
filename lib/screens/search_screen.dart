@@ -1,5 +1,5 @@
 import 'package:book_reading_mobile_app/constants.dart';
-import 'package:book_reading_mobile_app/screens/details_screen.dart';
+import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

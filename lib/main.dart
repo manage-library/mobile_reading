@@ -1,5 +1,5 @@
 import 'package:book_reading_mobile_app/core/api_const.dart';
-import 'package:book_reading_mobile_app/screens/home_screen.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/home_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_in_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/widgets/rounded_button.dart';
