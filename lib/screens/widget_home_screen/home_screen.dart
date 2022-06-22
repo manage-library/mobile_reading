@@ -136,7 +136,6 @@ class HomeScreen extends StatelessWidget {
                               imageUrl: controller.bestOfBook.value.image,
                               authorName: controller.bestOfBook.value.author?.fullName,
                               pressDetails: () {
-                                print('best of book');
                                 Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
                               },
                             ),

@@ -19,27 +19,6 @@ class ReadingChapter extends StatelessWidget {
       global: false,
       builder: (detailController) {
         return Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: kProgressIndicator,
-          //   leading: Builder(
-          //     builder: (BuildContext context) {
-          //       return IconButton(
-          //         icon: const Icon(Icons.arrow_back),
-          //         onPressed: () {
-          //           Get.back();
-          //         },
-          //         tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          //       );
-          //     },
-          //   ),
-          //   title: Center(child: Text("title")),
-          //   actions: [
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(horizontal: 20.0),
-          //       child: Icon(Icons.more_vert_outlined),
-          //     )
-          //   ],
-          // ),
           body: NestedScrollView(
             floatHeaderSlivers: true,
             body: Stack(children: [
@@ -142,20 +121,23 @@ class ReadingChapter extends StatelessWidget {
                                   ),
                                 )
                               : Container(),
-                          controller.isButtonDown.value
+                          controller.isButtonDown.value && controller.chapter.value.id! > 1
                               ? Padding(
                                   padding: const EdgeInsets.only(top: 10.0, right: 18, left: 18),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       GestureDetector(
-                                        onTap: (){
-                                           Get.toNamed(AppRoutes.readingChapter, arguments: controller.chapter.value);
+                                        onTap: () {
+                                          controller.goToPreviousChapter(
+                                              bookId: (controller.chapter.value.book_id).toString(),
+                                              chapterId: (controller.chapter.value.id ?? 10 - 1).toString());
                                         },
                                         child: Container(
                                           height: 50,
-                                          //    width: 100,
-                                          decoration: BoxDecoration(color: kProgressIndicator),
+                                          decoration: BoxDecoration(
+                                              color: kProgressIndicator,
+                                              borderRadius: BorderRadius.all(Radius.circular(30))),
                                           child: Center(
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
@@ -168,13 +150,17 @@ class ReadingChapter extends StatelessWidget {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: (){
-
+                                        onTap: () {
+                                          controller.goToNextChapter(
+                                              bookId: (controller.chapter.value.book_id).toString(),
+                                              chapterId: (controller.chapter.value.id).toString());
                                         },
                                         child: Container(
                                           height: 50,
                                           //    width: 150,
-                                          decoration: BoxDecoration(color: kProgressIndicator),
+                                          decoration: BoxDecoration(
+                                              color: kProgressIndicator,
+                                              borderRadius: BorderRadius.all(Radius.circular(30))),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Center(

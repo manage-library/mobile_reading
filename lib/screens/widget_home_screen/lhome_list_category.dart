@@ -1,4 +1,5 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/controller/book_overview_controller.dart';
 import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
@@ -12,6 +13,7 @@ class ListCategory extends StatelessWidget {
   final List<Category?>? categoryName;
   final List<Book?>? listBooks;
   final HomeController? controller;
+ 
   ListCategory({Key? key, this.controller, this.categoryName, this.listBooks}) : super(key: key);
 
   @override
@@ -119,6 +121,9 @@ class ListCategory extends StatelessWidget {
                     //   ),
                     // );
                   },
+                  pressRead : () {
+                    Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
+                  }
                 );
               }),
         ),

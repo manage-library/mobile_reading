@@ -8,12 +8,14 @@ class Chapter {
   final String? name;
   final String? description;
   final String? content;
+  final int? book_id;
 
   Chapter({
     this.id,
     this.name = '',
     this.description = '',
     this.content = '',
+    this.book_id
   });
 
   factory Chapter.fromJson(Map<String, dynamic> json) => _$ChapterFromJson(json);

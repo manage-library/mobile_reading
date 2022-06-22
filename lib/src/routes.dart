@@ -1,6 +1,7 @@
 
 
 import 'package:book_reading_mobile_app/main.dart';
+import 'package:book_reading_mobile_app/screens/book_over_view/book_over_view.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:book_reading_mobile_app/screens/profile_screen.dart';
 import 'package:book_reading_mobile_app/screens/reading_chapter/reading_chapter.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const searchScreen = '/search';
   static const detailBook = '/detail_book';
   static const readingChapter = '/reading_chapter';
+  static const bookOverView = '/book_over_view';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -28,5 +30,7 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.menuProfile: (context) => MenuProfile(),
   AppRoutes.searchScreen: (context) => SearchScreen(),
   AppRoutes.detailBook : (context) => DetailsScreen(),
-  AppRoutes.readingChapter : (context) => ReadingChapter()
+  AppRoutes.readingChapter : (context) => ReadingChapter(),
+  AppRoutes.bookOverView : (context) => BookOverView(),
+
 };
