@@ -1,5 +1,6 @@
 import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/filter_screen.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,8 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FilterParam filterParam = FilterParam();
+
     return GestureDetector(
       onTap: Get.focusScope?.unfocus,
       child: Scaffold(
@@ -19,13 +22,13 @@ class SearchScreen extends StatelessWidget {
               onTap: () {
                 Get.back();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back,
                 color: kBlackColor,
                 size: 30,
               ),
             ),
-            title: Text(
+            title: const Text(
               "Search screen",
               style: TextStyle(color: Colors.black),
             ),
@@ -45,32 +48,39 @@ class SearchScreen extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 2), // changes position of shadow
+                        offset: const Offset(0, 2), // changes position of shadow
                       ),
                     ],
                     // border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                     color: kProgressIndicatorTextField,
                   ),
                   child: TextFormField(
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.visiblePassword,
                     //    onChanged: (value) => authController.updatePassword(value),
 
                     //controller: controlPassword,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintStyle: TextStyle(color: Colors.white),
                       errorStyle: TextStyle(fontSize: 10, height: 0.3),
                       border: InputBorder.none,
                       hintText: 'Search ...',
                       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      suffixIcon: GestureDetector(
+                          onTap: () async {
+                            await Get.to(FilterScreen(filterParam: filterParam,),);
+                            //call api here
+                            Map<String, String> apiParam = filterParam.buildParams();
+                          },
+                          child: Icon(Icons.filter))
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18.0,
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Text("Total 10 items"),
                   ],
                 ),
