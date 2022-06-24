@@ -11,7 +11,8 @@ class BookItems extends StatelessWidget {
   final String? description;
   final String? imageUrl;
   final VoidCallback? pressDetails;
-  const BookItems({Key? key, this.title, this.authorName, this.description, this.imageUrl, this.pressDetails}) : super(key: key);
+  final double? rate;
+  const BookItems({Key? key, this.title, this.authorName, this.description, this.imageUrl, this.pressDetails, this.rate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class BookItems extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
-                          child: BookRating(score: 4.9),
+                          child: BookRating(score: rate ?? 0.0),
                         ),
                         Expanded(
                           child: Text(

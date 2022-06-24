@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -26,10 +27,84 @@ class BookOverView extends StatelessWidget {
               body: NestedScrollView(
                 body: TabBarView(
                   children: [
-                    AuthorTab(),
-                    Container(child: Column(children: [
-                      Text('Bạn có thể download truyện, tạo comment')
-                    ]),)
+                    Obx(() => AuthorTab(
+                          description: controller.bookOverView.value.description,
+                          authorDescription: controller.bookOverView.value.author_description,
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      child: Container(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Bình luận :',
+                                style: TextStyle(color: Colors.black, fontSize: 16),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 20),
+                                height: 90,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: kProgressIndicatorTextField, //                   <--- border color
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                                //  color: kProgressIndicatorTextField,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                  child: Row(children: [
+                                    ProfilePicture(
+                                      name: 'Aditya Dharmawan Saputra',
+                                      // role: name,
+                                      radius: 35,
+                                      fontsize: 21,
+                                      random: true,
+
+                                      tooltip: true,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      //  mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 15.0, bottom: 5),
+                                          child: RichText(
+                                            text: const TextSpan(
+                                              style: TextStyle(
+                                                  color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600),
+                                              children: [
+                                                TextSpan(text: "Gợi ý "),
+                                                TextSpan(
+                                                  text: "tốt nhất",
+                                                  style: TextStyle(fontWeight: FontWeight.normal),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        
+                                        ),
+                                        Container(
+                                          width: 250,
+                                          child: Text(
+                                            'Comment Comment CommentCommentCommentCommentComment Comment Comment CommentCommentCommentCommentCommentComment Comment CommentCommentCommentCommentComment',
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ]),
+                                ),
+                              )
+                            ]),
+                      ),
+                    )
                   ],
                 ),
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -77,38 +152,66 @@ class BookOverView extends StatelessWidget {
                                             style: TextStyle(color: Colors.black, fontSize: 12),
                                           ),
                                         )),
-                                    Obx(() => Text(controller.bookOverView.value.author?.fullName ?? '---',
+                                    Obx(() => Text(controller.bookOverView.value.author?.full_name ?? '---',
                                         style: TextStyle(
                                             color: Colors.black26, fontSize: 12, fontWeight: FontWeight.w300))),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 5.0),
-                                          child: RatingBar.builder(
-                                            initialRating: 3.0,
-                                            itemSize: 16,
-                                            minRating: 1,
-                                            direction: Axis.horizontal,
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                            itemBuilder: (context, _) => Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            ),
-                                            onRatingUpdate: (rating) {
-                                              // print(rating);
-                                            },
+                                        Obx(
+                                          () => Padding(
+                                            padding: const EdgeInsets.only(top: 5.0),
+                                            child: controller.bookOverView.value.rate?.value != null
+                                                ? RatingBar(
+                                                    initialRating: controller.bookOverView.value.rate?.value ?? 0.0,
+                                                    itemSize: 16,
+                                                    minRating: 1,
+                                                    direction: Axis.horizontal,
+                                                    allowHalfRating: true,
+                                                    itemCount: 5,
+                                                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                                    ratingWidget: RatingWidget(
+                                                      full: Icon(
+                                                        Icons.star,
+                                                        color: Colors.amber,
+                                                      ),
+                                                      half: Icon(
+                                                        Icons.star,
+                                                        color: Colors.amber,
+                                                      ),
+                                                      empty: Icon(
+                                                        Icons.star,
+                                                        color: Colors.black12,
+                                                      ),
+                                                    ),
+                                                    // itemBuilder: (context, _) => Icon(
+                                                    //   Icons.star,
+                                                    //   color: Colors.amber,
+                                                    // ),
+                                                    onRatingUpdate: (rating) {
+                                                      // print(rating);
+                                                    },
+                                                  )
+                                                : Center(
+                                                    child: Text(
+                                                      'Chưa có đánh giá.',
+                                                      style: TextStyle(color: Colors.black54, fontSize: 10),
+                                                    ),
+                                                  ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 10.0, left: 3.0),
-                                          child: Text('3.0',
-                                              style: TextStyle(
-                                                  color: Colors.black26, fontSize: 12, fontWeight: FontWeight.w400)),
-                                        )
+                                        Obx(() => controller.bookOverView.value.rate?.value != null
+                                            ? Padding(
+                                                padding: EdgeInsets.only(top: 10.0, left: 3.0),
+                                                child: Text(
+                                                    (controller.bookOverView.value.rate?.value ?? 0.0).toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.black26,
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400)),
+                                              )
+                                            : SizedBox())
                                       ],
                                     )
                                   ],
@@ -156,7 +259,11 @@ class BookOverView extends StatelessWidget {
 }
 
 class AuthorTab extends StatelessWidget {
-  const AuthorTab({
+  final String? authorDescription;
+  final String? description;
+  AuthorTab({
+    this.authorDescription,
+    this.description,
     Key? key,
   }) : super(key: key);
 
@@ -165,38 +272,38 @@ class AuthorTab extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 20),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "About the author",
-                style: TextStyle(
-                    color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500, height: 1.5),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
-                child: Text(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            "Tác giả : ",
+            style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500, height: 1.5),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 5, bottom: 5),
+            child: Text(
+              authorDescription ??
                   'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights furnished to do so, subject to the following conditions:',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      color: Colors.black26, fontSize: 14, fontWeight: FontWeight.w400, height: 1.5),
-                ),
-              ),
-              Text(
-                "About the author",
-                style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
-                child: Text(
+              textAlign: TextAlign.justify,
+              style: TextStyle(color: Colors.black26, fontSize: 14, fontWeight: FontWeight.w400, height: 1.5),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Mô tả tác phẩm : ",
+            style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w500),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 5, bottom: 5),
+            child: Text(
+              description ??
                   'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights furnished to do so, subject to the following conditions:',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      color: Colors.black26, fontSize: 14, fontWeight: FontWeight.w400, height: 1.5),
-                ),
-              )
-            ]),
+              textAlign: TextAlign.justify,
+              style: TextStyle(color: Colors.black26, fontSize: 14, fontWeight: FontWeight.w400, height: 1.5),
+            ),
+          )
+        ]),
       ),
     );
   }

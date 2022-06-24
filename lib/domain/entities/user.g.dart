@@ -9,8 +9,8 @@ part of 'user.dart';
 User _$UserFromJson(Map<String, dynamic> json) => User(
       email: json['email'] as String?,
       password: json['password'] as String?,
-      fullName: json['full_name'] as String?,
-      dateOfBirth: json['date_of_birth'] == null
+      full_name: json['full_name'] as String?,
+      date_of_birth: json['date_of_birth'] == null
           ? null
           : DateTime.parse(json['date_of_birth'] as String),
       gender: json['gender'] as String? ?? UserGender.female,
@@ -21,8 +21,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
-      'full_name': instance.fullName,
-      'date_of_birth': instance.dateOfBirth?.toIso8601String(),
+      'full_name': instance.full_name,
+      'date_of_birth': instance.date_of_birth?.toIso8601String(),
       'gender': instance.gender,
       'avatar': instance.avatar,
       'vip_id': instance.vip_id,

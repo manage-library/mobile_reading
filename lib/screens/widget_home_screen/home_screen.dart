@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Obx(
-                      () => SearchHomeScreen(name: controller.userInfor.value.fullName),
+                      () => SearchHomeScreen(name: controller.userInfor.value.full_name),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),
@@ -121,9 +121,9 @@ class HomeScreen extends StatelessWidget {
                             text: const TextSpan(
                               style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.w400),
                               children: [
-                                TextSpan(text: "Best of the "),
+                                TextSpan(text: "Gợi ý "),
                                 TextSpan(
-                                  text: "day",
+                                  text: "tốt nhất",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -134,7 +134,8 @@ class HomeScreen extends StatelessWidget {
                               title: controller.bestOfBook.value.name,
                               description: controller.bestOfBook.value.description,
                               imageUrl: controller.bestOfBook.value.image,
-                              authorName: controller.bestOfBook.value.author?.fullName,
+                              authorName: controller.bestOfBook.value.author?.full_name,
+                              rate: controller.bestOfBook.value.rate?.value,
                               pressDetails: () {
                                 Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
                               },
@@ -144,9 +145,9 @@ class HomeScreen extends StatelessWidget {
                             text: TextSpan(
                               style: TextStyle(fontSize: 25, color: Colors.black),
                               children: [
-                                TextSpan(text: "Continue "),
+                                TextSpan(text: "Tựa sách "),
                                 TextSpan(
-                                  text: "reading...",
+                                  text: "đang đọc ...",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],

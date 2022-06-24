@@ -13,8 +13,6 @@ import '../../widgets/rounded_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   final DetailBookController controller = DetailBookController();
-  int _numPages = 10;
-  int _currentPage = 0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -72,20 +70,13 @@ class DetailsScreen extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       padding: const EdgeInsets.all(8),
-                      itemCount: ((controller.bookItem.value.listChapter?.length ?? 1 - 1)),
+                      itemCount: ((controller.bookItem.value.chapters?.length ?? 1 - 1)),
                       itemBuilder: (BuildContext context, int index) {
-                        return
-                            //     ChapterCard(
-                            //       name: controller.bookItem.value.listChapter?.elementAt(index).name,
-                            //       chapterNumber: index + 1,
-                            //       tag: controller.bookItem.value.listChapter?.elementAt(index).description,
-                            //       press: () {},
-                            //     );
-                            GestureDetector(
+                        return GestureDetector(
                           onTap: () {
                             controller.goToChapterReadingBook(
                                 bookId: controller.bookItem.value.id.toString(),
-                                chapterId: controller.bookItem.value.listChapter?.elementAt(index).id.toString());
+                                chapterId: controller.bookItem.value.chapters?.elementAt(index).id.toString());
                           },
                           child: Card(
                             child: ClipRRect(
@@ -95,9 +86,9 @@ class DetailsScreen extends StatelessWidget {
                               ),
                               child: ListTile(
                                 title: Text(
-                                    "Chapter ${index + 1} : ${controller.bookItem.value.listChapter?.elementAt(index).name ?? '---'}"),
-                                subtitle: controller.bookItem.value.listChapter?.elementAt(index).description != null
-                                    ? Text('${controller.bookItem.value.listChapter?.elementAt(index).description}')
+                                    "Chapter ${index + 1} : ${controller.bookItem.value.chapters?.elementAt(index).name ?? '---'}"),
+                                subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
+                                    ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
                                     : Text('---'),
                                 trailing: Icon(
                                   Icons.arrow_forward_ios,
@@ -108,18 +99,6 @@ class DetailsScreen extends StatelessWidget {
                           ),
                         );
                       })),
-                  //  Obx(()=>  Padding(
-                  //     padding: EdgeInsets.only(top: 20,left: 20, right: 20),
-                  //     child: NumberPaginator(
-                  //       numberPages:(((controller.bookItem.value.listChapter?.length ?? 1 - 1)) / 4).toInt() + 1,
-                  //                     onPageChange: (int index) {
-                  //                       // setState(() {
-                  //                         print("index : ${index+1}");
-                  //                       //   _currentPage = index;
-                  //                       // });
-                  //       },
-                  //     ),
-                  //   )),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                     child: Column(
@@ -150,7 +129,7 @@ class DetailsScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: RelatedBook(
                           bookTitle: controller.bookWithCategory.value.name,
-                          authorName: controller.bookWithCategory.value.author?.fullName,
+                          authorName: controller.bookWithCategory.value.author?.full_name,
                           imgPath: controller.bookWithCategory.value.image,
                           onPressed: () {
                             Get.back();
@@ -173,9 +152,10 @@ class RelatedBook extends StatelessWidget {
   String? bookTitle;
   String? authorName;
   String? imgPath;
+  double? rate;
   VoidCallback? onPressed;
 
-  RelatedBook({Key? key, this.bookTitle, this.authorName, this.imgPath, this.onPressed}) : super(key: key);
+  RelatedBook({Key? key, this.bookTitle, this.authorName, this.imgPath, this.onPressed, this.rate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +200,7 @@ class RelatedBook extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     BookRating(
-                      score: 4.9,
+                      score: rate ?? 0.0,
                     ),
                     SizedBox(width: 10),
                     Expanded(
@@ -411,7 +391,7 @@ class BookInfo extends StatelessWidget {
                                   ),
                             onPressed: () {},
                           ),
-                          BookRating(score: 4.9),
+                          BookRating(score: book?.rate?.value ?? 0.0),
                         ],
                       )
                     ],

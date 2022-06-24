@@ -43,7 +43,7 @@ class SearchHomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Hello, " + (name ?? 'reader'),
+                    "Xin chào, " + (name ?? 'reader'),
                     style: const TextStyle(color: kBlackColor, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -54,12 +54,12 @@ class SearchHomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Text(
-            "Keep Exploring",
+            "Khám phá ngay",
             style: AppStyles.styleTextTitleMethodClever,
           ),
         ),
         GestureDetector(
-          onTap: (() => Navigator.push(context, new MaterialPageRoute(builder: (context) => SearchScreen()))),
+          onTap: (() => Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()))),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 24.0),
             child: Container(
@@ -75,7 +75,6 @@ class SearchHomeScreen extends StatelessWidget {
                       offset: Offset(0, 2), // changes position of shadow
                     ),
                   ],
-                  // border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                   color: kProgressIndicatorTextField,
                 ),
                 child: const Align(
@@ -83,27 +82,12 @@ class SearchHomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Text(
-                      "Search ... ",
+                      "Tìm kiếm ... ",
                       textAlign: TextAlign.start,
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                )
-                // TextFormField(
-                //   style: TextStyle(color: Colors.white),
-                //   keyboardType: TextInputType.visiblePassword,
-                //   //    onChanged: (value) => authController.updatePassword(value),
-
-                //   //   controller: controlPassword,
-                //   decoration: const InputDecoration(
-                //     hintStyle: TextStyle(color: Colors.white),
-                //     errorStyle: TextStyle(fontSize: 10, height: 0.3),
-                //     border: InputBorder.none,
-                //     hintText: 'Search ...',
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                //   ),
-                // ),
-                ),
+                )),
           ),
         ),
       ],

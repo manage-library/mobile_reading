@@ -58,7 +58,7 @@ class HomeRepositoryImpl extends HomeRepository {
       if(isVip == null && sortBy == null && sortType == null) {
          response = await _restClient.getMethod(ApiConfig.getBooks, params: {});
       } else {
-         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'isVip' : isVip, 'sortBy' : sortBy, 'sortType' : sortType, 'categoryId' : categoryId});
+         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'isVip' : isVip, 'sortBy' : sortBy, 'sortType' : sortType});
       }   
       if(categoryId != null) {
          response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId' : categoryId});

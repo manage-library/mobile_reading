@@ -48,8 +48,8 @@ class HomeController extends GetxController {
   }
 
   void getBestOfBook() async {
-    List<Book?> bookList = (await _homeRepositoryImpl.getBooks(
-        isVip: false, sortBy: ESortBy.like.eSortByteNumber, sortType: ESortType.asc.eSortType));
+    List<Book?> bookList = (await _homeRepositoryImpl.getBooks( isVip: false,
+        sortBy: ESortBy.like.eSortByteNumber, sortType: ESortType.asc.eSortType));
     bestOfBook.value = bookList.first ?? Book();
   }
 
@@ -70,6 +70,10 @@ class HomeController extends GetxController {
   void getBookById({String? bookId, id}) async {
     Book? book = await _homeRepositoryImpl.getBookById(id: bookId.toString());
     bookById.value = book ?? Book();
+  }
+
+  void goToSearchScreen() async {
+
   }
 
   // void

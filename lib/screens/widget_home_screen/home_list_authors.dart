@@ -21,16 +21,16 @@ class ListOfAuthors extends StatelessWidget {
                 text: TextSpan(
                   style: TextStyle(fontSize: 25, color: Colors.black),
                   children: [
-                    TextSpan(text: "Popular "),
+                    TextSpan(text:"Người dùng "),
                     TextSpan(
-                      text: "Authors",
+                      text: "nổi bật",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
               Text(
-                "View all",
+                "Xem tất cả",
                 style: const TextStyle(fontSize: 16, color: kBlackColor, fontWeight: FontWeight.w400),
               )
             ],
@@ -49,12 +49,11 @@ class ListOfAuthors extends StatelessWidget {
                     child: Table(
                       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                       children: <TableRow>[
-                        _exampleRandomColor(name: userName?.elementAt(index)?.fullName),
+                        _exampleRandomColor(name: userName?.elementAt(index)?.full_name),
                       ],
                     ),
                   );
-                })
-                ),
+                })),
       ],
     );
   }

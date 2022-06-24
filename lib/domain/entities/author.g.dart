@@ -8,10 +8,10 @@ part of 'author.dart';
 
 Author _$AuthorFromJson(Map<String, dynamic> json) => Author(
       id: json['id'] as int?,
-      fullName: json['full_name'] as String?,
+      full_name: json['full_name'] as String?,
     );
 
 Map<String, dynamic> _$AuthorToJson(Author instance) => <String, dynamic>{
       'id': instance.id,
-      'full_name': instance.fullName,
+      'full_name': instance.full_name,
     };

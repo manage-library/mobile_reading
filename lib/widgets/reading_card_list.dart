@@ -10,19 +10,21 @@ class ReadingListCard extends StatelessWidget {
   final String? title;
   final String? auth;
   final double? rating;
-  final bool? isFavorite;
+  bool? isFavorite;
+  final VoidCallback? onPressFavouriteButton;
   final VoidCallback? pressDetails;
   final VoidCallback? pressRead;
 
-  const ReadingListCard({
-     Key? key,
-     this.image,
-     this.title,
-     this.auth,
-     this.rating,
-     this.pressDetails,
-     this.pressRead,
-     this.isFavorite,
+  ReadingListCard({
+    Key? key,
+    this.image,
+    this.title,
+    this.auth,
+    this.rating,
+    this.pressDetails,
+    this.pressRead,
+    this.isFavorite = false,
+    this.onPressFavouriteButton,
   }) : super(key: key);
 
   @override
@@ -62,11 +64,16 @@ class ReadingListCard extends StatelessWidget {
             right: 10,
             child: Column(
               children: <Widget>[
-               IconButton(
-                  icon: isFavorite ?? false ? Icon(
-                    Icons.favorite_border, 
-                  ) :  SvgPicture.asset('assets/images/ic_nft_heart_fill.svg',color: Colors.red,),
-                  onPressed: () {},
+                IconButton(
+                  icon: isFavorite ?? false
+                      ? Icon(
+                          Icons.favorite_border,
+                        )
+                      : SvgPicture.asset(
+                          'assets/images/ic_nft_heart_fill.svg',
+                          color: Colors.red,
+                        ),
+                  onPressed: onPressFavouriteButton,
                 ),
                 BookRating(score: rating ?? 0.0),
               ],

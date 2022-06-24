@@ -59,7 +59,7 @@ class SignUpController extends GetxController {
   }
 
   void signUp({required String email, required String password, required String fullName}) async {
-    User _user = User(email: email, password: password, fullName: fullName);
+    User _user = User(email: email, password: password, full_name: fullName);
     var response = await _signUpRepositoryImpl.register(user: _user);
     if (response != null) {
       AlertUtils.showError(titleError: 'Success', desc: 'Register successfully', okButtonTitle: 'OK');

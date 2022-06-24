@@ -25,7 +25,7 @@ class ApiConfig {
   static const String deleteChapterByid = '/chapters/';
 
   ///Comment
-  static const String getComment = '/comments';
+  static const String getComment = '/books/%s/comments';
   static const String addNewComment = '/comments';
   static const String changeCommentById = '/comments/';
   static const String deleteCommentById = '/comments/';
