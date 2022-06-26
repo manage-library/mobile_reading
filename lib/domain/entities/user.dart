@@ -11,6 +11,7 @@ class User {
   final String? gender;
   final String? avatar;
   final int? vip_id;
+  final int? id;
 
   User({
     this.email,
@@ -20,6 +21,7 @@ class User {
     this.gender = UserGender.female,
     this.avatar,
     this.vip_id = 0,
+    this.id
   });
 
   static final User fakeUser = User(

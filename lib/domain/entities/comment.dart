@@ -1,3 +1,4 @@
+import 'package:book_reading_mobile_app/domain/entities/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'comment.g.dart';
@@ -7,11 +8,11 @@ class Comment {
   final String? content;
   final String? createdAt;
   final int? id;
-  final int? user_id;
+  final User? user;
   final int? book_id;
   final String? updatedAt;
 
-  Comment({this.content, this.createdAt, this.book_id, this.id, this.user_id, this.updatedAt});
+  Comment({this.content, this.createdAt, this.book_id, this.id, this.user, this.updatedAt});
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 

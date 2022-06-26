@@ -1,5 +1,7 @@
 import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/controller/book_overview_controller.dart';
+import 'package:book_reading_mobile_app/domain/entities/comment.dart';
+import 'package:book_reading_mobile_app/screens/book_over_view/comment_item.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,80 +33,7 @@ class BookOverView extends StatelessWidget {
                           description: controller.bookOverView.value.description,
                           authorDescription: controller.bookOverView.value.author_description,
                         )),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      child: Container(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Bình luận :',
-                                style: TextStyle(color: Colors.black, fontSize: 16),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 20),
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: kProgressIndicatorTextField, //                   <--- border color
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                                //  color: kProgressIndicatorTextField,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                  child: Row(children: [
-                                    ProfilePicture(
-                                      name: 'Aditya Dharmawan Saputra',
-                                      // role: name,
-                                      radius: 35,
-                                      fontsize: 21,
-                                      random: true,
-
-                                      tooltip: true,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      //  mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 15.0, bottom: 5),
-                                          child: RichText(
-                                            text: const TextSpan(
-                                              style: TextStyle(
-                                                  color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600),
-                                              children: [
-                                                TextSpan(text: "Gợi ý "),
-                                                TextSpan(
-                                                  text: "tốt nhất",
-                                                  style: TextStyle(fontWeight: FontWeight.normal),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          child: Text(
-                                            'Comment Comment CommentCommentCommentCommentComment Comment Comment CommentCommentCommentCommentCommentComment Comment CommentCommentCommentCommentComment',
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ]),
-                                ),
-                              )
-                            ]),
-                      ),
-                    )
+                    CommentTab()
                   ],
                 ),
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -255,6 +184,48 @@ class BookOverView extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Padding CommentTab() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      child: Container(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15.0),
+            child: Text(
+              'Bình luận :',
+              style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+          ),
+          controller.commentList.value.length != 0
+              ? Obx(() => Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.only(top: 15.0, left: 14),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: controller.commentList.value.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Comment comment = controller.commentList.value.elementAt(index) ?? Comment();
+                        return CommentItem(
+                          userName: comment.user?.full_name,
+                          time: comment.createdAt,
+                          comment: comment.content,
+                        );
+                      },
+                    ),
+                  ))
+              : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    'Hãy là người bình luận đầu tiên!',
+                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                )
+        ]),
+      ),
+    );
   }
 }
 

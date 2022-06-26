@@ -27,8 +27,8 @@ class AuthController extends GetxController {
   }
 
   bool get _isValidated {
-    return true;
-//    return (validateEmail == null && validatePassword == null);
+    // return true;
+    return (validateEmail == null && validatePassword == null);
   }
 
   String? get validateEmail {
@@ -61,8 +61,8 @@ class AuthController extends GetxController {
       email: email,
       password: password,
     );
-   // Security? security = await _authRepositoryImpl.login(user: _user);
-    Security? security = await _authRepositoryImpl.login(user: User.fakeUser);
+    Security? security = await _authRepositoryImpl.login(user: _user);
+    // Security? security = await _authRepositoryImpl.login(user: User.fakeUser);
     if (security != null) {
       _authenticationStorage.updateToken(security.accessToken!);
       Get.to(HomeScreen());
