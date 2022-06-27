@@ -6,6 +6,7 @@ part 'category.g.dart';
 class Category {
   final String? name;
   final int? id;
+  bool? isSelected;
 
   Category({
     this.name,

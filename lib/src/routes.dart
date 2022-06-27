@@ -1,8 +1,10 @@
 
 
+import 'package:book_reading_mobile_app/controller/edit_profile_controller.dart';
 import 'package:book_reading_mobile_app/main.dart';
 import 'package:book_reading_mobile_app/screens/book_over_view/book_over_view.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
+import 'package:book_reading_mobile_app/screens/edit_profile_screen.dart';
 import 'package:book_reading_mobile_app/screens/profile_screen.dart';
 import 'package:book_reading_mobile_app/screens/reading_chapter/reading_chapter.dart';
 import 'package:book_reading_mobile_app/screens/search_screen.dart';
@@ -21,6 +23,7 @@ class AppRoutes {
   static const detailBook = '/detail_book';
   static const readingChapter = '/reading_chapter';
   static const bookOverView = '/book_over_view';
+  static const eidtProfile = '/edit_profile';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -32,5 +35,6 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.detailBook : (context) => DetailsScreen(),
   AppRoutes.readingChapter : (context) => ReadingChapter(),
   AppRoutes.bookOverView : (context) => BookOverView(),
+  AppRoutes.eidtProfile: (context) => EditProfilePage(EditProfileController()),
 
 };
