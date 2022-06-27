@@ -1,6 +1,8 @@
 import 'package:book_reading_mobile_app/core/util/alert_utils.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/sign_up_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
+import 'package:book_reading_mobile_app/src/routes.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
@@ -25,6 +27,7 @@ class SignUpController extends GetxController {
     isDisabled.value = !_isValidated;
   }
 
+
   bool get _isValidated {
     return (validateEmail == null && validatePassword == null && validateFullName == null);
   }
@@ -48,6 +51,8 @@ class SignUpController extends GetxController {
     final password = this.password.value;
     if (password.isEmpty) {
       return 'sign_up_password_empty'.tr;
+    } else {
+      return null;
     }
   }
 
@@ -55,6 +60,8 @@ class SignUpController extends GetxController {
     final fullName = this.fullName.value;
     if (fullName.isEmpty) {
       return 'sign_up_password_empty'.tr;
+    } else {
+      return null;
     }
   }
 
@@ -62,7 +69,9 @@ class SignUpController extends GetxController {
     User _user = User(email: email, password: password, full_name: fullName);
     var response = await _signUpRepositoryImpl.register(user: _user);
     if (response != null) {
-      AlertUtils.showError(titleError: 'Success', desc: 'Register successfully', okButtonTitle: 'OK');
+      AlertUtils.showError(titleError: 'Success', desc: 'Register successfully', okButtonTitle: 'OK', onOkButtonPressed : () async {
+          await  Get.toNamed(AppRoutes.signInScreen);
+      }); 
     } else {
       AlertUtils.showError(titleError: 'Error', desc: 'Resgister failed', okButtonTitle: 'Try again');
     }

@@ -99,7 +99,7 @@ class WelcomeScreen extends StatelessWidget {
                         tileMode: TileMode.clamp),
                   ),
                   child: const Text(
-                    'Sign in',
+                    'Đăng nhập',
                     style: TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.white),
                   ),
@@ -121,7 +121,7 @@ class WelcomeScreen extends StatelessWidget {
                     color: const Color(0xffFAFAFA),
                   ),
                   child: const Text(
-                    'Sign up',
+                    'Đăng ký',
                     style: TextStyle(
                         fontWeight: FontWeight.w400, color: Color(0xff5A6273)),
                   ),

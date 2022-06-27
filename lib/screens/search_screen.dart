@@ -112,7 +112,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                     Obx(() => Expanded(
                           child: ListView.builder(
-                            padding: EdgeInsets.only(top: 15.0, left: 14),
+                            padding: EdgeInsets.only(top: 15.0, left: 14, right: 30),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: controller.listFilterBook.value.length,

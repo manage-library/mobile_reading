@@ -1,8 +1,6 @@
-import 'package:book_reading_mobile_app/data/rest_api/datasources/request_model/book_request_model.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/detail_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/chapter.dart';
-import 'package:book_reading_mobile_app/domain/repositories/detail_book_repository.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:get/get.dart';
 

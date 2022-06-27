@@ -12,6 +12,6 @@ class SearchController extends GetxController {
   final DetailBookImpl _detailBookImpl = DetailBookImpl();
     void getBookInCategory() async {
     List<Book?> listBook = await _detailBookImpl.getBooks();
-    listFilterBook.value = listBook ;
+    listFilterBook.value = listBook;
   }
 }

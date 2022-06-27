@@ -24,7 +24,7 @@ class SignInScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          'Sign in',
+          'Đăng nhập',
           style: TextStyle(color: Color(0xff151718)),
         ),
         centerTitle: true,
@@ -151,7 +151,7 @@ class SignInScreen extends StatelessWidget {
                               )
                             : BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.black26),
                         child: const Text(
-                          'Sign in',
+                          'Đăng nhập',
                           style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                       ));
@@ -159,16 +159,18 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.signUpScreen),
-                  child: Center(
-                    child: RichText(
-                        text: TextSpan(children: <TextSpan>[
-                      const TextSpan(text: 'Don\'t have an account? ', style: TextStyle(color: Colors.black)),
-                      TextSpan(
-                          text: 'Sign up', style: const TextStyle(color: Colors.deepPurpleAccent), recognizer: TapGestureRecognizer()..onTap = () {}),
-                    ])),
-                  ),
+                Center(
+                  child: RichText(
+                      text: TextSpan(children: <TextSpan>[
+                    const TextSpan(text: 'Bạn chưa có tài khoản? ', style: TextStyle(color: Colors.black)),
+                    TextSpan(
+                        text: 'Đăng ký',
+                        style: const TextStyle(color: Colors.deepPurpleAccent),
+                        recognizer: TapGestureRecognizer()..onTap = () {
+                      
+                    Navigator.pushNamed(context, AppRoutes.signUpScreen);
+                        }),
+                  ])),
                 )
               ],
             ),

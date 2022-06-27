@@ -16,16 +16,16 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       gender: json['gender'] as String? ?? UserGender.female,
       avatar: json['avatar'] as String?,
       vip_id: json['vip_id'] as int? ?? 0,
-      id: json['id'] as int? ?? 0
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
-      'full_name': instance.full_name,
+      'fullName': instance.full_name,
       'date_of_birth': instance.date_of_birth?.toIso8601String(),
       'gender': instance.gender,
       'avatar': instance.avatar,
       'vip_id': instance.vip_id,
-      'id' : instance.id
+      'id': instance.id,
     };
