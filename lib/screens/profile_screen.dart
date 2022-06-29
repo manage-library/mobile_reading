@@ -86,7 +86,7 @@ class MenuProfile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 28),
+            const SizedBox(height: 28),
             SizedBox(
               height: 550,
               child: Column(
@@ -95,7 +95,7 @@ class MenuProfile extends StatelessWidget {
                     title: 'Sửa thông tin',
                     onClick:() => Get.toNamed(AppRoutes.eidtProfile)
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   ProfileItem(
@@ -105,7 +105,14 @@ class MenuProfile extends StatelessWidget {
                       contentSize: 200,
                       content: LogoutPage(),
                     ).show(),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProfileItem(
+                    title: 'Nâng cấp VIP',
+                    onClick:() => Get.toNamed(AppRoutes.vipUpdate),
+                  ),
                 ],
               ),
               // child: ListView.separated(

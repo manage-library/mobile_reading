@@ -1,6 +1,7 @@
 
 
 import 'package:book_reading_mobile_app/controller/edit_profile_controller.dart';
+import 'package:book_reading_mobile_app/controller/vip_update_controller.dart';
 import 'package:book_reading_mobile_app/main.dart';
 import 'package:book_reading_mobile_app/screens/book_over_view/book_over_view.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
@@ -10,6 +11,7 @@ import 'package:book_reading_mobile_app/screens/reading_chapter/reading_chapter.
 import 'package:book_reading_mobile_app/screens/search_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_in_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_up_screen.dart';
+import 'package:book_reading_mobile_app/screens/vip_update_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRoutes {
@@ -24,6 +26,7 @@ class AppRoutes {
   static const readingChapter = '/reading_chapter';
   static const bookOverView = '/book_over_view';
   static const eidtProfile = '/edit_profile';
+  static const vipUpdate = '/vip_update';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -36,5 +39,6 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.readingChapter : (context) => ReadingChapter(),
   AppRoutes.bookOverView : (context) => BookOverView(),
   AppRoutes.eidtProfile: (context) => EditProfilePage(EditProfileController()),
+  AppRoutes.vipUpdate: (context) => VipUpdatePage(VipUpdateController()),
 
 };
