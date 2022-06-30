@@ -1,6 +1,10 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/screens/bottom_sheet/app_bottom_sheet.dart';
+import 'package:book_reading_mobile_app/widgets/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../src/routes.dart';
 
 class MenuProfile extends StatelessWidget {
   const MenuProfile({Key? key}) : super(key: key);
@@ -82,57 +86,149 @@ class MenuProfile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 28),
+            const SizedBox(height: 28),
             SizedBox(
               height: 550,
-              child: ListView.separated(
-                padding: const EdgeInsets.all(8),
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 86,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 2),
-                          blurRadius: 13,
-                          color: Color(0xFFD3D3D3).withOpacity(.40),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Row(children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: kProgressIndicator,
-                            borderRadius: BorderRadius.all(Radius.circular(45)),
-                          ),
-                          child: Icon(
-                            Icons.star,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          "My profile",
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                        )
-                      ]),
-                    ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) => const Divider(),
+              child: Column(
+                children: [
+                  ProfileItem(
+                    title: 'Sửa thông tin',
+                    onClick:() => Get.toNamed(AppRoutes.eidtProfile)
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProfileItem(
+                    title: 'Đăng xuất',
+                    onClick:() => AppBottomSheet(
+                      title: "Đăng xuất",
+                      contentSize: 200,
+                      content: LogoutPage(),
+                    ).show(),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProfileItem(
+                    title: 'Nâng cấp VIP',
+                    onClick:() => Get.toNamed(AppRoutes.vipUpdate),
+                  ),
+                ],
               ),
+              // child: ListView.separated(
+              //   padding: const EdgeInsets.all(8),
+              //   itemCount: 5,
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Container(
+              //       height: 86,
+              //       decoration: BoxDecoration(
+              //         color: Colors.white,
+              //         borderRadius: BorderRadius.circular(12),
+              //         boxShadow: [
+              //           BoxShadow(
+              //             offset: Offset(0, 2),
+              //             blurRadius: 13,
+              //             color: Color(0xFFD3D3D3).withOpacity(.40),
+              //           ),
+              //         ],
+              //       ),
+              //       child: Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              //         child: InkWell(
+              //           onTap: (){
+              //             AppBottomSheet(
+              //               title: "Đăng xuất",
+              //               contentSize: 200,
+              //               content: LogoutPage(),
+              //             ).show();
+              //           },
+              //           child: Row(children: [
+              //             Container(
+              //               height: 60,
+              //               width: 60,
+              //               decoration: BoxDecoration(
+              //                 color: kProgressIndicator,
+              //                 borderRadius: BorderRadius.all(Radius.circular(45)),
+              //               ),
+              //               child: Icon(
+              //                 Icons.star,
+              //                 color: Colors.white,
+              //                 size: 26,
+              //               ),
+              //             ),
+              //             SizedBox(width: 20),
+              //             Text(
+              //               "Đăng xuất",
+              //               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+              //             )
+              //           ]),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   separatorBuilder: (BuildContext context, int index) => const Divider(),
+              // ),
             )
           ],
         ),
       )),
     );
   }
+}
+
+class ProfileItem extends StatelessWidget{
+  String? icon;
+  String? title;
+  Function onClick;
+  ProfileItem({
+    this.title,
+    this.icon,
+    required this.onClick
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 86,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 2),
+            blurRadius: 13,
+            color: Color(0xFFD3D3D3).withOpacity(.40),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: InkWell(
+          onTap: (){
+            onClick();
+          },
+          child: Row(children: [
+            Container(
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                color: kProgressIndicator,
+                borderRadius: BorderRadius.all(Radius.circular(45)),
+              ),
+              child: Icon(
+                Icons.star,
+                color: Colors.white,
+                size: 26,
+              ),
+            ),
+            SizedBox(width: 20),
+            Text(
+              title ?? '',
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            )
+          ]),
+        ),
+      ),
+    );
+  }
+
 }
