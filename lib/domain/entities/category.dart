@@ -6,13 +6,9 @@ part 'category.g.dart';
 class Category {
   final String? name;
   final int? id;
+  bool? isSelected;
 
-  Category({
-    this.name,
-    this.id
-  });
-
-
+  Category({this.name, this.id, this.isSelected});
 
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
