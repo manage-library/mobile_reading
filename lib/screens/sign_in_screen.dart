@@ -93,6 +93,7 @@ class SignInScreen extends StatelessWidget {
                     //   }
                     //   return null;
                     // },
+
                     onChanged: (value) => authController.updatePassword(value),
                     obscureText: true,
                     controller: controlPassword,
@@ -166,10 +167,10 @@ class SignInScreen extends StatelessWidget {
                     TextSpan(
                         text: 'Đăng ký',
                         style: const TextStyle(color: Colors.deepPurpleAccent),
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                      
-                    Navigator.pushNamed(context, AppRoutes.signUpScreen);
-                        }),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, AppRoutes.signUpScreen);
+                          }),
                   ])),
                 )
               ],

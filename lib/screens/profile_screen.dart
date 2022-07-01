@@ -13,25 +13,25 @@ class MenuProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kProgressIndicatorTextField,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: kBlackColor,
-              size: 30,
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: kBlackColor,
+            size: 30,
           ),
-          title: Text(
-            "Profile",
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
         ),
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 30),
@@ -91,27 +91,24 @@ class MenuProfile extends StatelessWidget {
               height: 550,
               child: Column(
                 children: [
+                  ProfileItem(title: 'Sửa thông tin', onClick: () => Get.toNamed(AppRoutes.eidtProfile)),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   ProfileItem(
-                    title: 'Sửa thông tin',
-                    onClick:() => Get.toNamed(AppRoutes.eidtProfile)
+                    title: 'Nâng cấp VIP',
+                    onClick: () => Get.toNamed(AppRoutes.vipUpdate),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   ProfileItem(
                     title: 'Đăng xuất',
-                    onClick:() => AppBottomSheet(
+                    onClick: () => AppBottomSheet(
                       title: "Đăng xuất",
                       contentSize: 200,
                       content: LogoutPage(),
                     ).show(),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ProfileItem(
-                    title: 'Nâng cấp VIP',
-                    onClick:() => Get.toNamed(AppRoutes.vipUpdate),
                   ),
                 ],
               ),
@@ -176,15 +173,11 @@ class MenuProfile extends StatelessWidget {
   }
 }
 
-class ProfileItem extends StatelessWidget{
+class ProfileItem extends StatelessWidget {
   String? icon;
   String? title;
   Function onClick;
-  ProfileItem({
-    this.title,
-    this.icon,
-    required this.onClick
-  });
+  ProfileItem({this.title, this.icon, required this.onClick});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -203,7 +196,7 @@ class ProfileItem extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             onClick();
           },
           child: Row(children: [
@@ -230,5 +223,4 @@ class ProfileItem extends StatelessWidget{
       ),
     );
   }
-
 }

@@ -1,85 +1,120 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 
-class ContinueReading extends StatelessWidget {
-  const ContinueReading({Key? key}) : super(key: key);
+class ContinueListReading extends StatelessWidget {
+  final HomeController? controller;
+  const ContinueListReading({Key? key, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-      height: 80,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(38.5),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 10),
-            blurRadius: 33,
-            color: Color(0xFFD3D3D3).withOpacity(.84),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(38.5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 30, right: 20),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Crushing & Influence",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+    return SizedBox(
+      height: 120,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        // padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: controller?.listHistoryBook.value.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0), //khoảng cách 2 item
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(38.5),
+              child: Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(38.5),
+
+                  // border: Border.all(color: kProgressIndicator),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 33,
+                      color: Color(0xFFD3D3D3).withOpacity(.84),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 12.0, top: 20),
+                  child: ClipRRect(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          //   color: Colors.blue,
+                          width: 300,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    width: 180,
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      text: TextSpan(
+                                        text: controller?.listHistoryBook.value.elementAt(index)?.book?.name ??
+                                            "tên tác phẩm",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    controller?.listHistoryBook.value.elementAt(index)?.book?.author_description ??
+                                        "tên tác giả",
+                                    style: TextStyle(
+                                      color: kLightBlackColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                child: Image.network(
+                                  controller?.listHistoryBook.value.elementAt(index)?.book?.image ?? '',
+                                  width: 70,
+                                  height: 70,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Gary Venchuk",
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                            "Chapter ${controller?.listHistoryBook.value.elementAt(index)?.chapter?.id}",
                             style: TextStyle(
+                              fontSize: 10,
                               color: kLightBlackColor,
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text(
-                              "Chapter 7 of 10",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: kLightBlackColor,
-                              ),
-                            ),
+                        ),
+                        Container(
+                          height: 7,
+                          width: size.width * .65,
+                          decoration: BoxDecoration(
+                            color: kProgressIndicator,
+                            borderRadius: BorderRadius.circular(7),
                           ),
-                          SizedBox(height: 5),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Image.asset(
-                      "assets/images/book-1.png",
-                      width: 55,
-                    )
-                  ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              height: 7,
-              width: size.width * .65,
-              decoration: BoxDecoration(
-                color: kProgressIndicator,
-                borderRadius: BorderRadius.circular(7),
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

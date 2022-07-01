@@ -33,136 +33,148 @@ class HomeScreen extends StatelessWidget {
       "assets/images/magic_book.jpg",
     ];
 
-    return GestureDetector(
-      onTap: () {
-        Get.focusScope?.unfocus();
+    return RefreshIndicator(
+      color: kProgressIndicator,
+      onRefresh: () async {
+        controller.loadData();
       },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/main_page_bg.png"),
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Obx(
-                      () => SearchHomeScreen(name: controller.userInfor.value.full_name),
+      child: GestureDetector(
+        onTap: () {
+          Get.focusScope?.unfocus();
+        },
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/main_page_bg.png"),
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.fitWidth,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: PageView.builder(
-                              controller: pageController,
-                              itemCount: assetImage.length,
-                              itemBuilder: (_, index) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.grey.shade300,
-                                  ),
-                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                  child: Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                                    height: 280,
-                                    child: Image.asset(assetImage[index], fit: BoxFit.fill),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 30.0),
-                            child: Center(
-                              child: SmoothPageIndicator(
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Obx(
+                        () => SearchHomeScreen(name: controller.userInfor.value.full_name),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: PageView.builder(
                                 controller: pageController,
-                                count: 6,
-                                axisDirection: Axis.horizontal,
-                                effect: const JumpingDotEffect(
-                                  activeDotColor: kProgressIndicator,
-                                  dotHeight: 10,
-                                  dotWidth: 10,
-                                  jumpScale: .7,
-                                  verticalOffset: 15,
+                                itemCount: assetImage.length,
+                                itemBuilder: (_, index) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      color: Colors.grey.shade300,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    child: Container(
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                                      height: 280,
+                                      child: Image.asset(assetImage[index], fit: BoxFit.fill),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30.0),
+                              child: Center(
+                                child: SmoothPageIndicator(
+                                  controller: pageController,
+                                  count: 6,
+                                  axisDirection: Axis.horizontal,
+                                  effect: const JumpingDotEffect(
+                                    activeDotColor: kProgressIndicator,
+                                    dotHeight: 10,
+                                    dotWidth: 10,
+                                    jumpScale: .7,
+                                    verticalOffset: 15,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Obx(() => ListOfAuthors(
-                          userName: controller.authorList.value,
-                        )),
-                    Obx(() => ListCategory(
-                          categoryName: controller.bookCategory.value,
-                          listBooks: controller.listBooks.value,
-                          controller: controller,
-                        )),
-                    // const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          RichText(
-                            text: const TextSpan(
-                              style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.w400),
-                              children: [
-                                TextSpan(text: "Gợi ý "),
-                                TextSpan(
-                                  text: "tốt nhất",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                      Obx(() => ListOfAuthors(
+                            userName: controller.authorList.value,
+                          )),
+                      Obx(() => ListCategory(
+                            categoryName: controller.bookCategory.value,
+                            listBooks: controller.listBooks.value,
+                            controller: controller,
+                          )),
+                      // const SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            RichText(
+                              text: const TextSpan(
+                                style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.w400),
+                                children: [
+                                  TextSpan(text: "Gợi ý "),
+                                  TextSpan(
+                                    text: "tốt nhất",
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Obx(
-                            () => BookItems(
-                              title: controller.bestOfBook.value.name,
-                              description: controller.bestOfBook.value.description,
-                              imageUrl: controller.bestOfBook.value.image,
-                              authorName: controller.bestOfBook.value.author?.full_name,
-                              rate: controller.bestOfBook.value.rate?.value,
-                              pressDetails: () {
-                                Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
-                              },
+                            Obx(
+                              () => BookItems(
+                                title: controller.bestOfBook.value.name,
+                                description: controller.bestOfBook.value.description,
+                                imageUrl: controller.bestOfBook.value.image,
+                                authorName: controller.bestOfBook.value.author?.full_name,
+                                rate: controller.bestOfBook.value.rate?.value,
+                                pressDetails: () {
+                                  Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
+                                },
+                              ),
                             ),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              style: TextStyle(fontSize: 25, color: Colors.black),
-                              children: [
-                                TextSpan(text: "Tựa sách "),
-                                TextSpan(
-                                  text: "đang đọc ...",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                            Obx(() => (controller.listHistoryBook.value.length) > 0
+                                ? RichText(
+                                    text: const TextSpan(
+                                      style: const TextStyle(fontSize: 25, color: Colors.black),
+                                      children: [
+                                        const TextSpan(text: "Tựa sách "),
+                                        const TextSpan(
+                                          text: "đang đọc ...",
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container()),
+                            const SizedBox(height: 20),
+                            Obx(
+                              () => (controller.listHistoryBook.value.length) > 0
+                                  ? ContinueListReading(controller: controller)
+                                  : Container(),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          ContinueReading(),
-                          SizedBox(height: 40),
-                        ],
+                            const SizedBox(height: 40),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

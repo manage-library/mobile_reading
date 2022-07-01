@@ -1,9 +1,7 @@
 import 'package:book_reading_mobile_app/constants.dart';
-import 'package:book_reading_mobile_app/controller/book_overview_controller.dart';
 import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
-import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';

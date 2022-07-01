@@ -32,4 +32,7 @@ class ApiConfig {
 
   /// Category
   static const String getCategory = '/categories';
+
+  //// History
+  static const String getHistory = '/histories';
 }

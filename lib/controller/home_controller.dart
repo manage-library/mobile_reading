@@ -2,6 +2,7 @@ import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/home_rep
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/enum.dart';
+import 'package:book_reading_mobile_app/domain/entities/history_chapter.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class HomeController extends GetxController {
   RxList<Category?> bookCategory = RxList();
   RxList<Book?> listBooks = RxList();
   RxList<User?> authorList = RxList();
+  RxList<HistoryBook?> listHistoryBook = RxList();
   var bestOfBook = Book().obs;
   Rx<bool> isSelect = false.obs;
   var selectedCategoryId = 0.obs;
@@ -24,6 +26,16 @@ class HomeController extends GetxController {
     getBestOfBook();
     getListAthor();
     super.onInit();
+    getHistory();
+  }
+
+  void loadData() {
+    getInfoUser();
+    getCategory();
+    getBooks();
+    getBestOfBook();
+    getListAthor();
+    getHistory();
   }
 
   @override
@@ -48,14 +60,17 @@ class HomeController extends GetxController {
   }
 
   void getBestOfBook() async {
-    List<Book?> bookList = (await _homeRepositoryImpl.getBooks( isVip: false,
-        sortBy: ESortBy.like.eSortByteNumber, sortType: ESortType.asc.eSortType));
+    List<Book?> bookList = (await _homeRepositoryImpl.getBooks(
+        isVip: userInfor.value.vip_id == 0 ? false : true,
+        sortBy: ESortBy.like.eSortByteNumber,
+        sortType: ESortType.asc.eSortType));
     bestOfBook.value = bookList.first ?? Book();
   }
 
   void getBookByCategory(int? categoryId) async {
     if (categoryId != null) {
-      List<Book?> bookList = await _homeRepositoryImpl.getBooks(categoryId: categoryId);
+      List<Book?> bookList =
+          await _homeRepositoryImpl.getBooks(categoryId: categoryId, isVip: userInfor.value.vip_id == 0 ? false : true);
       listBooks.value = bookList;
     } else {
       getBooks();
@@ -72,9 +87,12 @@ class HomeController extends GetxController {
     bookById.value = book ?? Book();
   }
 
-  void goToSearchScreen() async {
-
+  void getHistory() async {
+    List<HistoryBook?> listHistoryBookValue = await _homeRepositoryImpl.getHistory();
+    listHistoryBook.value = listHistoryBookValue;
   }
+
+  void goToSearchScreen() async {}
 
   // void
 
