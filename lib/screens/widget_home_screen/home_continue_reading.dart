@@ -49,13 +49,13 @@ class ContinueListReading extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    width: 180,
-                                    child: RichText(
+                              Container(
+                                width: 180,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RichText(
                                       overflow: TextOverflow.ellipsis,
                                       text: TextSpan(
                                         text: controller?.listHistoryBook.value.elementAt(index)?.book?.name ??
@@ -66,15 +66,15 @@ class ContinueListReading extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    controller?.listHistoryBook.value.elementAt(index)?.book?.author_description ??
-                                        "tên tác giả",
-                                    style: TextStyle(
-                                      color: kLightBlackColor,
+                                    Text(
+                                      controller?.listHistoryBook.value.elementAt(index)?.book?.author_description ??
+                                          "tên tác giả",
+                                      style: TextStyle(
+                                        color: kLightBlackColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Container(
                                 child: Image.network(

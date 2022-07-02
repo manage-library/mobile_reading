@@ -60,7 +60,9 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Obx(
-                        () => SearchHomeScreen(name: controller.userInfor.value.full_name),
+                        () => SearchHomeScreen(name: controller.userInfor.value.full_name, onPressed: (){
+                           Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);
+                        },),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),

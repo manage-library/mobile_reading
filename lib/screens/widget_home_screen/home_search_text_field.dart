@@ -1,15 +1,14 @@
 import 'package:book_reading_mobile_app/screens/search_screen.dart';
-import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class SearchHomeScreen extends StatelessWidget {
   String? name;
-  SearchHomeScreen({Key? key, this.name}) : super(key: key);
+  VoidCallback? onPressed;
+  SearchHomeScreen({Key? key, this.name, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +21,7 @@ class SearchHomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, AppRoutes.menuProfile);
-                },
+                onTap: onPressed,
                 child: Container(
                   height: 41,
                   width: 41,

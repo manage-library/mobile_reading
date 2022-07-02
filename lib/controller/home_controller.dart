@@ -70,7 +70,7 @@ class HomeController extends GetxController {
   void getBookByCategory(int? categoryId) async {
     if (categoryId != null) {
       List<Book?> bookList =
-          await _homeRepositoryImpl.getBooks(categoryId: categoryId, isVip: userInfor.value.vip_id == 0 ? false : true);
+          await _homeRepositoryImpl.getBooks(categoryId: categoryId);
       listBooks.value = bookList;
     } else {
       getBooks();

@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+
+import '../core/util/functions.dart';
 
 class EditProfileController extends GetxController{
   List<String> gender = ['Nam', 'Nữ'];
@@ -6,6 +9,7 @@ class EditProfileController extends GetxController{
   String name = "";
   String email = "";
   String dateOfBirth = "";
+  Rx<DateTime?> selectDate = Rx(DateTime.now());
 
   void updateGender(String value){
     genderSelected.value = value;
@@ -19,6 +23,10 @@ class EditProfileController extends GetxController{
     email = value;
   }
 
+   Future<void> selectBirthday() async {
+    final date = await FunctionUtils.selectDate(Get.context!);
+    selectDate.value = date ?? DateTime.now();
+  }
   void updateDateOfBirth(String value){
     dateOfBirth = value;
   }
