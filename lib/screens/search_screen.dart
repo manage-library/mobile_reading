@@ -17,129 +17,114 @@ class SearchScreen extends StatelessWidget {
       init: controller,
       global: false,
       builder: (GetxController controllerSearch) {
-        return GestureDetector(
-          onTap: Get.focusScope?.unfocus,
+        final List<String> tabs = <String>['Tác phẩm', 'Tác giả'];
+        return DefaultTabController(
+          length: tabs.length, // This is the number of tabs.
           child: Scaffold(
-              appBar: AppBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                leading: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: kBlackColor,
-                    size: 30,
-                  ),
-                ),
-                title: const Text(
-                  "Tìm kiếm",
-                  style: TextStyle(color: Colors.black),
-                ),
-                centerTitle: true,
-              ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 24),
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 2), // changes position of shadow
-                          ),
-                        ],
-                        // border: Border.all(color: const Color(0xffDBDBDB), width: 1),
-                        color: kProgressIndicatorTextField,
+            body: NestedScrollView(
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverOverlapAbsorber(
+                    handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                    sliver: SliverAppBar(
+                      title: const Text(
+                        "Tìm kiếm",
+                        style: TextStyle(color: Colors.black),
                       ),
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
-                        keyboardType: TextInputType.visiblePassword,
-                        //    onChanged: (value) => authController.updatePassword(value),
+                      backgroundColor: kProgressIndicator,
+                      leading: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: kBlackColor,
+                          size: 30,
+                        ),
+                      ),
 
-                        //controller: controlPassword,
-                        decoration: InputDecoration(
-                            hintStyle: TextStyle(color: Colors.white),
-                            errorStyle: TextStyle(fontSize: 10, height: 0.3),
-                            border: InputBorder.none,
-                            hintText: 'Tìm kiếm ...',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                            suffixIcon: GestureDetector(
-                                onTap: () async {
-                                  await Get.to(
-                                    FilterScreen(
-                                      filterParam: filterParam,
-                                    ),
-                                  );
-                                  //call api here
-                                  Map<String, String> apiParam = filterParam.buildParams();
-                                },
-                                child: Icon(Icons.filter))),
+                      floating: true,
+                      snap: true,
+                      pinned: true,
+                      expandedHeight: 150.0,
+                      forceElevated: innerBoxIsScrolled,
+                      bottom: TabBar(
+                        tabs: tabs.map((String name) => Tab(text: name)).toList(),
+                      ),
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Stack(
+                          children: [
+                            TextFormField(
+                              style: const TextStyle(color: Colors.white),
+                              keyboardType: TextInputType.visiblePassword,
+
+                              //controller: controlPassword,
+                              decoration: InputDecoration(
+                                  hintStyle: const TextStyle(color: Colors.white),
+                                  errorStyle: const TextStyle(fontSize: 10, height: 0.3),
+                                  border: InputBorder.none,
+                                  hintText: 'Tìm kiếm ...',
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  suffixIcon: GestureDetector(
+                                      onTap: () async {
+                                        await Get.to(
+                                          FilterScreen(
+                                            filterParam: filterParam,
+                                          ),
+                                        );
+                                        //call api here
+                                        Map<String, String> apiParam = filterParam.buildParams();
+                                      },
+                                      child: const Icon(Icons.filter_list_outlined, color: Colors.white70, size: 30,))),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 18.0,
-                    ),
-                    Row(
-                      children: [
-                        Obx(
-                          () => RichText(
-                            text: TextSpan(
-                              style: TextStyle(fontSize: 16, color: Colors.black),
-                              children: [
-                                TextSpan(
-                                  text: "Tổng ",
-                                ),
-                                TextSpan(
-                                  text: controller.listFilterBook.length.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                TextSpan(
-                                  text: " tựa sách",
-                                ),
-                              ],
+                  ),
+                ];
+              },
+              body: TabBarView(
+                // These are the contents of the tab views, below the tabs.
+                children: tabs.map((String name) {
+                  return SafeArea(
+                    top: false,
+                    bottom: false,
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        return CustomScrollView(
+                          key: PageStorageKey<String>(name),
+                          slivers: <Widget>[
+                            SliverOverlapInjector(
+                              handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context),
                             ),
-                          ),
-                        )
-                      ],
+                            SliverPadding(
+                              padding: const EdgeInsets.all(8.0),
+                              sliver: SliverFixedExtentList(
+                                itemExtent: 48.0,
+                                delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                    return ListTile(
+                                      title: Text('Item $index'),
+                                    );
+                                  },
+
+                                  childCount: 30,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    Obx(() => Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.only(top: 15.0, left: 14, right: 30),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: controller.listFilterBook.value.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              Book bookElement = controller.listFilterBook.value.elementAt(index) ?? Book();
-                              return ReadingListCard(
-                                image: bookElement.image,
-                                title: bookElement.name,
-                                //     auth: bookElement.author,
-                                rating: bookElement.rate?.value,
-                                pressDetails: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return DetailsScreen();
-                                      },
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ))
-                  ],
-                ),
-              )),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
         );
       },
     );
