@@ -114,9 +114,74 @@ class BookOverView extends StatelessWidget {
                                           TextStyle(color: Colors.black26, fontSize: 12, fontWeight: FontWeight.w300))),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.bottomSheet(
-                                          Padding(
-                                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                      showCommentBottomSheet(context);
+                                      shape:
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                          'Hãy đánh giá ngay !',
+                                          style: TextStyle(color: kProgressIndicator, fontSize: 10),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ])),
+                          ],
+                        ),
+                        centerTitle: true,
+                      ),
+                      floating: true,
+                      backgroundColor: Colors.white,
+                      snap: true,
+                      pinned: true,
+                      bottom: TabBar(
+                          indicatorColor: kProgressIndicator,
+                          labelStyle: TextStyle(
+                              fontSize: 22.0, fontFamily: 'Family Name', color: Color.fromARGB(255, 209, 158, 158)), //For Selected tab
+                          unselectedLabelStyle:
+                              TextStyle(fontSize: 10.0, fontFamily: 'Family Name'), //For Un-selected Tabs
+
+                          // controller: TabController() ,
+                          tabs: [
+                            Tab(
+                              icon: Icon(
+                                Icons.cloud_outlined,
+                                color: Colors.black,
+                              ),
+                              //  text: 'Cloud',
+                            ),
+                            Tab(
+                              icon: Icon(
+                                Icons.beach_access_sharp,
+                                color: Colors.black,
+                              ),
+                              //  text: 'Umbrella',
+                            ),
+                          ]),
+                    ),
+                  ];
+                },
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<void> showCommentBottomSheet(BuildContext context) {
+    return showModalBottomSheet<void>(
+                                        barrierColor: AppColors.colorDarkBackground,
+                                        isDismissible: false,
+                                        isScrollControlled: true,
+                                        enableDrag: true,
+                                        backgroundColor: AppColors.colorDarkBackground,
+                                        builder: (BuildContext context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context).viewInsets,
                                             child: Container(
                                                 decoration: BoxDecoration(
                                                     color: kProgressIndicatorTextField,
@@ -162,13 +227,14 @@ class BookOverView extends StatelessWidget {
                                                       padding: EdgeInsets.symmetric(vertical: 20.0),
                                                       child: Text(
                                                         "Vui lòng đánh giá và bình luận sách",
-                                                        style: AppStyles.styleAppBarTitle
-                                                            .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                                                        style: AppStyles.styleAppBarTitle.copyWith(
+                                                            color: Colors.black, fontWeight: FontWeight.w600),
                                                       ),
                                                     ),
                                                     Center(
                                                       child: RatingBar(
-                                                        initialRating: controller.bookOverView.value.rate?.value ?? 0.0,
+                                                        initialRating:
+                                                            controller.bookOverView.value.rate?.value ?? 0.0,
                                                         itemSize: 50,
                                                         minRating: 1,
                                                         direction: Axis.horizontal,
@@ -205,7 +271,8 @@ class BookOverView extends StatelessWidget {
                                                         height: 100,
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(10),
-                                                          border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+                                                          border:
+                                                              Border.all(color: const Color(0xffDBDBDB), width: 1),
                                                           color: const Color(0xffFAFAFA),
                                                         ),
                                                         child: TextFormField(
@@ -225,63 +292,9 @@ class BookOverView extends StatelessWidget {
                                                     ),
                                                   ],
                                                 )),
-                                          ),
-                                          barrierColor: AppColors.colorDarkBackground,
-                                          isDismissible: false,
-                                          isScrollControlled: true,
-                                          enableDrag: true,
-                                          backgroundColor: AppColors.colorDarkBackground);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: Text(
-                                          'Hãy đánh giá ngay !',
-                                          style: TextStyle(color: kProgressIndicator, fontSize: 10),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ])),
-                          ],
-                        ),
-                        centerTitle: true,
-                      ),
-                      floating: true,
-                      backgroundColor: Colors.white,
-                      snap: true,
-                      pinned: true,
-                      bottom: TabBar(
-                          indicatorColor: kProgressIndicator,
-                          labelStyle: TextStyle(
-                              fontSize: 22.0, fontFamily: 'Family Name', color: Colors.black), //For Selected tab
-                          unselectedLabelStyle:
-                              TextStyle(fontSize: 10.0, fontFamily: 'Family Name'), //For Un-selected Tabs
-
-                          // controller: TabController() ,
-                          tabs: [
-                            Tab(
-                              icon: Icon(
-                                Icons.cloud_outlined,
-                                color: Colors.black,
-                              ),
-                              //  text: 'Cloud',
-                            ),
-                            Tab(
-                              icon: Icon(
-                                Icons.beach_access_sharp,
-                                color: Colors.black,
-                              ),
-                              //  text: 'Umbrella',
-                            ),
-                          ]),
-                    ),
-                  ];
-                },
-              ),
-            ),
-          );
-        });
+                                          );
+                                        },
+                                        context: context);
   }
 
   Padding CommentTab() {

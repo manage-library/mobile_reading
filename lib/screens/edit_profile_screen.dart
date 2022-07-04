@@ -102,6 +102,7 @@ class EditProfilePage extends StatelessWidget {
                           border: InputBorder.none,
                           hintText:
                               DateTimeUtils.getStringDate(controller.selectDate.value, pattern: Pattern.ddMMyyyy_vi),
+                          hintStyle: TextStyle(color: Colors.black),
                           contentPadding: EdgeInsets.symmetric(horizontal: 20),
                         ),
                         //     onChanged: (date) => controller.updateDateOfBirth(date)

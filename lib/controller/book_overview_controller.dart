@@ -20,4 +20,7 @@ class BookOverViewController extends GetxController {
     List<Comment?> listComment = await _bookOverViewImpl.getComment(bookOverView.value.id ?? 0);
     commentList.value = listComment;
   }
+  void postRateAndComment() {
+    
+  }
 }
