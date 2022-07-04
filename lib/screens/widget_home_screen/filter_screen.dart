@@ -12,7 +12,6 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     TextEditingController bookName = TextEditingController(text: filterParam.bookName);
     TextEditingController authorName = TextEditingController(text: filterParam.authorName);
     final FilterParam currentFilterParamChanged = FilterParam.copy(filterParam);
@@ -42,40 +41,6 @@ class FilterScreen extends StatelessWidget {
             children: [
               const SizedBox(
                 height: 10,
-              ),
-              TextField(
-                controller: bookName,
-                onChanged: (text) => currentFilterParamChanged.bookName = bookName.text,
-                decoration: const InputDecoration(
-                    label: Text("Nhập tên sách", style: TextStyle(color: AppColors.colorTextSubTitleClever)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(
-                          color: AppColors.colorTextSubTitleClever,
-                          width: 0.5,
-                      )
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: authorName,
-                onChanged: (text) => currentFilterParamChanged.authorName = authorName.text,
-                decoration: const InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(
-                      color: AppColors.colorTextSubTitleClever,
-                      width: 0.5,
-                    )
-                  ),
-                  label: Text('Nhập tên tác giả', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
-                ),
-              ),
-              const SizedBox(
-                height: 40,
               ),
               const Text('Trạng thái phát hành', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
               const SizedBox(
@@ -132,7 +97,11 @@ class FilterScreen extends StatelessWidget {
                 height: 50,
               ),
               TextButton(
-                child: const Text('Tìm kiếm', style: TextStyle(color: Colors.white, fontSize: 20,)),
+                child: const Text('Tìm kiếm',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    )),
                 onPressed: () {
                   filterParam.copyFilterParam(currentFilterParamChanged);
                   Navigator.of(context).pop();
@@ -184,27 +153,31 @@ class _GroupFilterButtonState extends State<GroupFilterButton> {
                   }
                 }),
                 child: FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: indexSelected == FilterParamWrapper.getIndex(e) ? AppColors.colorSelectedFilter : AppColors.colorTextSubTitle,
-                            width: 0.5),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: indexSelected == FilterParamWrapper.getIndex(e) ? AppColors.colorSelectedFilter : Colors.white,
-                      ),
-                      margin: EdgeInsets.only(
-                          right: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 10 : 0,
-                          left: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 0 : 10),
-
-                      child: Center(child: Text(FilterParamWrapper.parseTitle(e),
-                        style: TextStyle(
-                          color: indexSelected == FilterParamWrapper.getIndex(e) ? Colors.white : Colors.black87,
-                          fontSize: 17
-                        ),
-                      )),
+                  widthFactor: 0.5,
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: indexSelected == FilterParamWrapper.getIndex(e)
+                              ? AppColors.colorSelectedFilter
+                              : AppColors.colorTextSubTitle,
+                          width: 0.5),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: indexSelected == FilterParamWrapper.getIndex(e)
+                          ? AppColors.colorSelectedFilter
+                          : Colors.white,
                     ),
+                    margin: EdgeInsets.only(
+                        right: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 10 : 0,
+                        left: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 0 : 10),
+                    child: Center(
+                        child: Text(
+                      FilterParamWrapper.parseTitle(e),
+                      style: TextStyle(
+                          color: indexSelected == FilterParamWrapper.getIndex(e) ? Colors.white : Colors.black87,
+                          fontSize: 17),
+                    )),
+                  ),
                 ),
               ))
           .toList(),

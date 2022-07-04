@@ -1,17 +1,54 @@
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/detail_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:get/get.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
 
-class SearchController extends GetxController {
+class SearchController extends GetxController with GetSingleTickerProviderStateMixin {
   var listFilterBook = <Book?>[].obs;
+  final _debounceTime = 800;
+
+  Timer _debounce = Timer(const Duration(milliseconds: 0), () {});
+  RxString searchParam = ''.obs;
+  RxBool showRecentSearch = true.obs;
+  RxBool showClearButton = false.obs;
+  RxInt selectedIndex = 1.obs;
+  late TabController tabController;
+  static const List<Tab> myTabs = <Tab>[
+    Tab(text: 'Tác giả'),
+    Tab(text: 'Tác phẩm'),
+  ];
+
   @override
   void onInit() {
     super.onInit();
+    tabController = TabController(length: 2, vsync: this);
     getBookInCategory();
+    tabController.addListener(() {
+      selectedIndex.value = tabController.index;
+    });
   }
+
   final DetailBookImpl _detailBookImpl = DetailBookImpl();
-    void getBookInCategory() async {
+  void getBookInCategory() async {
     List<Book?> listBook = await _detailBookImpl.getBooks();
     listFilterBook.value = listBook;
+  }
+
+  void loadData() {
+    getBookInCategory();
+  }
+
+  void debounceCallBack(String value) {
+    if (_debounce.isActive) {
+      _debounce.cancel();
+    }
+    _debounce = Timer(Duration(milliseconds: _debounceTime), () async {
+      if (selectedIndex.value == 0) {
+        listFilterBook.value = await _detailBookImpl.getBooks(bookName: value);
+      } else {
+        listFilterBook.value = await _detailBookImpl.getBooks(authorName: value);
+      }
+    });
   }
 }

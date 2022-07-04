@@ -29,7 +29,7 @@ class DetailBookImpl extends DetailBookRepository {
   }
 
   @override
-  Future<List<Book?>> getBooks({bool? isVip, int? sortBy, String? sortType, int? categoryId}) async {
+  Future<List<Book?>> getBooks({bool? isVip, int? sortBy, String? sortType, int? categoryId, String? bookName, String? authorName}) async {
     var response;
     try {
       if (isVip == null && sortBy == null && sortType == null) {
@@ -41,6 +41,15 @@ class DetailBookImpl extends DetailBookRepository {
       if (categoryId != null) {
         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});
       }
+
+      if(bookName != null) {
+        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'bookName' : bookName});
+      }
+
+      if(authorName != null) {
+        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'authorName' : authorName});
+      }
+      
       print("responseBookList : $response");
       return ApiResponse.withResult(
               response: response.data,
