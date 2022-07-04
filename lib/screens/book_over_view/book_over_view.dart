@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
-
 import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/controller/book_overview_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/comment.dart';
 import 'package:book_reading_mobile_app/screens/book_over_view/comment_item.dart';
 import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
