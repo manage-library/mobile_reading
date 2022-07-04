@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../constants.dart';
+import '../../style/app_colors.dart';
 
 class FilterScreen extends StatelessWidget {
   FilterScreen({Key? key, required this.filterParam}) : super(key: key);
@@ -6,6 +12,7 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     TextEditingController bookName = TextEditingController(text: filterParam.bookName);
     TextEditingController authorName = TextEditingController(text: filterParam.authorName);
     final FilterParam currentFilterParamChanged = FilterParam.copy(filterParam);
@@ -13,7 +20,19 @@ class FilterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Filter'),
+        title: const Text('Bộ lọc', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: kBlackColor,
+            size: 30,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -21,17 +40,46 @@ class FilterScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               TextField(
                 controller: bookName,
                 onChanged: (text) => currentFilterParamChanged.bookName = bookName.text,
+                decoration: const InputDecoration(
+                    label: Text("Nhập tên sách", style: TextStyle(color: AppColors.colorTextSubTitleClever)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                          color: AppColors.colorTextSubTitleClever,
+                          width: 0.5,
+                      )
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               TextField(
                 controller: authorName,
                 onChanged: (text) => currentFilterParamChanged.authorName = authorName.text,
+                decoration: const InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(
+                      color: AppColors.colorTextSubTitleClever,
+                      width: 0.5,
+                    )
+                  ),
+                  label: Text('Nhập tên tác giả', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
+                ),
               ),
-              const Text('Release status'),
               const SizedBox(
-                height: 20,
+                height: 40,
+              ),
+              const Text('Trạng thái phát hành', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
+              const SizedBox(
+                height: 10,
               ),
               GroupFilterButton(
                 enumList: FilterReleaseStatus.values.toList(),
@@ -45,11 +93,11 @@ class FilterScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 50,
+                height: 40,
               ),
-              const Text('Sort by'),
+              const Text('Sắp xếp theo', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               GroupFilterButton(
                 enumList: FilterSortBy.values.toList(),
@@ -63,11 +111,11 @@ class FilterScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 50,
+                height: 40,
               ),
-              const Text('Sort type'),
+              const Text('Kiểu sắp xếp', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               GroupFilterButton(
                 enumList: FilterSortType.values.toList(),
@@ -84,12 +132,19 @@ class FilterScreen extends StatelessWidget {
                 height: 50,
               ),
               TextButton(
-                child: Text('Confirm'),
+                child: const Text('Tìm kiếm', style: TextStyle(color: Colors.white, fontSize: 20,)),
                 onPressed: () {
                   filterParam.copyFilterParam(currentFilterParamChanged);
                   Navigator.of(context).pop();
                 },
-              )
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(32))),
+                    backgroundColor: MaterialStateProperty.all(AppColors.colorButtonSearch),
+                    minimumSize: MaterialStateProperty.all(Size(Get.width - 40, 54))),
+              ),
+              const SizedBox(
+                height: 25.0,
+              ),
             ],
           ),
         ),
@@ -131,13 +186,26 @@ class _GroupFilterButtonState extends State<GroupFilterButton> {
                 child: FractionallySizedBox(
                     widthFactor: 0.5,
                     child: Container(
-                      height: 30,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: indexSelected == FilterParamWrapper.getIndex(e) ? AppColors.colorSelectedFilter : AppColors.colorTextSubTitle,
+                            width: 0.5),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: indexSelected == FilterParamWrapper.getIndex(e) ? AppColors.colorSelectedFilter : Colors.white,
+                      ),
                       margin: EdgeInsets.only(
                           right: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 10 : 0,
                           left: (FilterParamWrapper.getIndex(e).toInt() % 2 == 1) ? 0 : 10),
-                      color: indexSelected == FilterParamWrapper.getIndex(e) ? Colors.red : Colors.blue,
-                      child: Center(child: Text(FilterParamWrapper.parseTitle(e))),
-                    )),
+
+                      child: Center(child: Text(FilterParamWrapper.parseTitle(e),
+                        style: TextStyle(
+                          color: indexSelected == FilterParamWrapper.getIndex(e) ? Colors.white : Colors.black87,
+                          fontSize: 17
+                        ),
+                      )),
+                    ),
+                ),
               ))
           .toList(),
     );
@@ -195,9 +263,9 @@ extension FilterReleaseStatusParsingEx on FilterReleaseStatus {
       case FilterReleaseStatus.empty:
         return '';
       case FilterReleaseStatus.releasing:
-        return 'RELEASING';
+        return 'Đang hoàn thành';
       case FilterReleaseStatus.released:
-        return 'RELEASED';
+        return 'Đã hoàn thành';
     }
   }
 
@@ -234,11 +302,11 @@ extension FilterSortByParsingEx on FilterSortBy {
       case FilterSortBy.empty:
         return '';
       case FilterSortBy.like:
-        return 'LIKE';
+        return 'Lượt yêu thích';
       case FilterSortBy.view:
-        return 'VIEW';
+        return 'Lượt xem';
       case FilterSortBy.updateTime:
-        return 'UPDATE TIME';
+        return 'Thời gian cập nhật';
     }
   }
 
@@ -275,9 +343,9 @@ extension FilterSortTypeParsingEx on FilterSortType {
       case FilterSortType.empty:
         return '';
       case FilterSortType.asc:
-        return 'ASC';
+        return 'Tăng dần';
       case FilterSortType.desc:
-        return 'DESC';
+        return 'Giảm dần';
     }
   }
 

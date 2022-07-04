@@ -93,4 +93,6 @@ class AppColors {
   static const Color colorBuyCLMIcon = Color(0xFF0151FC);
   static const Color colorIconHeaderAssetsDetail = Color(0xff5B616E);
   static const Color newColorBackgroundIcon = Color(0xffF3F2F1);
+  static const Color colorSelectedFilter = Color.fromARGB(255, 241, 205, 200);
+  static const Color colorButtonSearch = Color.fromARGB(255, 236, 164, 153);
 }
