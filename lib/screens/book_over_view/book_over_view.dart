@@ -138,7 +138,9 @@ class BookOverView extends StatelessWidget {
                       bottom: TabBar(
                           indicatorColor: kProgressIndicator,
                           labelStyle: TextStyle(
-                              fontSize: 22.0, fontFamily: 'Family Name', color: Color.fromARGB(255, 209, 158, 158)), //For Selected tab
+                              fontSize: 22.0,
+                              fontFamily: 'Family Name',
+                              color: Color.fromARGB(255, 209, 158, 158)), //For Selected tab
                           unselectedLabelStyle:
                               TextStyle(fontSize: 10.0, fontFamily: 'Family Name'), //For Un-selected Tabs
 
@@ -170,127 +172,147 @@ class BookOverView extends StatelessWidget {
 
   Future<void> showCommentBottomSheet(BuildContext context) {
     return showModalBottomSheet<void>(
-                                        barrierColor: AppColors.colorDarkBackground,
-                                        isDismissible: false,
-                                        isScrollControlled: true,
-                                        enableDrag: true,
-                                        backgroundColor: AppColors.colorDarkBackground,
-                                        builder: (BuildContext context) {
-                                          return Padding(
-                                            padding: MediaQuery.of(context).viewInsets,
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: kProgressIndicatorTextField,
-                                                    borderRadius: BorderRadius.only(
-                                                        topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-                                                height: Get.height * 0.6,
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Text(
-                                                            "Đánh giá sách",
-                                                            style: AppStyles.styleAppBarTitle.copyWith(
-                                                                color: Colors.black, fontWeight: FontWeight.w800),
-                                                          ),
-                                                          Align(
-                                                            alignment: Alignment.topRight,
-                                                            child: IconButton(
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons.close,
-                                                                  size: 30,
-                                                                )),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.symmetric(horizontal: 18.0),
-                                                      child: Divider(
-                                                        color: Colors.white,
-                                                        thickness: 2,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.symmetric(vertical: 20.0),
-                                                      child: Text(
-                                                        "Vui lòng đánh giá và bình luận sách",
-                                                        style: AppStyles.styleAppBarTitle.copyWith(
-                                                            color: Colors.black, fontWeight: FontWeight.w600),
-                                                      ),
-                                                    ),
-                                                    Center(
-                                                      child: RatingBar(
-                                                        initialRating:
-                                                            controller.bookOverView.value.rate?.value ?? 0.0,
-                                                        itemSize: 50,
-                                                        minRating: 1,
-                                                        direction: Axis.horizontal,
-                                                        allowHalfRating: true,
-                                                        itemCount: 5,
-                                                        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                                        ratingWidget: RatingWidget(
-                                                          full: Icon(
-                                                            Icons.star,
-                                                            color: Colors.amber,
-                                                          ),
-                                                          half: Icon(
-                                                            Icons.star,
-                                                            color: Colors.amber,
-                                                          ),
-                                                          empty: Icon(
-                                                            Icons.star,
-                                                            color: Colors.black12,
-                                                          ),
-                                                        ),
-                                                        // itemBuilder: (context, _) => Icon(
-                                                        //   Icons.star,
-                                                        //   color: Colors.amber,
-                                                        // ),
-                                                        onRatingUpdate: (rating) {
-                                                          // print(rating);
-                                                        },
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 18.0),
-                                                      child: Container(
-                                                        alignment: Alignment.center,
-                                                        height: 100,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          border:
-                                                              Border.all(color: const Color(0xffDBDBDB), width: 1),
-                                                          color: const Color(0xffFAFAFA),
-                                                        ),
-                                                        child: TextFormField(
-                                                          keyboardType: TextInputType.multiline,
-                                                          maxLines: 3,
-                                                          maxLength: 200,
-                                                          onChanged: (value) => ({}),
-                                                          decoration: const InputDecoration(
-                                                            errorStyle: TextStyle(fontSize: 10, height: 0.3),
-                                                            border: InputBorder.none,
-                                                            hintText: 'Hãy nhập bình luận của bạn',
-                                                            contentPadding:
-                                                                EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                          );
-                                        },
-                                        context: context);
+        barrierColor: AppColors.colorDarkBackground,
+        isDismissible: false,
+        isScrollControlled: true,
+        enableDrag: true,
+        backgroundColor: AppColors.colorDarkBackground,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: kProgressIndicatorTextField,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                height: Get.height * 0.6,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Đánh giá sách",
+                            style:
+                                AppStyles.styleAppBarTitle.copyWith(color: Colors.black, fontWeight: FontWeight.w800),
+                          ),
+                          // SizedBox(
+                          //   width: 50,
+                          // ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Icon(
+                                  Icons.close,
+                                  size: 30,
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Divider(
+                        color: Colors.white,
+                        thickness: 2,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Text(
+                        "Vui lòng đánh giá và bình luận sách",
+                        style: AppStyles.styleAppBarTitle.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Center(
+                      child: RatingBar(
+                        initialRating: controller.bookOverView.value.rate?.value ?? 0.0,
+                        itemSize: 50,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                        ratingWidget: RatingWidget(
+                          full: Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          half: Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          empty: Icon(
+                            Icons.star,
+                            color: Colors.black12,
+                          ),
+                        ),
+                       
+                        onRatingUpdate: (rating) {
+                          controller.updateRating(rating);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 30.0),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+                          color: const Color(0xffFAFAFA),
+                        ),
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 3,
+                          maxLength: 200,
+                          onChanged: (value) => {
+                            controller.updateComment(value)
+                          },
+                          decoration: const InputDecoration(
+                            errorStyle: TextStyle(fontSize: 10, height: 0.3),
+                            border: InputBorder.none,
+                            hintText: 'Hãy nhập bình luận của bạn',
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        controller.submitComment();
+                      },
+                      child: Container(
+                          //  height: 45,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: kProgressIndicator,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                'Đánh giá',
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 22),
+                              ),
+                            ),
+                          )),
+                    )
+                  ],
+                )),
+          );
+        },
+        context: context);
   }
 
   Padding CommentTab() {

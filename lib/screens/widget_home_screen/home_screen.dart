@@ -7,6 +7,7 @@ import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
 import '../../widgets/book_rating.dart';
@@ -24,14 +25,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    List<String> assetImage = [
-      "assets/images/magic_book.jpg",
-      "assets/images/magic_book.jpg",
-      "assets/images/magic_book.jpg",
-      "assets/images/magic_book.jpg",
-      "assets/images/magic_book.jpg",
-      "assets/images/magic_book.jpg",
-    ];
+    List<ImagePath> listImage = [];
+    listImage.add(ImagePath(
+        url: 'https://daibieunhandan.vn/van-hoa/Day-van-kieu-My-i253103/', imgPath: 'assets/images/3png.png'));
+    listImage.add(ImagePath(
+        imgPath: 'assets/images/magic_book.jpg', url: 'https://daibieunhandan.vn/van-hoa/Day-van-kieu-My-i253103/'));
+    listImage.add(ImagePath(
+        imgPath: 'assets/images/2.jpg',
+        url: 'https://sachhay24h.com/nhung-truyen-co-tich-ve-tinh-ban-hay-va-y-nghia-nhat-a989.html'));
+    listImage.add(ImagePath(
+        imgPath: 'assets/images/4.jpg',
+        url:
+            'https://www.ybox.vn/vien-sach-bookademy/review-sach-ban-dat-gia-bao-nhieu-de-tro-thanh-mot-co-gai-hanh-phuc-5cdcbab7824c197ab7b738f9'));
+    listImage.add(
+        ImagePath(imgPath: 'assets/images/6.jpg', url: 'https://revisach.com/khi-chat-bao-nhieu-hanh-phuc-bay-nhieu/'));
+    listImage.add(
+        ImagePath(imgPath: 'assets/images/van-mau-tong-quan-van-hoc-viet-nam.jpg', url: 'https://hoctotnguvan.vn/van-10/van-mau-10/tong-quan-ve-van-hoc-viet-nam.html'));
 
     return RefreshIndicator(
       color: kProgressIndicator,
@@ -60,9 +69,12 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Obx(
-                        () => SearchHomeScreen(name: controller.userInfor.value.full_name, onPressed: (){
-                           Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);
-                        },),
+                        () => SearchHomeScreen(
+                          name: controller.userInfor.value.full_name,
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 24.0, right: 24, bottom: 15),
@@ -73,18 +85,23 @@ class HomeScreen extends StatelessWidget {
                               height: 200,
                               child: PageView.builder(
                                 controller: pageController,
-                                itemCount: assetImage.length,
+                                itemCount: listImage.length,
                                 itemBuilder: (_, index) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.grey.shade300,
-                                    ),
-                                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      openBrowerURL(url: listImage[index].url, inApp: true);
+                                    },
                                     child: Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                                      height: 280,
-                                      child: Image.asset(assetImage[index], fit: BoxFit.fill),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                      child: Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                                        height: 280,
+                                        child: Image.asset(listImage[index].imgPath, fit: BoxFit.fill),
+                                      ),
                                     ),
                                   );
                                 },
@@ -118,7 +135,6 @@ class HomeScreen extends StatelessWidget {
                             listBooks: controller.listBooks.value,
                             controller: controller,
                           )),
-                      // const SizedBox(height: 30),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Column(
@@ -151,10 +167,10 @@ class HomeScreen extends StatelessWidget {
                             Obx(() => (controller.listHistoryBook.value.length) > 0
                                 ? RichText(
                                     text: const TextSpan(
-                                      style: const TextStyle(fontSize: 25, color: Colors.black),
+                                      style: TextStyle(fontSize: 25, color: Colors.black),
                                       children: [
-                                        const TextSpan(text: "Tựa sách "),
-                                        const TextSpan(
+                                         TextSpan(text: "Tựa sách "),
+                                         TextSpan(
                                           text: "đang đọc ...",
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
@@ -182,4 +198,16 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future openBrowerURL({required String url, bool inApp = false}) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: inApp, forceWebView: inApp, enableJavaScript: true);
+    }
+  }
+}
+
+class ImagePath {
+  final String url;
+  final String imgPath;
+  ImagePath({required this.imgPath, required this.url});
 }

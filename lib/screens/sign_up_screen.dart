@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    const Text('Full name *'),
+                    const Text('Họ và tên *'),
                     const SizedBox(
                       height: 8,
                     ),
@@ -94,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                     const SizedBox(
                       height: 32,
                     ),
-                    const Text('Password *'),
+                    const Text('Mật khẩu *'),
                     const SizedBox(
                       height: 8,
                     ),
@@ -118,12 +118,7 @@ class SignUpScreen extends StatelessWidget {
                           contentPadding: EdgeInsets.symmetric(horizontal: 20),
                         ),
                       ),
-                    ),
-
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-
+                    ), 
                     const SizedBox(
                       height: 32,
                     ),

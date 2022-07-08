@@ -1,38 +1,90 @@
+import 'package:book_reading_mobile_app/core/util/alert_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
 import '../core/util/functions.dart';
+import '../data/rest_api/repositories_impl/sign_up_repository_impl.dart';
+import '../domain/entities/user.dart';
+import '../src/routes.dart';
 
-class EditProfileController extends GetxController{
-  List<String> gender = ['Nam', 'Nữ'];
+class EditProfileController extends GetxController {
+  final SignUpRepositoryImpl _signUpRepositoryImpl = SignUpRepositoryImpl();
+  List<String> gender = ['Nam', 'Nữ', 'Khác'];
   RxString genderSelected = "Nam".obs;
+  List<String> vipName = ['Vàng', 'Bạc', 'Đồng', 'Chưa đăng kí Vip'];
+  RxString vipIdSelected = 'Vàng'.obs;
   String name = "";
-  String email = "";
-  String dateOfBirth = "";
+  var userInfor = User().obs;
+  int genderId = 1;
+
   Rx<DateTime?> selectDate = Rx(DateTime.now());
 
-  void updateGender(String value){
-    genderSelected.value = value;
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      userInfor.value = Get.arguments;
+    }
   }
 
-  void updateName(String value){
+  RxString get updateVipValue {
+    if (userInfor.value.vip_id == 6) {
+      return 'Vàng'.obs;
+    } else if (userInfor.value.vip_id == 3) {
+      return 'Bạc'.obs;
+    } else if (userInfor.value.vip_id == 1) {
+      return 'Đồng'.obs;
+    }
+
+    return 'Chưa đăng kí Vip'.obs;
+  }
+
+  void updateGender(String value) {
+    genderSelected.value = value;
+    if (value == "Nam") {
+      genderId = 1;
+    } else if (value == "Nữ") {
+      genderId == 2;
+    } else {
+      genderId == 3;
+    }
+  }
+
+  void updateVip(String value) {
+    vipIdSelected.value = value;
+  }
+
+  void updateName(String value) {
     name = value;
   }
 
-  void updateEmail(String value){
-    email = value;
+  Future<void> selectBirthday({required BuildContext context}) async {
+    final date = await FunctionUtils.selectDate(context);
+    selectDate.value = date;
   }
 
-   Future<void> selectBirthday() async {
-    final date = await FunctionUtils.selectDate(Get.context!);
-    selectDate.value = date ?? DateTime.now();
+  void confirm(
+      {required String email,
+      required String fullName,
+      required DateTime dateOfBirth,
+      required String gender,
+      required int vipId}) async {
+    User _user = User(
+      email: userInfor.value.email,
+      full_name: fullName,
+      date_of_birth: dateOfBirth,
+      vip_id: userInfor.value.vip_id,
+      gender: genderId.toString(),
+    );
+    var response = await _signUpRepositoryImpl.updateInfo(user: _user);
+    if (response != null) {
+      AlertUtils.showError(
+          titleError: 'Success',
+          desc: 'Register successfully',
+          okButtonTitle: 'OK',
+          onOkButtonPressed: () async {
+            AlertUtils.showCustomDialog(desc: 'Thay đổi thông tin thành công');
+          });
+    } else {
+      AlertUtils.showError(titleError: 'Xảy ra lỗi', desc: 'Sửa đổi thông tin thất bại', okButtonTitle: 'Thử lại');
+    }
   }
-  void updateDateOfBirth(String value){
-    dateOfBirth = value;
-  }
-
-  void confirm(){
-
-  }
-
 }

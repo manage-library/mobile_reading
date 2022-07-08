@@ -1,5 +1,3 @@
-
-
 import 'package:book_reading_mobile_app/controller/edit_profile_controller.dart';
 import 'package:book_reading_mobile_app/controller/vip_update_controller.dart';
 import 'package:book_reading_mobile_app/main.dart';
@@ -35,10 +33,9 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.signUpScreen: (context) => SignUpScreen(),
   AppRoutes.menuProfile: (context) => MenuProfile(),
   AppRoutes.searchScreen: (context) => SearchScreen(),
-  AppRoutes.detailBook : (context) => DetailsScreen(),
-  AppRoutes.readingChapter : (context) => ReadingChapter(),
-  AppRoutes.bookOverView : (context) => BookOverView(),
-  AppRoutes.eidtProfile: (context) => EditProfilePage(EditProfileController()),
+  AppRoutes.detailBook: (context) => DetailsScreen(),
+  AppRoutes.readingChapter: (context) => ReadingChapter(),
+  AppRoutes.bookOverView: (context) => BookOverView(),
+  AppRoutes.eidtProfile: (context) => EditProfilePage(),
   AppRoutes.vipUpdate: (context) => VipUpdatePage(VipUpdateController()),
-
 };

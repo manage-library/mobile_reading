@@ -9,7 +9,7 @@ import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/style/app_colors.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -32,7 +32,6 @@ class SearchScreen extends StatelessWidget {
     FilterParam filterParam = FilterParam();
     TextEditingController bookName = TextEditingController(text: filterParam.bookName);
     TextEditingController authorName = TextEditingController(text: filterParam.authorName);
-    // final FilterParam currentFilterParamChanged = FilterParam.copy(filterParam);
     return GetBuilder(
       init: controller,
       global: false,
@@ -101,22 +100,32 @@ class SearchScreen extends StatelessWidget {
                       ),
                     ),
                     actions: [
-                      IconButton(
-                        icon: Icon(Icons.filter_hdr),
-                        onPressed: () async {
+                      GestureDetector(
+                        onTap: () async {
                           await Get.to(
                             FilterScreen(
                               filterParam: filterParam,
                             ),
                           );
+                          //call api here
+                          Map<String, String> apiParam = filterParam.buildParams();
+                          controller.getBookFilter(filterParam);
                         },
+                       
+                        child: SvgIconWidget(
+                          name: "assets/images/ic_filter.svg",
+                          size: 20.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                     const SizedBox(
+                        width: 16,
                       )
                     ],
                     floating: true,
                     snap: true,
                     pinned: true,
                     expandedHeight: navigationBarExpandedHeight,
-                    //    collapsedHeight: collapsedHeight,
                     elevation: 0,
                     centerTitle: true,
                     forceElevated: innerBoxIsScrolled,
@@ -124,28 +133,7 @@ class SearchScreen extends StatelessWidget {
                       controller: controller.tabController,
                       tabs: tabs.map((String name) => Tab(text: name)).toList(),
                     ),
-                    //       //   //controller: controlPassword,
-                    //       //   decoration: InputDecoration(
-                    //       //       hintStyle: const TextStyle(color: Colors.white),
-                    //       //       errorStyle: const TextStyle(fontSize: 10, height: 0.3),
-                    //       //       border: InputBorder.none,
-                    //       //       hintText: 'Tìm kiếm ...',
-                    //       //       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    //       //       suffixIcon: GestureDetector(
-                    //       //           onTap: () async {
-                    //       //             await Get.to(
-                    //       //               FilterScreen(
-                    //       //                 filterParam: filterParam,
-                    //       //               ),
-                    //       //             );
-                    //       //             //call api here
-                    //       //             Map<String, String> apiParam = filterParam.buildParams();
-                    //       //           },
-                    //       //           child: const Icon(Icons.filter_list_outlined, color: Colors.white70, size: 30,))),
-                    //       // ),
-                    //     ],
-                    //   ),
-                    // ),
+                    
                   );
                 })
               ];
@@ -156,10 +144,10 @@ class SearchScreen extends StatelessWidget {
               children: [
                 Obx(() => controller.listFilterBook.value.length != 0
                     ? ListBookSortByName()
-                    : Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
+                    : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
                 Obx(() => controller.listFilterBook.value.length != 0
                     ? ListBookSortByName()
-                    : Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
+                    : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
               ],
             ),
           ),

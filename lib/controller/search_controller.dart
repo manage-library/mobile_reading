@@ -1,5 +1,6 @@
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/detail_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
+import 'package:book_reading_mobile_app/screens/widget_home_screen/filter_screen.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
   RxBool showClearButton = false.obs;
   RxInt selectedIndex = 1.obs;
   late TabController tabController;
+  RxString searchText = ''.obs;
   static const List<Tab> myTabs = <Tab>[
     Tab(text: 'Tác giả'),
     Tab(text: 'Tác phẩm'),
@@ -49,6 +51,13 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
       } else {
         listFilterBook.value = await _detailBookImpl.getBooks(authorName: value);
       }
+      searchText.value = value.trim();
     });
+  }
+
+  void getBookFilter(FilterParam filterParam) async {
+    List<Book?> listBook = await _detailBookImpl.getBookFilter(filterParam: filterParam);
+    // FilterParam.copyField(authorName : searchText.value)..buildParams());
+    listFilterBook.value = listBook;
   }
 }

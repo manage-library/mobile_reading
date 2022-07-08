@@ -4,6 +4,7 @@ import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/enum.dart';
 import 'package:book_reading_mobile_app/domain/entities/history_chapter.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
+import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -69,8 +70,7 @@ class HomeController extends GetxController {
 
   void getBookByCategory(int? categoryId) async {
     if (categoryId != null) {
-      List<Book?> bookList =
-          await _homeRepositoryImpl.getBooks(categoryId: categoryId);
+      List<Book?> bookList = await _homeRepositoryImpl.getBooks(categoryId: categoryId);
       listBooks.value = bookList;
     } else {
       getBooks();
@@ -92,8 +92,21 @@ class HomeController extends GetxController {
     listHistoryBook.value = listHistoryBookValue;
   }
 
-  void goToSearchScreen() async {}
+  // void historyBook({HistoryBook? book}) async {
+  //   if (book?.chapter != null) {
+  //     final result = Get.toNamed(AppRoutes.detailBook, arguments: book?.book);
+  //     if(result == true) {
+  //       loadData();
+  //     }
+  //     Get.toNamed(AppRoutes.detailBook, arguments: book?.book);
+  //   } else {
+  //     print("chapter null");
+  //   }
+  // }
 
+  void goToSearchScreen() async {}
+  // final result = await Get.to(page)
+  // if (result)
   // void
 
   // RxBool togleSelect() {

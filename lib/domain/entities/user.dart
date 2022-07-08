@@ -4,31 +4,36 @@ part 'user.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class User {
-  final String? email;
-  final String? password;
-  final String? full_name;
-  final DateTime? date_of_birth;
-  final String? gender;
-  final String? avatar;
-  final int? vip_id;
-  final int? id;
+  String? email;
+  String? password;
+  String? full_name;
+  DateTime? date_of_birth;
+  String? gender;
+  String? avatar;
+  int? vip_id;
+  int? id;
 
-  User({
-    this.email,
-    this.password,
-    this.full_name,
-    this.date_of_birth,
-    this.gender = UserGender.female,
-    this.avatar,
-    this.vip_id = 0,
-    this.id
-  });
+  User(
+      {this.email,
+      this.password,
+      this.full_name,
+      this.date_of_birth,
+      this.gender = UserGender.female,
+      this.avatar,
+      this.vip_id = 0,
+      this.id});
 
   static final User fakeUser = User(
     email: "huetransky@gmail.com",
     password: "123456",
     gender: UserGender.female,
   );
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return super.toString() + "email : " + email! + "fullName : " + full_name!;
+  }
 
   User copyWith({
     String? email,

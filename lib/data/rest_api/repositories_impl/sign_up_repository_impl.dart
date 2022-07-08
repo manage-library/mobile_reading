@@ -21,4 +21,17 @@ class SignUpRepositoryImpl extends SignUpRepository {
     }
     return null;
   }
+  
+  @override
+  Future<int?> updateInfo({required User user}) async{
+     try {
+      var responseRegister = await _restClient.putMethod(ApiConfig.updateInfor, data: user.toJson());
+      print("response updateInfor ${responseRegister.data['statusCode']}");
+      return responseRegister.data['statusCode'];
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('apiResponse updateInfor .error: ${apiResponse.error.toString()}');
+    }
+    return null;
+  }
 }

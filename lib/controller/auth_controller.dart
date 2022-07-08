@@ -65,7 +65,7 @@ class AuthController extends GetxController {
     // Security? security = await _authRepositoryImpl.login(user: User.fakeUser);
     if (security != null) {
       _authenticationStorage.updateToken(security.accessToken!);
-      Get.to(HomeScreen());
+      Get.to(() => HomeScreen());
     } else {
       //   Get.snackbar('title', ' message');
       AlertUtils.showError(titleError: 'Error', desc: 'Email or password is incorrect', okButtonTitle: 'Try again');

@@ -108,8 +108,15 @@ class ListCategory extends StatelessWidget {
                     title: listBooks?[index]?.name ?? "Crushing & Influence",
                     auth: listBooks?[index]?.author?.full_name ?? "Gary Venchuk",
                     rating: listBooks?[index]?.rate?.value,
-                    pressDetails: () {
-                      Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
+                    pressDetails: () async{
+                       final result =
+                                      await Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
+                                  if (result == 'go back to home') {
+                                    controller?.loadData();
+                                  } else {
+                                    //Get.toNamed()
+                                  }
+                     // Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
                     },
                     pressRead: () {
                       Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));

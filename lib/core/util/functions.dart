@@ -27,4 +27,13 @@ class FunctionUtils {
 
     return _pickedDate;
   }
+
+    static String convertFullNameToAvatarText(String? name) {
+    final convertName = name?.trim().split(' ').map((e) => e.isNotEmpty ? e.substring(0, 1) : '').toList() ?? [];
+    if (convertName.length > 2) {
+      return '${convertName.first}${convertName.last}'.toUpperCase();
+    } else {
+      return convertName.join('').toUpperCase();
+    }
+  }
 }

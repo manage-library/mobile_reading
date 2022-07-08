@@ -80,7 +80,7 @@ class ReadingChapter extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Obx(() => Text(
-                                      controller.isButtonDown.value ? 'Font Size' : 'Setting',
+                                      controller.isButtonDown.value ? 'Cỡ chữ' : 'Cài đặt',
                                       style: TextStyle(color: Colors.black, fontSize: 18),
                                     )),
                                 GestureDetector(
@@ -109,14 +109,14 @@ class ReadingChapter extends StatelessWidget {
                                   inactiveColor: kProgressIndicatorTextField,
                                   thumbColor: Colors.white,
                                 )
-                              : SizedBox(
+                              : const SizedBox(
                                   height: 0,
                                 ),
                           controller.isButtonDown.value
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 10.0, right: 18, left: 18),
+                              ? const Padding(
+                                  padding: EdgeInsets.only(top: 10.0, right: 18, left: 18),
                                   child: Text(
-                                    'Go to',
+                                    'Chuyển sang',
                                     style: TextStyle(color: Colors.black, fontSize: 18),
                                   ),
                                 )
@@ -135,14 +135,14 @@ class ReadingChapter extends StatelessWidget {
                                         },
                                         child: Container(
                                           height: 50,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               color: kProgressIndicator,
                                               borderRadius: BorderRadius.all(Radius.circular(30))),
-                                          child: Center(
+                                          child: const Center(
                                             child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding: EdgeInsets.all(8.0),
                                               child: Text(
-                                                'Previous chapter',
+                                                'Chap trước',
                                                 style: TextStyle(color: Colors.white),
                                               ),
                                             ),
@@ -158,14 +158,14 @@ class ReadingChapter extends StatelessWidget {
                                         child: Container(
                                           height: 50,
                                           //    width: 150,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               color: kProgressIndicator,
                                               borderRadius: BorderRadius.all(Radius.circular(30))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
                                             child: Center(
                                                 child: Text(
-                                              'Next chapter',
+                                              'Chap tiếp theo',
                                               style: TextStyle(color: Colors.white),
                                             )),
                                           ),
@@ -185,11 +185,13 @@ class ReadingChapter extends StatelessWidget {
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  expandedHeight: 56,
+              
                   flexibleSpace: FlexibleSpaceBar(
                     title: Obx(() => Text(
                           controller.chapter.value.name ?? '',
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
                         )),
                     centerTitle: true,
                   ),
@@ -201,13 +203,6 @@ class ReadingChapter extends StatelessWidget {
               ];
             },
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-
-          //   },
-          //   backgroundColor: Colors.green,
-          //   child: const Icon(Icons.navigation),
-          // ),
         );
       },
     );

@@ -21,22 +21,6 @@ class DetailsScreen extends StatelessWidget {
         global: false,
         builder: (detailController) {
           return Scaffold(
-            // appBar: AppBar(
-            //   backgroundColor: kProgressIndicator,
-            //   leading: Builder(
-            //     builder: (BuildContext context) {
-            //       return IconButton(
-            //         icon: const Icon(Icons.arrow_back),
-            //         onPressed: () {
-            //           Get.back();
-            //         },
-            //         tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            //       );
-            //     },
-            //   ),
-            //   title: const Center(child: Text("Book Detail")),
-            //   actions: [],
-            // ),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,10 +30,8 @@ class DetailsScreen extends StatelessWidget {
                     children: <Widget>[
                       Container(
                           alignment: Alignment.topCenter,
-                          padding:
-                              EdgeInsets.only(top: size.height * .08, left: size.width * .1, right: size.width * .02),
                           height: size.height * .4,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage("assets/images/bg.png"),
                               fit: BoxFit.fitWidth,
@@ -59,10 +41,33 @@ class DetailsScreen extends StatelessWidget {
                               bottomRight: Radius.circular(50),
                             ),
                           ),
-                          child: Obx(() => BookInfo(
-                                size: size,
-                                book: controller.bookItem.value,
-                              ))),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: (){
+                                  Get.back(result: 'go back to home');
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      top: size.height * .04, left: size.width * .05, right: size.width * .02),
+                                  child: const Icon(
+                                    Icons.arrow_back,
+                                    size: 30,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Obx(() => Padding(
+                                    padding: EdgeInsets.only(
+                                        top: size.height * .01, left: size.width * .1, right: size.width * .02),
+                                    child: BookInfo(
+                                      size: size,
+                                      book: controller.bookItem.value,
+                                    ),
+                                  ))
+                            ],
+                          )),
                     ],
                   ),
                   Obx(() => ListView.builder(
@@ -80,7 +85,7 @@ class DetailsScreen extends StatelessWidget {
                           },
                           child: Card(
                             child: ClipRRect(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(32),
                                 bottomLeft: Radius.circular(32),
                               ),
@@ -90,7 +95,7 @@ class DetailsScreen extends StatelessWidget {
                                 subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
                                     ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
                                     : Text('---'),
-                                trailing: Icon(
+                                trailing: const Icon(
                                   Icons.arrow_forward_ios,
                                   size: 18,
                                 ),
@@ -100,19 +105,19 @@ class DetailsScreen extends StatelessWidget {
                         );
                       })),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.headline5,
-                            children: [
+                            children: const [
                               TextSpan(
-                                text: "You might also ",
+                                text: "Có thể bạn cũng ",
                               ),
                               TextSpan(
-                                text: "like….",
+                                text: "thích...",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -122,11 +127,8 @@ class DetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 40,
-                  // ),
                   Obx(() => Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: RelatedBook(
                           bookTitle: controller.bookWithCategory.value.name,
                           authorName: controller.bookWithCategory.value.author?.full_name,
@@ -137,7 +139,7 @@ class DetailsScreen extends StatelessWidget {
                           },
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                 ],
@@ -170,29 +172,29 @@ class RelatedBook extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-            padding: EdgeInsets.only(left: 24, top: 24, right: 150),
+            padding: const EdgeInsets.only(left: 24, top: 24, right: 150),
             height: 160,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(29),
-              color: Color(0xFFFFF8F9),
+              color: const Color(0xFFFFF8F9),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 RichText(
                   text: TextSpan(
-                    style: TextStyle(color: kBlackColor),
+                    style: const TextStyle(color: kBlackColor),
                     children: [
                       TextSpan(
                         text: bookTitle ?? "How To Win \nFriends & Influence \n",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                         ),
                       ),
                       TextSpan(
                         text: '\n${authorName}',
-                        style: TextStyle(color: kBlackColor, fontSize: 15),
+                        style: const TextStyle(color: kBlackColor, fontSize: 15),
                       ),
                     ],
                   ),
@@ -202,7 +204,7 @@ class RelatedBook extends StatelessWidget {
                     BookRating(
                       score: rate ?? 0.0,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: InkWell(
                         onTap: onPressed,
@@ -249,17 +251,17 @@ class ChapterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-      margin: EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      margin: const EdgeInsets.only(bottom: 16),
       width: size.width - 48,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(38.5),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
             blurRadius: 33,
-            color: Color(0xFFD3D3D3).withOpacity(.84),
+            color: const Color(0xFFD3D3D3).withOpacity(.84),
           ),
         ],
       ),
@@ -273,7 +275,7 @@ class ChapterCard extends StatelessWidget {
                 "Chapter $chapterNumber : $name \n",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: kBlackColor,
                   fontWeight: FontWeight.bold,
@@ -287,9 +289,9 @@ class ChapterCard extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_forward_ios,
               size: 18,
             ),
@@ -329,18 +331,6 @@ class BookInfo extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 28),
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: this.size.height * .005),
-                  //   alignment: Alignment.centerLeft,
-                  //   padding: EdgeInsets.only(top: 0),
-                  //   child: Text(
-                  //     "Influence",
-                  //     style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  //           fontSize: 25,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //   ),
-                  // ),
                   Row(
                     children: <Widget>[
                       Column(
@@ -353,7 +343,7 @@ class BookInfo extends StatelessWidget {
                               book?.description ??
                                   "When the earth was flat andeveryone wanted to win the gameof the best and people and winning with an A game with all the things you have.",
                               maxLines: 5,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 10,
                                 color: kLightBlackColor,
                               ),
@@ -361,15 +351,17 @@ class BookInfo extends StatelessWidget {
                           ),
                           Container(
                             margin: EdgeInsets.only(top: this.size.height * .015),
-                            padding: EdgeInsets.only(left: 10, right: 10),
+                            padding: const EdgeInsets.only(left: 10, right: 10),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: FlatButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Read",
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.bookOverView, arguments: book);
+                              },
+                              child: const Text(
+                                "Thêm",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -380,7 +372,7 @@ class BookInfo extends StatelessWidget {
                         children: <Widget>[
                           IconButton(
                             icon: book?.isLike == 0
-                                ? Icon(
+                                ? const Icon(
                                     Icons.favorite_border,
                                     size: 20,
                                     color: Colors.grey,

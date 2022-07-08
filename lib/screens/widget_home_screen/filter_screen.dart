@@ -1,3 +1,4 @@
+import 'package:book_reading_mobile_app/controller/search_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class FilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController bookName = TextEditingController(text: filterParam.bookName);
     TextEditingController authorName = TextEditingController(text: filterParam.authorName);
+    final SearchController controller = Get.put(SearchController());
     final FilterParam currentFilterParamChanged = FilterParam.copy(filterParam);
 
     return Scaffold(
@@ -305,9 +307,9 @@ extension FilterSortTypeParsingEx on FilterSortType {
       case FilterSortType.empty:
         return '';
       case FilterSortType.asc:
-        return 'asc';
+        return 'ASC';
       case FilterSortType.desc:
-        return 'desc';
+        return 'DESC';
     }
   }
 
@@ -335,10 +337,10 @@ extension FilterSortTypeParsingEx on FilterSortType {
 }
 
 class FilterParam {
-  String bookName;
-  String authorName;
-  int categoryId;
-  bool isVip;
+  String? bookName;
+  String? authorName;
+  int? categoryId;
+  bool? isVip;
   FilterReleaseStatus releaseStatus;
   FilterSortBy sortBy;
   FilterSortType sortType;
@@ -361,6 +363,20 @@ class FilterParam {
         sortBy = param.sortBy,
         sortType = param.sortType;
 
+  FilterParam.copyField({String? bookName, String? authorName,  int? categoryId,
+  bool? isVip,
+  FilterReleaseStatus? releaseStatus,
+  FilterSortBy? sortBy,
+  FilterSortType? sortType}) 
+        :  bookName = bookName,
+        authorName = authorName,
+        categoryId = categoryId,
+        isVip = isVip,
+        releaseStatus = releaseStatus ?? FilterReleaseStatus.empty,
+        sortBy = sortBy ?? FilterSortBy.empty,
+        sortType = sortType ?? FilterSortType.empty;
+
+
   void copyFilterParam(FilterParam param) {
     bookName = param.bookName;
     authorName = param.authorName;
@@ -372,14 +388,27 @@ class FilterParam {
   }
 
   Map<String, String> buildParams() {
-    return {
-      'bookName': bookName,
-      'authorName': authorName,
-      'categoryId': categoryId.toString(),
-      'isVip': isVip.toString(),
-      'releaseStatus': releaseStatus.parseParam(),
-      'sortBy': sortBy.parseParam(),
-      'sortType': sortType.parseParam()
-    };
+    Map<String, String> result = {};
+
+    if (bookName != '') {
+      result['bookName'] = bookName!;
+    }
+    if (authorName != '') {
+      result['authorName'] = authorName!;
+    }
+    if (isVip.toString() != '') {
+      result['isVip'] = isVip.toString();
+    }
+    if (releaseStatus != FilterReleaseStatus.empty) {
+      result['releaseStatus'] = releaseStatus.parseParam();
+    }
+    if (sortBy != FilterSortBy.empty) {
+      result['sortBy'] = sortBy.parseParam();
+    }
+    if (sortType !=  FilterSortType.empty) {
+      result['sortType'] = sortType.parseParam();
+    }
+
+    return result;
   }
 }

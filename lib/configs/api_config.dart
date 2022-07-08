@@ -10,6 +10,7 @@ class ApiConfig {
   ///Users
   static const String getInfoUser = '/users/profile';
   static const String getListUser = '/users';
+  static const String updateInfor = '/users';
   static const String changePassword = '/users/change-password';
 
   ///Books
@@ -26,7 +27,7 @@ class ApiConfig {
 
   ///Comment
   static const String getComment = '/books/%s/comments';
-  static const String addNewComment = '/comments';
+  static const String addNewComment = '/books/%s/rate';
   static const String changeCommentById = '/comments/';
   static const String deleteCommentById = '/comments/';
 
