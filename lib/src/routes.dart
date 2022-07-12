@@ -37,5 +37,5 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.readingChapter: (context) => ReadingChapter(),
   AppRoutes.bookOverView: (context) => BookOverView(),
   AppRoutes.eidtProfile: (context) => EditProfilePage(),
-  AppRoutes.vipUpdate: (context) => VipUpdatePage(VipUpdateController()),
+  AppRoutes.vipUpdate: (context) => VipUpdatePage(),
 };

@@ -74,7 +74,7 @@ class ContinueListReading extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         text: TextSpan(
                                           text: controller?.listHistoryBook.value.elementAt(index)?.book?.name ??
-                                              "tên tác phẩm",
+                                              "Tác phẩm ---",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
@@ -83,7 +83,7 @@ class ContinueListReading extends StatelessWidget {
                                       ),
                                       Text(
                                         controller?.listHistoryBook.value.elementAt(index)?.book?.author_description ??
-                                            "tên tác giả",
+                                            "Tác giả ---",
                                         style: const TextStyle(
                                           color: kLightBlackColor,
                                         ),

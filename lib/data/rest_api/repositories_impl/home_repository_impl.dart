@@ -5,6 +5,8 @@ import 'package:book_reading_mobile_app/data/rest_api/datasources/rest_client.da
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
+import 'package:book_reading_mobile_app/favourite_logic/set_favourite_model.dart';
+import 'package:get/get.dart';
 import 'package:sprintf/sprintf.dart';
 
 import '../../../domain/entities/history_chapter.dart';
@@ -14,10 +16,10 @@ abstract class HomeRepository {
   Future<List<Category?>> getCategory();
   Future<List<User?>> getListAuthor();
   Future<Book?> getBookById({String? id});
- Future<List<HistoryBook?>> getHistory();
+  Future<List<HistoryBook?>> getHistory();
 }
 
-class HomeRepositoryImpl extends HomeRepository {
+class HomeRepositoryImpl  with RepositoryMixin implements HomeRepository{
   final RestClient _restClient = RestClient();
   @override
   Future<User?> getUserInfo() async {
@@ -65,6 +67,9 @@ class HomeRepositoryImpl extends HomeRepository {
       }
       if (categoryId != null && isVip != null) {
         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId, 'isVip': isVip});
+      }
+       if (categoryId != null) {
+        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});
       }
       print("responseBookList : $response");
       return ApiResponse.withResult(
@@ -128,5 +133,36 @@ class HomeRepositoryImpl extends HomeRepository {
       print('apiResponseHistory.error : ${apiResponse.error}');
     }
     return [];
+  }
+  
+  @override
+  Stream<int?> setFavourite(FavouriteModel favouriteModel, int id) async* {
+    final response = await _restClient.postMethod(sprintf(ApiConfig.setFavourite, [id]),data: favouriteModel.toJson());
+    yield extractDataOrError(fromResponse: response.data['statusCode']);
+    // try {
+    //   var 
+    //   print("response setFavourite ${response.data['statusCode']}");
+    //   yield response.data['statusCode'];
+    // } catch (error) {
+    //    ApiResponse apiResponse = ApiResponse.withError(error);
+    //   print('apiResponse setFavourite.error: ${apiResponse.error.toString()}');
+    // }
+    // return null;
+  }
+}
+class AppError {
+  String? message;
+  String? status;
+  dynamic body;
+  AppError(this.message, {this.status, this.body});
+}
+
+mixin RepositoryMixin {
+  int extractDataOrError<T>({required int fromResponse}) {
+    if (fromResponse != 201) {
+      throw AppError('fromResponse.statusText', status: 'Error', body: 'fromResponse.body');
+    } else {
+      return 201;
+    }
   }
 }

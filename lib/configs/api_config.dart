@@ -29,11 +29,15 @@ class ApiConfig {
   static const String getComment = '/books/%s/comments';
   static const String addNewComment = '/books/%s/rate';
   static const String changeCommentById = '/comments/';
-  static const String deleteCommentById = '/comments/';
+  static const String deleteCommentById = '/books/%s/comments/%s';
 
   /// Category
   static const String getCategory = '/categories';
 
   //// History
   static const String getHistory = '/histories';
+
+  /// Like and favorite
+   static const String setFavourite = '/books/%s/like';
+  
 }

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../domain/entities/category.dart';
+
 class SearchController extends GetxController with GetSingleTickerProviderStateMixin {
   var listFilterBook = <Book?>[].obs;
   final _debounceTime = 800;
@@ -20,12 +22,17 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
     Tab(text: 'Tác giả'),
     Tab(text: 'Tác phẩm'),
   ];
+  RxList<Category?> bookCategory = RxList();
+  RxMap<String, int> listReadingBook = RxMap();
+
+
 
   @override
   void onInit() {
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
     getBookInCategory();
+    // getCategory();
     tabController.addListener(() {
       selectedIndex.value = tabController.index;
     });
@@ -40,6 +47,8 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
   void loadData() {
     getBookInCategory();
   }
+
+  
 
   void debounceCallBack(String value) {
     if (_debounce.isActive) {
@@ -59,5 +68,23 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
     List<Book?> listBook = await _detailBookImpl.getBookFilter(filterParam: filterParam);
     // FilterParam.copyField(authorName : searchText.value)..buildParams());
     listFilterBook.value = listBook;
+  }
+
+    void getCategory() async {
+    List<Category?> category = await _detailBookImpl.getCategory();
+    bookCategory.value = category;
+    
+    for(int i = 0; i< category.length ; i++) {
+       listReadingBook[category[i]!.name ?? ''] = category[i]?.id ?? 1;
+    }
+  }
+
+  Rx<String?>? get getCategorySelected {
+    return 'Văn học Việt Nam'.obs;
+  }
+
+  void updateCategory(Category? category){
+    getCategorySelected?.value = category?.name;
+    print(category?.id);
   }
 }

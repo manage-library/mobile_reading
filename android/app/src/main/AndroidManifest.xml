@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.book_reading_mobile_app">
     <uses-permission android:name="android.permission.INTERNET"/>
-   <application
+    <application
         android:label="Book Reading App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

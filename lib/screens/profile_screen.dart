@@ -97,7 +97,12 @@ class MenuProfile extends StatelessWidget {
                 height: 550,
                 child: Column(
                   children: [
-                    ProfileItem(title: 'Sửa thông tin', onClick: () => Get.toNamed(AppRoutes.eidtProfile, arguments: controller.userInfor.value)),
+                    ProfileItem(title: 'Sửa thông tin', onClick: () { 
+                      final result = Get.toNamed(AppRoutes.eidtProfile, arguments: controller.userInfor.value);
+                      if(result == 'change profile') {
+                        controller.loadData();
+                      }
+                      }),
                     const SizedBox(
                       height: 16,
                     ),

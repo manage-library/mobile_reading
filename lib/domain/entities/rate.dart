@@ -3,10 +3,10 @@ part 'rate.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class BookRatingModel {
-  final double? value;
+  final double? rate;
   final String? comment;
-  BookRatingModel({this.comment, this.value});
-    factory BookRatingModel.fromJson(Map<String, dynamic> json) => _$BookRatingModelFromJson(json);
-
+  final String? content;
+  BookRatingModel({this.content, this.comment, this.rate});
+  factory BookRatingModel.fromJson(Map<String, dynamic> json) => _$BookRatingModelFromJson(json);
   Map<String, dynamic> toJson() => _$BookRatingModelToJson(this);
 }

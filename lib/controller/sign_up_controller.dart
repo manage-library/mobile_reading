@@ -11,6 +11,7 @@ class SignUpController extends GetxController {
   final email = "".obs;
   final password = "".obs;
   final fullName = "".obs;
+  RxBool isObscureText = true.obs;
 
   void updateFullName(String? value) {
     fullName.value = value?.trim() ?? '';
@@ -75,5 +76,9 @@ class SignUpController extends GetxController {
     } else {
       AlertUtils.showError(titleError: 'Error', desc: 'Resgister failed', okButtonTitle: 'Try again');
     }
+  }
+
+  void setObsecureText() {
+    isObscureText.value = !isObscureText.value;
   }
 }

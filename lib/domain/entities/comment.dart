@@ -9,10 +9,13 @@ class Comment {
   final String? createdAt;
   final int? id;
   final User? user;
+  final int? user_id;
   final int? book_id;
   final String? updatedAt;
+  final List? raw;
+  final int? affected;
 
-  Comment({this.content, this.createdAt, this.book_id, this.id, this.user, this.updatedAt});
+  Comment({this.user_id, this.raw, this.affected, this.content, this.createdAt, this.book_id, this.id, this.user, this.updatedAt});
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 

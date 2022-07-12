@@ -3,19 +3,11 @@ import 'package:book_reading_mobile_app/screens/widget_home_screen/home_continue
 import 'package:book_reading_mobile_app/screens/widget_home_screen/home_list_authors.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/lhome_list_category.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
-import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../constants.dart';
-import '../../widgets/book_rating.dart';
-import '../../widgets/reading_card_list.dart';
-import '../../widgets/two_side_rounded_button.dart';
-import '../detail_book_screen/details_screen.dart';
 import 'package:get/get.dart';
-
 import 'home_book_item.dart';
 import 'home_search_text_field.dart';
 
@@ -158,10 +150,8 @@ class HomeScreen extends StatelessWidget {
                                 description: controller.bestOfBook.value.description,
                                 imageUrl: controller.bestOfBook.value.image,
                                 authorName: controller.bestOfBook.value.author?.full_name,
-                                rate: controller.bestOfBook.value.rate?.value,
-                                pressDetails: () {
-                                  Get.toNamed(AppRoutes.detailBook, arguments: controller.bestOfBook.value);
-                                },
+                                rate: controller.bestOfBook.value.rate?.rate,
+                                pressDetails: () => controller.goToDetailScreen(controller.bestOfBook.value),
                               ),
                             ),
                             Obx(() => (controller.listHistoryBook.value.length) > 0

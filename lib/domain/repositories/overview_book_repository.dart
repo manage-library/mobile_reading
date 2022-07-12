@@ -3,5 +3,7 @@ import 'package:book_reading_mobile_app/domain/entities/rate.dart';
 
 abstract class BookOverViewRepository {
   Future<List<Comment?>> getComment(int bookId);
-  Future<int?> addNewComment(int bookId, BookRatingModel rate);
+  Future<int?> addRate(int bookId, BookRatingModel rate);
+  Future<Comment?> addComment(int bookId, BookRatingModel rate);
+   Future<Comment?> deleteComment(int bookId, int commentId);
 }

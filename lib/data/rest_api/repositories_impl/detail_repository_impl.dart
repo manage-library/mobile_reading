@@ -3,13 +3,18 @@ import 'package:book_reading_mobile_app/data/rest_api/datasources/models/api_res
 import 'package:book_reading_mobile_app/data/rest_api/datasources/models/api_result.dart';
 import 'package:book_reading_mobile_app/data/rest_api/datasources/rest_client.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
+import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/chapter.dart';
 import 'package:book_reading_mobile_app/domain/repositories/detail_book_repository.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/filter_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:sprintf/sprintf.dart';
 
-class DetailBookImpl extends DetailBookRepository {
+import '../../../favourite_logic/set_favourite_model.dart';
+import 'home_repository_impl.dart';
+
+class DetailBookImpl with RepositoryMixin implements DetailBookRepository {
   final RestClient _restClient = RestClient();
   @override
   Future<Book?> getBookById({String? id}) async {
@@ -98,6 +103,29 @@ class DetailBookImpl extends DetailBookRepository {
     } catch (error) {
       ApiResponse apiResponse = ApiResponse.withError(error);
       print('apiResponseBookList.error : ${apiResponse.error}');
+    }
+    return [];
+  }
+
+    @override
+  Stream<int?> setFavourite(FavouriteModel favouriteModel, int id) async* {
+    final response = await _restClient.postMethod(sprintf(ApiConfig.setFavourite, [id]),data: favouriteModel.toJson());
+    print('response post favourite ${response.data['statusCode']}');
+    yield extractDataOrError(fromResponse: response.data['statusCode']);
+  }
+
+ @override
+  Future<List<Category?>> getCategory() async {
+    try {
+      var response = await _restClient.getMethod(ApiConfig.getCategory, params: {});
+      print("responseCategory : $response");
+      return ApiResponse.withResult(
+          response: response.data,
+          resultConverter: (json) =>
+              ApiResultList<Category>(json: json, jsonConverter: (json) => Category.fromJson(json))).result?.data;
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('apiResponseCategory.error : ${apiResponse.error}');
     }
     return [];
   }

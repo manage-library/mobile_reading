@@ -7,6 +7,9 @@ part of 'comment.dart';
 // **************************************************************************
 
 Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
+      user_id: json['user_id'] as int?,
+      raw: json['raw'] as List<dynamic>?,
+      affected: json['affected'] as int?,
       content: json['content'] as String?,
       createdAt: json['createdAt'] as String?,
       book_id: json['book_id'] as int?,
@@ -22,6 +25,9 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
       'id': instance.id,
       'user': instance.user?.toJson(),
+      'user_id': instance.user_id,
       'book_id': instance.book_id,
       'updatedAt': instance.updatedAt,
+      'raw': instance.raw,
+      'affected': instance.affected,
     };

@@ -6,13 +6,8 @@ import 'package:book_reading_mobile_app/core/util/date_time.dart';
 import 'package:book_reading_mobile_app/core/util/file_utils.dart';
 import 'package:book_reading_mobile_app/style/app_colors.dart';
 import 'package:book_reading_mobile_app/style/app_style.dart';
-import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-
-import '../widgets/custom_avatar.dart';
 
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({Key? key}) : super(key: key);
@@ -25,7 +20,7 @@ class EditProfilePage extends StatelessWidget {
     return GetBuilder(
         init: this.controller,
         global: false,
-        builder: (GetxController profileController) {
+        builder: (profileController) {
           return Scaffold(
             backgroundColor: kProgressIndicatorTextField,
             appBar: AppBar(
@@ -33,7 +28,7 @@ class EditProfilePage extends StatelessWidget {
               backgroundColor: Colors.transparent,
               leading: GestureDetector(
                 onTap: () {
-                  Get.back();
+                final result =  Get.back(result: 'change profile');
                 },
                 child: const Icon(
                   Icons.arrow_back,
@@ -56,21 +51,21 @@ class EditProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        SizedBox(
-                          height: 200,
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: CustomAvatar(
-                              sizeAvatar: 120.w,
-                              showCameraIcon: true,
-                              assetWidget: SvgIconWidget(name: 'assets/images/ic_camera.svg'),
-                              //  file: controller.selectFingerprintFile.value,
-                              onTap: () async {
-                                final File? photo = await FileUtils.chooseImage();
-                              },
-                            ),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   height: 200,
+                        //   child: Container(
+                        //     alignment: Alignment.center,
+                        //     child: CustomAvatar(
+                        //       sizeAvatar: 120.w,
+                        //       showCameraIcon: true,
+                        //       assetWidget: SvgIconWidget(name: 'assets/images/ic_camera.svg'),
+                        //       //  file: controller.selectFingerprintFile.value,
+                        //       onTap: () async {
+                        //         final File? photo = await FileUtils.chooseImage();
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                         const Text('Họ và tên '),
                         const SizedBox(
                           height: 8,
@@ -208,7 +203,7 @@ class EditProfilePage extends StatelessWidget {
                               dateOfBirth: controller.selectDate.value!,
                               email: controller.userInfor.value.email ?? '',
                               fullName: controlFullName.text,
-                              gender: controller.genderSelected.value,
+                              gender: controller.genderId,
                               vipId: controller.userInfor.value.vip_id ?? 0),
                           child: Text("Xác nhận",
                               style: AppStyles.styleTextTitleMethod.copyWith(color: AppColors.colorTextTitleMethod)),

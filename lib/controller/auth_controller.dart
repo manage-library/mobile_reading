@@ -15,6 +15,7 @@ class AuthController extends GetxController {
   final isDisabled = true.obs;
   final email = "".obs;
   final password = "".obs;
+  RxBool isObscureText = true.obs;
 
   void updateEmail(String? value) {
     email.value = value?.trim() ?? '';
@@ -70,6 +71,10 @@ class AuthController extends GetxController {
       //   Get.snackbar('title', ' message');
       AlertUtils.showError(titleError: 'Error', desc: 'Email or password is incorrect', okButtonTitle: 'Try again');
     }
+  }
+
+  void setObsecureText() {
+    isObscureText.value = !isObscureText.value;
   }
 }
 

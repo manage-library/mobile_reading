@@ -8,7 +8,7 @@ class User {
   String? password;
   String? full_name;
   DateTime? date_of_birth;
-  String? gender;
+  int? gender;
   String? avatar;
   int? vip_id;
   int? id;
@@ -38,7 +38,7 @@ class User {
   User copyWith({
     String? email,
     String? password,
-    String? gender,
+    int? gender,
     String? fullName,
     DateTime? dateOfBirth,
     String? avatar,
@@ -60,7 +60,7 @@ class User {
 }
 
 class UserGender {
-  static const String male = '1';
-  static const String female = '2';
-  static const String other = '3';
+  static const int male = 1;
+  static const int female = 2;
+  static const int other = 3;
 }

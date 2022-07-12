@@ -73,7 +73,7 @@ class ListCategory extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(const Radius.circular(40)),
+                          borderRadius: const BorderRadius.all( Radius.circular(40)),
                           color:
                               (categoryName?.elementAt(index)?.isSelected ?? false) ? kProgressIndicator : Colors.white,
                           border: Border.all(color: kProgressIndicator)),
@@ -103,21 +103,8 @@ class ListCategory extends StatelessWidget {
               padding: const EdgeInsets.only(right: 30),
               itemBuilder: (BuildContext context, int index) {
                 return ReadingListCard(
-                    isFavorite: controller?.listBooks.elementAt(index)?.isLike == 1 ? true : false,
-                    image: listBooks?[index]?.image ?? "assets/images/book-1.png",
-                    title: listBooks?[index]?.name ?? "Crushing & Influence",
-                    auth: listBooks?[index]?.author?.full_name ?? "Gary Venchuk",
-                    rating: listBooks?[index]?.rate?.value,
-                    pressDetails: () async{
-                       final result =
-                                      await Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
-                                  if (result == 'go back to home') {
-                                    controller?.loadData();
-                                  } else {
-                                    //Get.toNamed()
-                                  }
-                     // Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
-                    },
+                   book: listBooks?[index] ?? Book(),
+                    pressDetails:  () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
                     pressRead: () {
                       Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
                     });

@@ -8,12 +8,14 @@ part of 'rate.dart';
 
 BookRatingModel _$BookRatingModelFromJson(Map<String, dynamic> json) =>
     BookRatingModel(
+      content: json['content'] as String?,
       comment: json['comment'] as String?,
-      value: (json['value'] as num?)?.toDouble(),
+      rate: (json['rate'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$BookRatingModelToJson(BookRatingModel instance) =>
     <String, dynamic>{
-      'value': instance.value,
-      'count': instance.comment,
+      'rate': instance.rate,
+      'comment': instance.comment,
+      'content': instance.content,
     };

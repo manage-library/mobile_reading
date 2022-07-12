@@ -1,13 +1,17 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:book_reading_mobile_app/controller/base_controller.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/home_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/enum.dart';
 import 'package:book_reading_mobile_app/domain/entities/history_chapter.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
+import 'package:book_reading_mobile_app/favourite_logic/stream_subcrptions_mixins.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class HomeController extends BaseController with StreamSubscriptionsMixin{
   final HomeRepositoryImpl _homeRepositoryImpl = HomeRepositoryImpl();
   var userInfor = User().obs;
   RxList<Category?> bookCategory = RxList();
@@ -15,9 +19,11 @@ class HomeController extends GetxController {
   RxList<User?> authorList = RxList();
   RxList<HistoryBook?> listHistoryBook = RxList();
   var bestOfBook = Book().obs;
-  Rx<bool> isSelect = false.obs;
+  var isSelect = false.obs;
   var selectedCategoryId = 0.obs;
   var bookById = Book().obs;
+   int currentSelectedIndex = 0;
+
 
   @override
   void onInit() {
@@ -29,6 +35,8 @@ class HomeController extends GetxController {
     super.onInit();
     getHistory();
   }
+
+ 
 
   void loadData() {
     getInfoUser();
@@ -42,6 +50,14 @@ class HomeController extends GetxController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    bag.dispose;
+    super.onClose();
+
   }
 
   void getInfoUser() async {
@@ -92,25 +108,25 @@ class HomeController extends GetxController {
     listHistoryBook.value = listHistoryBookValue;
   }
 
-  // void historyBook({HistoryBook? book}) async {
-  //   if (book?.chapter != null) {
-  //     final result = Get.toNamed(AppRoutes.detailBook, arguments: book?.book);
-  //     if(result == true) {
-  //       loadData();
-  //     }
-  //     Get.toNamed(AppRoutes.detailBook, arguments: book?.book);
-  //   } else {
-  //     print("chapter null");
-  //   }
-  // }
+  void goToDetailScreen(Book book) async {
+    currentSelectedIndex = book.id ?? 1;
+                       final result =
+                                      await Get.toNamed(AppRoutes.detailBook, arguments: book);
+                                  if (result == 'go back to home') {
+                                    loadData();
+                                  } else {
+                                    //Get.toNamed()
+                                  }
+                     // Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
+                    }
 
-  void goToSearchScreen() async {}
-  // final result = await Get.to(page)
-  // if (result)
-  // void
-
-  // RxBool togleSelect() {
-  //   print(isSelect.value);
-  //   return (isSelect.value = !isSelect.value).obs;
-  // }
+   //call back to handle request reload state listview from another page
+  void handleRequestReloadState(bool favState) {
+    if(favState) {
+      listBooks.elementAt(currentSelectedIndex)?.setFavourite();
+    } else {
+      listBooks.elementAt(currentSelectedIndex)?.unsetFavourite();
+    }
+    reloadListViewState.add(true);
+  }
 }

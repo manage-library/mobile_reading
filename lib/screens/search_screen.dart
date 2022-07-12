@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/controller/base_controller.dart';
 import 'package:book_reading_mobile_app/controller/search_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/screens/detail_book_screen/details_screen.dart';
 import 'package:book_reading_mobile_app/screens/widget_home_screen/filter_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
-import 'package:book_reading_mobile_app/style/app_colors.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
@@ -30,10 +30,8 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FilterParam filterParam = FilterParam();
-    TextEditingController bookName = TextEditingController(text: filterParam.bookName);
-    TextEditingController authorName = TextEditingController(text: filterParam.authorName);
     return GetBuilder(
-      init: controller,
+      init: this.controller,
       global: false,
       builder: (GetxController controllerSearch) {
         final List<String> tabs = <String>['Tác phẩm', 'Tác giả'];
@@ -70,7 +68,7 @@ class SearchScreen extends StatelessWidget {
                                   color: const Color.fromARGB(255, 247, 239, 239),
                                 ),
                                 child: TextField(
-                                  controller: bookName,
+                               //   controller: bookName,
                                   onChanged: (text) {
                                     text.isNotEmpty
                                         ? controller.showClearButton.value = true
@@ -171,17 +169,13 @@ class SearchScreen extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Center(
               child: ReadingListCard(
-                  isFavorite: controller.listFilterBook.elementAt(index)?.isLike == 1 ? true : false,
-                  image: controller.listFilterBook.elementAt(index)?.image ?? "assets/images/book-1.png",
-                  title: controller.listFilterBook.elementAt(index)?.name ?? "Crushing & Influence",
-                  auth: controller.listFilterBook.elementAt(index)?.author?.full_name ?? "Gary Venchuk",
-                  rating: controller.listFilterBook.elementAt(index)?.rate?.value,
+                 book: controller.listFilterBook.elementAt(index) ?? Book(),
                   pressDetails: () {
                     Get.toNamed(AppRoutes.detailBook, arguments: controller.listFilterBook.elementAt(index));
                   },
                   pressRead: () {
                     Get.toNamed(AppRoutes.bookOverView, arguments: controller.listFilterBook.elementAt(index));
-                  }),
+                  }, ),
             );
           },
         ),

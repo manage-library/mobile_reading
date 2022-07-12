@@ -43,7 +43,7 @@ class _AppCustomDialogState extends State<AppCustomDialog> {
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: Container(
-          decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(16.0)),
+          decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(16.0)),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -54,14 +54,14 @@ class _AppCustomDialogState extends State<AppCustomDialog> {
                     padding: EdgeInsets.only(top: 5, bottom: 15.0),
                     child: widget.isShowCloseButton && widget.type != DialogType.info
                         ? AppBar(
-                            backgroundColor: Colors.black38,
+                            backgroundColor: AppColors.transparent,
                             elevation: 0.0,
                             automaticallyImplyLeading: false,
                             title: Text(
                               widget.title ?? '',
                               textAlign: TextAlign.center,
                               textScaleFactor: 1.0,
-                              style: TextStyle(fontSize: 16, color: Colors.white),
+                              style: TextStyle(fontSize: 24, color: Colors.white),
                             ),
                             centerTitle: true,
                             actions: [

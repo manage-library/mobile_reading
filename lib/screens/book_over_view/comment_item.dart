@@ -9,7 +9,8 @@ class CommentItem extends StatelessWidget {
   String? time;
   String? comment;
   String? rate;
-  CommentItem({Key? key, this.comment, this.time, this.userName, this.rate}) : super(key: key);
+  VoidCallback deleteComment;
+  CommentItem({Key? key, this.comment, this.time, this.userName, this.rate, required this.deleteComment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,18 +74,13 @@ class CommentItem extends StatelessWidget {
                   width: 60,
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(45))),
                   child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                      size: 16,
+                    GestureDetector(
+                      onTap: deleteComment,
+                      child: Text(
+                        'Xóa',
+                        style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
                     ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    Text(
-                      rate ?? '5',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )
                   ]),
                 ),
               )

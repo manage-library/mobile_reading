@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../constants.dart';
+import '../../domain/entities/category.dart';
 import '../../style/app_colors.dart';
 
 class FilterScreen extends StatelessWidget {
@@ -13,8 +14,6 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController bookName = TextEditingController(text: filterParam.bookName);
-    TextEditingController authorName = TextEditingController(text: filterParam.authorName);
     final SearchController controller = Get.put(SearchController());
     final FilterParam currentFilterParamChanged = FilterParam.copy(filterParam);
 
@@ -44,6 +43,33 @@ class FilterScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              // const Text('Thể loại', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Container(
+              //     alignment: Alignment.center,
+              //     height: 50,
+              //     padding: const EdgeInsets.only(left: 20, right: 20),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(40),
+              //       border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+              //       color: const Color(0xffFAFAFA),
+              //     ),
+              //     child: DropdownButton(
+              //         value: controller.getCategorySelected?.value,
+              //         isExpanded: true,
+              //         underline: Container(),
+              //         items: controller.bookCategory.map<DropdownMenuItem<String>>((Category? value) {
+              //           return DropdownMenuItem<String>(
+              //             value: value!.id.toString(),
+              //             child: Text(value.name.toString()),
+              //           );
+              //         }).toList(),
+              //         onChanged: (value) => controller.updateCategory(value as Category))),
+              // const SizedBox(
+              //   height: 40,
+              // ),
               const Text('Trạng thái phát hành', style: TextStyle(color: AppColors.colorTextSubTitleClever)),
               const SizedBox(
                 height: 10,
@@ -363,19 +389,21 @@ class FilterParam {
         sortBy = param.sortBy,
         sortType = param.sortType;
 
-  FilterParam.copyField({String? bookName, String? authorName,  int? categoryId,
-  bool? isVip,
-  FilterReleaseStatus? releaseStatus,
-  FilterSortBy? sortBy,
-  FilterSortType? sortType}) 
-        :  bookName = bookName,
+  FilterParam.copyField(
+      {String? bookName,
+      String? authorName,
+      int? categoryId,
+      bool? isVip,
+      FilterReleaseStatus? releaseStatus,
+      FilterSortBy? sortBy,
+      FilterSortType? sortType})
+      : bookName = bookName,
         authorName = authorName,
         categoryId = categoryId,
         isVip = isVip,
         releaseStatus = releaseStatus ?? FilterReleaseStatus.empty,
         sortBy = sortBy ?? FilterSortBy.empty,
         sortType = sortType ?? FilterSortType.empty;
-
 
   void copyFilterParam(FilterParam param) {
     bookName = param.bookName;
@@ -396,6 +424,10 @@ class FilterParam {
     if (authorName != '') {
       result['authorName'] = authorName!;
     }
+
+    if (categoryId.toString() != null) {
+      result['categoryId'] = categoryId.toString();
+    }
     if (isVip.toString() != '') {
       result['isVip'] = isVip.toString();
     }
@@ -405,7 +437,7 @@ class FilterParam {
     if (sortBy != FilterSortBy.empty) {
       result['sortBy'] = sortBy.parseParam();
     }
-    if (sortType !=  FilterSortType.empty) {
+    if (sortType != FilterSortType.empty) {
       result['sortType'] = sortType.parseParam();
     }
 

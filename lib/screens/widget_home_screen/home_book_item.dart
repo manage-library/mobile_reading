@@ -45,7 +45,7 @@ class BookItems extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
                     child: const Text(
-                      "New York Time Best For 11th March 2020",
+                      "Việt Nam ngày -- tháng -- năm --",
                       style: TextStyle(
                         fontSize: 9,
                         color: kLightBlackColor,
@@ -67,12 +67,12 @@ class BookItems extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 10.0),
-                          child: BookRating(score: rate ?? 0.0),
+                          child: BookRating(score: rate ?? 4.9),
                         ),
                         Expanded(
                           child: Text(
                             description ?? 
-                            "When the earth was flat and everyone wanted to win the game of the best and people….",
+                            "Đây là một tác phẩm đặc biệt và xuất sắc, mang đến cho người đọc những cảm xúc thú vị….",
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -104,7 +104,7 @@ class BookItems extends StatelessWidget {
               height: 40,
               width: size.width * .3,
               child: TwoSideRoundedButton(
-                text: "Read",
+                text: "Đọc sách",
                 radious: 24,
                 press: pressDetails,
               ),

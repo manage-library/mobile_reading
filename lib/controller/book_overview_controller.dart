@@ -22,13 +22,16 @@ class BookOverViewController extends GetxController {
     getComment();
   }
 
+  void refreshData() {
+    getComment();
+  }
+
   void getComment() async {
     List<Comment?> listComment = await _bookOverViewImpl.getComment(bookOverView.value.id ?? 0);
     commentList.value = listComment;
   }
-  void postRateAndComment() {
-    
-  }
+
+  void postRateAndComment() {}
 
   void updateRating(double value) {
     star = value;
@@ -39,14 +42,39 @@ class BookOverViewController extends GetxController {
   }
 
   void submitComment() async {
-    BookRatingModel rate = BookRatingModel(comment: comment, value: star);
-    var response = _bookOverViewImpl.addNewComment(bookOverView.value.id!, rate);
-      if (response == 200) {
-      AlertUtils.showError(titleError: 'Thành công', desc: 'Cảm ơn bạn đã đánh giá !', okButtonTitle: 'Đồng ý', onOkButtonPressed : () async {
-          Get.back(result: 'comment');
-      }); 
+    BookRatingModel rate = BookRatingModel(comment: 'string', rate: star, content: 'string');
+    var response = await _bookOverViewImpl.addRate(bookOverView.value.id!, rate);
+    if (response != null) {
+      AlertUtils.showError(
+          titleError: 'Thành công',
+          desc: 'Cảm ơn bạn đã đánh giá !',
+          okButtonTitle: 'Đồng ý',
+          onOkButtonPressed: () async {
+            Get.back(result: 'comment');
+          });
     } else {
-      AlertUtils.showError(titleError: 'Lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
+      AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
     }
   }
+
+  void deleteComment(int? id) async {
+    Comment? deleteComment = await _bookOverViewImpl.deleteComment(bookOverView.value.id!, id!);
+    if (deleteComment != null) {
+      getComment();
+    }
   }
+
+  void submitCommentWithoutRate() async {
+    if (comment != null) {
+      BookRatingModel rate = BookRatingModel(comment: comment, rate: star, content: comment);
+      Comment? resultComment = await _bookOverViewImpl.addComment(bookOverView.value.id!, rate);
+      if (resultComment?.content != "") {
+        getComment();
+      } else {
+        AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
+      }
+    } else {
+      AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
+    }
+  }
+}

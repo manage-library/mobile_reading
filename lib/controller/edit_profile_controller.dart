@@ -23,7 +23,9 @@ class EditProfileController extends GetxController {
     if (Get.arguments != null) {
       userInfor.value = Get.arguments;
     }
+    genderSelected.value = (userInfor.value.gender == 1) ? 'Nam' : 'Nữ';
   }
+
 
   RxString get updateVipValue {
     if (userInfor.value.vip_id == 6) {
@@ -65,24 +67,24 @@ class EditProfileController extends GetxController {
       {required String email,
       required String fullName,
       required DateTime dateOfBirth,
-      required String gender,
+      required int gender,
       required int vipId}) async {
     User _user = User(
-      email: userInfor.value.email,
       full_name: fullName,
       date_of_birth: dateOfBirth,
       vip_id: userInfor.value.vip_id,
-      gender: genderId.toString(),
+      gender: genderId,
+      avatar: '',
     );
     var response = await _signUpRepositoryImpl.updateInfo(user: _user);
     if (response != null) {
+      Get.back(result: 'change profile');
       AlertUtils.showError(
-          titleError: 'Success',
-          desc: 'Register successfully',
-          okButtonTitle: 'OK',
-          onOkButtonPressed: () async {
-            AlertUtils.showCustomDialog(desc: 'Thay đổi thông tin thành công');
-          });
+        titleError: 'Thành công',
+        desc: 'Thay đổi thông tin thành công',
+        okButtonTitle: 'Đồng ý',
+      );
+      
     } else {
       AlertUtils.showError(titleError: 'Xảy ra lỗi', desc: 'Sửa đổi thông tin thất bại', okButtonTitle: 'Thử lại');
     }

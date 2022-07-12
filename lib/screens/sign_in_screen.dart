@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../domain/entities/user.dart';
+import '../style/app_colors.dart';
+import '../style/app_icons.dart';
 
 // validate in form login with Global key is not beautyfull -> use enable login button when email and pass is filled
 class SignInScreen extends StatelessWidget {
@@ -85,7 +87,7 @@ class SignInScreen extends StatelessWidget {
                     border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                     color: const Color(0xffFAFAFA),
                   ),
-                  child: TextFormField(
+                  child: Obx(() => TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     // validator: (value) {
                     //   if (value == null || value.isEmpty) {
@@ -95,23 +97,37 @@ class SignInScreen extends StatelessWidget {
                     // },
 
                     onChanged: (value) => authController.updatePassword(value),
-                    obscureText: true,
+                    obscureText: authController.isObscureText.value ,
                     controller: controlPassword,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       errorStyle: TextStyle(fontSize: 10, height: 0.3),
                       border: InputBorder.none,
-                      hintText: 'Your password',
+                      hintText: 'Mật khẩu',
                       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      suffixIcon: IconButton(icon: SvgIconWidget(
+                                        name: authController.isObscureText.value
+                                            ? AppIcons.iconEyeOpen
+                                            : AppIcons.iconEyeClose,
+                                        size: 16,
+                                        color: AppColors.labelColor,
+                                      ), onPressed: () {
+                                        authController.setObsecureText();
+                                       },)
                     ),
                   ),
-                ),
+             )   ),
                 const SizedBox(
                   height: 8,
                 ),
-                const Text(
-                  'Forgot your password',
-                  style: TextStyle(fontSize: 12, color: Colors.deepPurpleAccent),
-                ),
+                // GestureDetector(
+                //   onTap: (){
+                    
+                //   },
+                //   child: const Text(
+                //     'Quên mật khẩu',
+                //     style: TextStyle(fontSize: 12, color: Colors.deepPurpleAccent),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 32,
                 ),

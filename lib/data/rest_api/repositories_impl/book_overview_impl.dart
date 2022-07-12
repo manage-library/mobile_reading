@@ -27,14 +27,46 @@ class BookOverViewImpl extends BookOverViewRepository {
   }
 
   @override
-  Future<int?> addNewComment(int bookId, BookRatingModel rate) async {
+  Future<int?> addRate(int bookId, BookRatingModel rate) async {
     try {
-      var response = await _restClient.postMethod(sprintf(ApiConfig.addNewComment, [bookId]), data: rate);
-      print("response add comment : ${response.data['statusCode']}");
+      var response = await _restClient.postMethod(sprintf(ApiConfig.addNewComment, [bookId]), data: rate.toJson());
+      print("response add rate : ${response.data['statusCode']}");
       return response.data['statusCode'];
     } catch (error) {
       ApiResponse apiResponse = ApiResponse.withError(error);
-      print('apiResponse updateInfor .error: ${apiResponse.error.toString()}');
+      print('apiResponse rate.error: ${apiResponse.error.toString()}');
+    }
+    return null;
+  }
+
+  @override
+  Future<Comment?> addComment(int bookId, BookRatingModel rate) async {
+    try {
+      var response = await _restClient.postMethod(sprintf(ApiConfig.getComment, [bookId]), data: rate.toJson());
+      print("response comment : ${response.toString()}");
+      return ApiResponse.withResult(
+          response: response.data,
+          resultConverter: (json) =>
+              ApiResultSingle<Comment>(json: json, jsonConverter: (json) => Comment.fromJson(json))).result?.data;
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('api post comment : ${apiResponse.error}');
+    }
+    return null;
+  }
+  
+  @override
+  Future<Comment?> deleteComment(int bookId, int commentId) async {
+    try {
+      var response = await _restClient.deleteMethod(sprintf(ApiConfig.deleteCommentById, [bookId, commentId]), params: {});
+    print("response delete comment : ${response.toString()}");
+      return ApiResponse.withResult(
+          response: response.data,
+          resultConverter: (json) =>
+              ApiResultSingle<Comment>(json: json, jsonConverter: (json) => Comment.fromJson(json))).result?.data;
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('api delete comment : ${apiResponse.error}');
     }
     return null;
   }

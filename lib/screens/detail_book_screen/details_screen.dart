@@ -1,11 +1,11 @@
+import 'dart:ui';
+
 import 'package:book_reading_mobile_app/controller/detail_book_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
+import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:number_paginator/number_paginator.dart';
 
 import '../../constants.dart';
 import '../../widgets/book_rating.dart';
@@ -45,7 +45,7 @@ class DetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Get.back(result: 'go back to home');
                                 },
                                 child: Padding(
@@ -62,8 +62,13 @@ class DetailsScreen extends StatelessWidget {
                                     padding: EdgeInsets.only(
                                         top: size.height * .01, left: size.width * .1, right: size.width * .02),
                                     child: BookInfo(
+                                      imgPath: controller.imgFavoriteIcon.value,
+                                      colorOfHeart: controller.bookItem.value.imgFavoriteColor,
                                       size: size,
                                       book: controller.bookItem.value,
+                                      onTap: () async {
+                                        controller.onTapFavouriteButton();
+                                      },
                                     ),
                                   ))
                             ],
@@ -202,14 +207,14 @@ class RelatedBook extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     BookRating(
-                      score: rate ?? 0.0,
+                      score: rate ?? 4.9,
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: InkWell(
                         onTap: onPressed,
                         child: RoundedButton(
-                          text: "Read",
+                          text: "Đọc sách",
                           verticalPadding: 10,
                         ),
                       ),
@@ -305,13 +310,19 @@ class ChapterCard extends StatelessWidget {
 
 class BookInfo extends StatelessWidget {
   final Book? book;
-  const BookInfo({
+  String imgPath;
+  Color colorOfHeart;
+  VoidCallback onTap;
+
+  Size size;
+  BookInfo({
+    required this.onTap,
     this.book,
+    required this.imgPath,
+    required this.colorOfHeart,
     Key? key,
     required this.size,
   }) : super(key: key);
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -340,8 +351,7 @@ class BookInfo extends StatelessWidget {
                             width: this.size.width * .3,
                             padding: EdgeInsets.only(top: this.size.height * .02),
                             child: Text(
-                              book?.description ??
-                                  "When the earth was flat andeveryone wanted to win the gameof the best and people and winning with an A game with all the things you have.",
+                              book?.description ?? "Mô tả ngắn gọn về sách",
                               maxLines: 5,
                               style: const TextStyle(
                                 fontSize: 10,
@@ -361,7 +371,7 @@ class BookInfo extends StatelessWidget {
                                 Get.toNamed(AppRoutes.bookOverView, arguments: book);
                               },
                               child: const Text(
-                                "Thêm",
+                                "Đánh giá",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -370,20 +380,14 @@ class BookInfo extends StatelessWidget {
                       ),
                       Column(
                         children: <Widget>[
-                          IconButton(
-                            icon: book?.isLike == 0
-                                ? const Icon(
-                                    Icons.favorite_border,
-                                    size: 20,
-                                    color: Colors.grey,
-                                  )
-                                : SvgPicture.asset(
-                                    'assets/images/ic_nft_heart_fill.svg',
-                                    color: Colors.red,
-                                  ),
-                            onPressed: () {},
+                          InkWell(
+                            onTap: onTap,
+                            child: SvgIconWidget(
+                              name: imgPath,
+                              color: colorOfHeart,
+                            ),
                           ),
-                          BookRating(score: book?.rate?.value ?? 0.0),
+                          BookRating(score: book?.rate?.rate ?? 4.9),
                         ],
                       )
                     ],

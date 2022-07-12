@@ -1,9 +1,12 @@
 import 'package:book_reading_mobile_app/controller/sign_up_controller.dart';
-import 'package:book_reading_mobile_app/domain/entities/user.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
+import 'package:book_reading_mobile_app/style/app_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../style/app_colors.dart';
+import '../widgets/svg_icon.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -106,9 +109,9 @@ class SignUpScreen extends StatelessWidget {
                         border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                         color: const Color(0xffFAFAFA),
                       ),
-                      child: TextField(
+                      child: Obx(() => TextField(
                         controller: controlPassword,
-                        obscureText: true,
+                        obscureText: signUpController.isObscureText.value,
                         onChanged: (value) {
                           signUpController.updatePassword(value);
                         },
@@ -116,8 +119,19 @@ class SignUpScreen extends StatelessWidget {
                           border: InputBorder.none,
                           hintText: 'Password',
                           contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                           isDense: true,
+                           
+                          suffixIcon: IconButton(icon: SvgIconWidget(
+                                        name: signUpController.isObscureText.value
+                                            ? AppIcons.iconEyeOpen
+                                            : AppIcons.iconEyeClose,
+                                        size: 16,
+                                        color: AppColors.labelColor,
+                                      ), onPressed: () {
+                                        signUpController.setObsecureText();
+                                       },)
                         ),
-                      ),
+                      )),
                     ), 
                     const SizedBox(
                       height: 32,

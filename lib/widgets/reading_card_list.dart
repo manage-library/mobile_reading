@@ -1,31 +1,35 @@
 import 'package:book_reading_mobile_app/constants.dart';
+import 'package:book_reading_mobile_app/controller/home_controller.dart';
+import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/widgets/book_rating.dart';
 import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:book_reading_mobile_app/widgets/two_side_rounded_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class ReadingListCard extends StatelessWidget {
-  final String? image;
-  final String? title;
-  final String? auth;
-  final double? rating;
-  bool? isFavorite;
-  final VoidCallback? onPressFavouriteButton;
+import '../style/app_colors.dart';
+import '../style/app_icons.dart';
+
+class ReadingListCard extends StatefulWidget {
+ 
+  final Book book;
   final VoidCallback? pressDetails;
   final VoidCallback? pressRead;
+  final HomeController controller = Get.put(HomeController());
+  ReadingListCard({Key? key, this.pressDetails, this.pressRead, required this.book})
+      : super(key: key);
 
-  ReadingListCard({
-    Key? key,
-    this.image,
-    this.title,
-    this.auth,
-    this.rating,
-    this.pressDetails,
-    this.pressRead,
-    this.isFavorite = false,
-    this.onPressFavouriteButton,
-  }) : super(key: key);
+  @override
+  State<ReadingListCard> createState() => _ReadingListCard();
+}
+
+class _ReadingListCard extends State<ReadingListCard> {
+  void onTapHeartButton() async {
+    widget.book.toggleFavourite();
+    // widget.controller.updateFavouriteForItem(
+    //      onSuccess: () {}, bookId: widget.book.id ?? 1);
+    //widget.controller.setFavouriteItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +59,31 @@ class ReadingListCard extends StatelessWidget {
             ),
           ),
           Image.network(
-            image!,
+            widget.book.image!,
             width: 150,
             height: 150,
           ),
           Positioned(
-            top: 35,
+            top: 55,
             right: 10,
             child: Column(
               children: <Widget>[
-                IconButton(
-                  icon: isFavorite ?? false
-                      ? Icon(
-                          Icons.favorite_border,
-                        )
-                      : SvgPicture.asset(
-                          'assets/images/ic_nft_heart_fill.svg',
-                          color: Colors.red,
-                        ),
-                  onPressed: onPressFavouriteButton,
-                ),
-                BookRating(score: rating ?? 0.0),
+                 InkWell(
+                  onTap:() { 
+                    onTapHeartButton() ;
+                    setState(() {
+                    });
+                    
+                   },
+                   child: SvgIconWidget(
+                      name: widget.book.isFavourite ? AppIcons.iconNFTHeartFill : AppIcons.icHeart,
+                      color: widget.book.isFavourite
+                          ? AppColors.redColor
+                          : AppColors.labelColor,
+                    ),
+                 ),
+              
+                BookRating(score: widget.book.rate?.rate ?? 4.9),
               ],
             ),
           ),
@@ -95,14 +103,14 @@ class ReadingListCard extends StatelessWidget {
                         style: TextStyle(color: kBlackColor),
                         children: [
                           TextSpan(
-                            text: "$title\n",
-                            style: TextStyle(
+                            text: "${widget.book.name}\n",
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text: auth,
-                            style: TextStyle(
+                            text: widget.book.author?.full_name,
+                            style: const TextStyle(
                               color: kLightBlackColor,
                             ),
                           ),
@@ -114,18 +122,18 @@ class ReadingListCard extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       GestureDetector(
-                        onTap: pressDetails,
+                        onTap: widget.pressDetails,
                         child: Container(
                           width: 101,
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.center,
-                          child: Text("Details"),
+                          child: Text("Đọc sách"),
                         ),
                       ),
                       Expanded(
                         child: TwoSideRoundedButton(
-                          text: "Read",
-                          press: pressRead,
+                          text: "Đánh giá",
+                          press: widget.pressRead,
                         ),
                       )
                     ],
