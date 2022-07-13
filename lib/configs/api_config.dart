@@ -6,6 +6,9 @@
 class ApiConfig {
   static const String login = '/auth/login';
   static const String register = '/auth/register';
+  static const String forgotPassword = '/auth/forgot-password';
+  
+  static const String verifyPassword = '/auth/verify-forgot-password';
 
   ///Users
   static const String getInfoUser = '/users/profile';
@@ -39,5 +42,8 @@ class ApiConfig {
 
   /// Like and favorite
    static const String setFavourite = '/books/%s/like';
+   
+   static const String updateVip = '/users/upgrade-vip';
+
   
 }

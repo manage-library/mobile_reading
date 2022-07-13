@@ -71,6 +71,9 @@ class HomeRepositoryImpl  with RepositoryMixin implements HomeRepository{
        if (categoryId != null) {
         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});
       }
+        if (isVip != null) {
+        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'isVip': isVip});
+      }
       print("responseBookList : $response");
       return ApiResponse.withResult(
               response: response.data,

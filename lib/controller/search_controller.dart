@@ -25,7 +25,11 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
   RxList<Category?> bookCategory = RxList();
   RxMap<String, int> listReadingBook = RxMap();
 
-
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
+  }
 
   @override
   void onInit() {

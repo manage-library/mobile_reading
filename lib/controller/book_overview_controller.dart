@@ -5,7 +5,6 @@ import 'package:book_reading_mobile_app/domain/entities/rate.dart';
 import 'package:get/get.dart';
 
 import '../core/util/alert_utils.dart';
-import '../src/routes.dart';
 
 class BookOverViewController extends GetxController {
   var bookOverView = Book().obs;

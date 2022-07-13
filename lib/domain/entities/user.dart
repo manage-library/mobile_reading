@@ -12,6 +12,7 @@ class User {
   String? avatar;
   int? vip_id;
   int? id;
+  String? code;
 
   User(
       {this.email,
@@ -21,6 +22,7 @@ class User {
       this.gender = UserGender.female,
       this.avatar,
       this.vip_id = 0,
+      this.code,
       this.id});
 
   static final User fakeUser = User(
@@ -43,6 +45,7 @@ class User {
     DateTime? dateOfBirth,
     String? avatar,
     int? vip_id,
+    String? code,
   }) {
     return User(
         email: email ?? this.email,
@@ -50,6 +53,7 @@ class User {
         gender: gender ?? this.gender,
         full_name: fullName ?? this.full_name,
         date_of_birth: dateOfBirth ?? this.date_of_birth,
+        code: code ?? this.code,
         avatar: avatar ?? this.avatar,
         vip_id: vip_id ?? this.vip_id);
   }

@@ -70,11 +70,11 @@ class SignUpController extends GetxController {
     User _user = User(email: email, password: password, full_name: fullName);
     var response = await _signUpRepositoryImpl.register(user: _user);
     if (response != null) {
-      AlertUtils.showError(titleError: 'Success', desc: 'Register successfully', okButtonTitle: 'OK', onOkButtonPressed : () async {
+      AlertUtils.showError(titleError: 'Thành công', desc: 'Chúc mừng bạn đãng kí thành công', okButtonTitle: 'Chấp nhận', onOkButtonPressed : () async {
           await  Get.toNamed(AppRoutes.signInScreen);
       }); 
     } else {
-      AlertUtils.showError(titleError: 'Error', desc: 'Resgister failed', okButtonTitle: 'Try again');
+      AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Đăng kí thất bại', okButtonTitle: 'Thử lại');
     }
   }
 

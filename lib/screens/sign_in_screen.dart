@@ -119,15 +119,13 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                // GestureDetector(
-                //   onTap: (){
-                    
-                //   },
-                //   child: const Text(
-                //     'Quên mật khẩu',
-                //     style: TextStyle(fontSize: 12, color: Colors.deepPurpleAccent),
-                //   ),
-                // ),
+                GestureDetector(
+                  onTap: () => Get.toNamed(AppRoutes.forgotPassword),
+                  child: const Text(
+                    'Quên mật khẩu',
+                    style: TextStyle(fontSize: 12, color: Colors.deepPurpleAccent),
+                  ),
+                ),
                 const SizedBox(
                   height: 32,
                 ),

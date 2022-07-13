@@ -16,11 +16,7 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return GetBuilder(
-        init: this.controller,
-        global: false,
-        builder: (detailController) {
-          return Scaffold(
+    return Scaffold(
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +147,7 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
           );
-        });
+       
   }
 }
 
