@@ -56,8 +56,8 @@ class VipUpdatePage extends StatelessWidget {
           ),
           Obx(() => Positioned(
                 top: 550,
-                left: 110,
-                child: Text('Số tiền cần chuyển: ${controller.fee.value[controller.selectedIndex.value]}',
+                left: 80,
+                child: Text('Số tiền cần chuyển: ${controller.fee.value[controller.selectedIndex.value]}00 đồng',
                     style: AppStyles.styleSize16SemiBoldClever.copyWith(color: AppColors.blackColor)),
               )),
           Container(
@@ -111,7 +111,8 @@ class VipUpdatePage extends StatelessWidget {
               children: [
                 Text(
                   'VIP $total - $month tháng',
-                  style: AppStyles.styleAppBarTitle.copyWith(color: AppColors.colorNftItemFavourite),
+                  style: AppStyles.styleAppBarTitle
+                      .copyWith(color: AppColors.colorNftItemFavourite, fontWeight: FontWeight.w500),
                 ),
                 Radio(
                     value: index,

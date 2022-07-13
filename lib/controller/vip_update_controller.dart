@@ -13,8 +13,8 @@ class VipUpdateController extends GetxController {
   RxList<int> vip = [1, 2, 3].obs;
   RxInt selectedIndex = 0.obs;
   RxList<double> fee = [99.000, 199.000, 399.000].obs;
-  
-  RxList<int> month = [1 , 3, 6].obs;
+
+  RxList<int> month = [1, 3, 6].obs;
   var code = ''.obs;
 
   Rx<User?> currentUser = Get.find<HomeController>().userInfor;
@@ -36,8 +36,17 @@ class VipUpdateController extends GetxController {
     }
   }
 
+  int getValue() {
+    if (selectedIndex.value == 0) {
+      return 1;
+    } else if (selectedIndex.value == 1) {
+      return 3;
+    }
+    return 6;
+  }
+
   void postTransaction() async {
-    TransactionModel? user = await _vipRepositoryImpl.postTransaction(vipId: (selectedIndex.value + 1));
+    TransactionModel? user = await _vipRepositoryImpl.postTransaction(vipId: getValue());
     code.value = user?.code ?? '';
     Get.toNamed(AppRoutes.qrCode, arguments: user);
   }
