@@ -425,9 +425,6 @@ class FilterParam {
       result['authorName'] = authorName!;
     }
 
-    if (categoryId.toString() != null) {
-      result['categoryId'] = categoryId.toString();
-    }
     if (isVip.toString() != '') {
       result['isVip'] = isVip.toString();
     }

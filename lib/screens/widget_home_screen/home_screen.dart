@@ -31,8 +31,9 @@ class HomeScreen extends StatelessWidget {
             'https://www.ybox.vn/vien-sach-bookademy/review-sach-ban-dat-gia-bao-nhieu-de-tro-thanh-mot-co-gai-hanh-phuc-5cdcbab7824c197ab7b738f9'));
     listImage.add(
         ImagePath(imgPath: 'assets/images/6.jpg', url: 'https://revisach.com/khi-chat-bao-nhieu-hanh-phuc-bay-nhieu/'));
-    listImage.add(
-        ImagePath(imgPath: 'assets/images/van-mau-tong-quan-van-hoc-viet-nam.jpg', url: 'https://hoctotnguvan.vn/van-10/van-mau-10/tong-quan-ve-van-hoc-viet-nam.html'));
+    listImage.add(ImagePath(
+        imgPath: 'assets/images/van-mau-tong-quan-van-hoc-viet-nam.jpg',
+        url: 'https://hoctotnguvan.vn/van-10/van-mau-10/tong-quan-ve-van-hoc-viet-nam.html'));
 
     return RefreshIndicator(
       color: kProgressIndicator,
@@ -63,8 +64,12 @@ class HomeScreen extends StatelessWidget {
                       Obx(
                         () => SearchHomeScreen(
                           name: controller.userInfor.value.full_name,
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);
+                          onPressed: () async {
+                            final result =
+                                await Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);
+                            if (result != null) {
+                              controller.loadData();
+                            }
                           },
                         ),
                       ),
@@ -159,8 +164,8 @@ class HomeScreen extends StatelessWidget {
                                     text: const TextSpan(
                                       style: TextStyle(fontSize: 25, color: Colors.black),
                                       children: [
-                                         TextSpan(text: "Tựa sách "),
-                                         TextSpan(
+                                        TextSpan(text: "Tựa sách "),
+                                        TextSpan(
                                           text: "đang đọc ...",
                                           style: TextStyle(fontWeight: FontWeight.bold),
                                         ),

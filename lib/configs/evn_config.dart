@@ -8,7 +8,7 @@ class ComputerIP {
 }
 
 class EnvConfig {
-  static const String baseUrlLocal = "http://35.160.249.162:3000/api";
+  static const String baseUrlLocal = "http://34.211.57.240:3000/api";
   static const String baseUrlProduction = "";
   static const String baseUrlRealDevice = "http://" + ComputerIP.computerIP + ":3000/api";
 }

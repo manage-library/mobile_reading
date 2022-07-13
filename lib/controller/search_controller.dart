@@ -89,6 +89,5 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
 
   void updateCategory(Category? category){
     getCategorySelected?.value = category?.name;
-    print(category?.id);
   }
 }

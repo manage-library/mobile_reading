@@ -42,7 +42,7 @@ class DetailBookImpl with RepositoryMixin implements DetailBookRepository {
         response = await _restClient.getMethod(ApiConfig.getBooks, params: {});
       } else {
         response = await _restClient.getMethod(ApiConfig.getBooks,
-            params: {'isVip': isVip, 'sortBy': sortBy, 'sortType': sortType, 'categoryId': categoryId});
+            params: {'isVip': isVip, 'sortBy': sortBy, 'sortType': sortType});
       }
       if (categoryId != null) {
         response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});

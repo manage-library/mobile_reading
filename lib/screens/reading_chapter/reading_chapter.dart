@@ -138,7 +138,7 @@ class ReadingChapter extends StatelessWidget {
                                           decoration: const BoxDecoration(
                                               color: kProgressIndicator,
                                               borderRadius: BorderRadius.all(Radius.circular(30))),
-                                          child: const Center(
+                                          child: Center(
                                             child: Padding(
                                               padding: EdgeInsets.all(8.0),
                                               child: Text(

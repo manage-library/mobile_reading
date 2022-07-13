@@ -12,6 +12,7 @@ import 'package:book_reading_mobile_app/screens/vip_update_screen.dart';
 import 'package:flutter/widgets.dart';
 import '../screens/forgot_password_page/forgot_password_page.dart';
 import '../screens/forgot_password_page/verify_pin_code.dart';
+import '../screens/qr_code.dart';
 
 class AppRoutes {
   AppRoutes._internal();
@@ -28,6 +29,7 @@ class AppRoutes {
   static const vipUpdate = '/vip_update';
   static const forgotPassword = '/forgotPassword';
   static const verifyPin = '/verifyPin';
+  static const qrCode = '/qrCode';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -43,4 +45,5 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.vipUpdate: (context) => VipUpdatePage(),
   AppRoutes.forgotPassword : (context) => ForgotPasswordPage(),
   AppRoutes.verifyPin : (context) => VerifyCodePage(),
+   AppRoutes.qrCode : (context) => QrCodePage(),
 };

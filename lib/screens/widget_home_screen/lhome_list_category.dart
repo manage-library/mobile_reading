@@ -7,6 +7,8 @@ import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../search_screen.dart';
+
 class ListCategory extends StatelessWidget {
   final List<Category?>? categoryName;
   final List<Book?>? listBooks;
@@ -41,9 +43,14 @@ class ListCategory extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Text(
-                  "Xem tất cả",
-                  style: TextStyle(fontSize: 16, color: kBlackColor, fontWeight: FontWeight.w400),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+                  },
+                  child: const Text(
+                    "Xem tất cả",
+                    style: TextStyle(fontSize: 16, color: kBlackColor, fontWeight: FontWeight.w400),
+                  ),
                 )
               ],
             ),
@@ -73,7 +80,7 @@ class ListCategory extends StatelessWidget {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all( Radius.circular(40)),
+                          borderRadius: const BorderRadius.all(Radius.circular(40)),
                           color:
                               (categoryName?.elementAt(index)?.isSelected ?? false) ? kProgressIndicator : Colors.white,
                           border: Border.all(color: kProgressIndicator)),
@@ -103,8 +110,8 @@ class ListCategory extends StatelessWidget {
               padding: const EdgeInsets.only(right: 30),
               itemBuilder: (BuildContext context, int index) {
                 return ReadingListCard(
-                   book: listBooks?[index] ?? Book(),
-                    pressDetails:  () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
+                    book: listBooks?[index] ?? Book(),
+                    pressDetails: () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
                     pressRead: () {
                       Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
                     });

@@ -26,12 +26,12 @@ class SearchScreen extends StatelessWidget {
   final double collapsedHeight = kToolbarHeight;
   final Duration navigationBarTitleAnimatedDuration = const Duration(milliseconds: 70);
   SearchScreen({Key? key}) : super(key: key);
-  final SearchController controller = SearchController();
+  final SearchController controller = Get.put(SearchController());
   @override
   Widget build(BuildContext context) {
     FilterParam filterParam = FilterParam();
     return GetBuilder(
-      init: this.controller,
+      init: controller,
       global: false,
       builder: (GetxController controllerSearch) {
         final List<String> tabs = <String>['Tác phẩm', 'Tác giả'];

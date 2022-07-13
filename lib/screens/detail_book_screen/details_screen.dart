@@ -12,142 +12,147 @@ import '../../widgets/book_rating.dart';
 import '../../widgets/rounded_button.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final DetailBookController controller = DetailBookController();
+  final DetailBookController controller = Get.put(DetailBookController());
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      Container(
-                          alignment: Alignment.topCenter,
-                          height: size.height * .4,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/bg.png"),
-                              fit: BoxFit.fitWidth,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(50),
-                              bottomRight: Radius.circular(50),
-                            ),
+    return GetBuilder(
+      init: controller,
+      global: false,
+      builder: (detailController) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    Container(
+                        alignment: Alignment.topCenter,
+                        height: size.height * .4,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/bg.png"),
+                            fit: BoxFit.fitWidth,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.back(result: 'go back to home');
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: size.height * .04, left: size.width * .05, right: size.width * .02),
-                                  child: const Icon(
-                                    Icons.arrow_back,
-                                    size: 30,
-                                    color: Colors.black,
-                                  ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.back(result: 'go back to home');
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: size.height * .04, left: size.width * .05, right: size.width * .02),
+                                child: const Icon(
+                                  Icons.arrow_back,
+                                  size: 30,
+                                  color: Colors.black,
                                 ),
                               ),
-                              Obx(() => Padding(
-                                    padding: EdgeInsets.only(
-                                        top: size.height * .01, left: size.width * .1, right: size.width * .02),
-                                    child: BookInfo(
-                                      imgPath: controller.imgFavoriteIcon.value,
-                                      colorOfHeart: controller.bookItem.value.imgFavoriteColor,
-                                      size: size,
-                                      book: controller.bookItem.value,
-                                      onTap: () async {
-                                        controller.onTapFavouriteButton();
-                                      },
-                                    ),
-                                  ))
-                            ],
-                          )),
+                            ),
+                            Obx(() => Padding(
+                                  padding: EdgeInsets.only(
+                                      top: size.height * .01, left: size.width * .1, right: size.width * .02),
+                                  child: BookInfo(
+                                    imgPath: controller.imgFavoriteIcon.value,
+                                    colorOfHeart: controller.bookItem.value.imgFavoriteColor,
+                                    size: size,
+                                    book: controller.bookItem.value,
+                                    onTap: () async {
+                                      controller.onTapFavouriteButton();
+                                    },
+                                  ),
+                                ))
+                          ],
+                        )),
+                  ],
+                ),
+                Obx(() => ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    padding: const EdgeInsets.all(8),
+                    itemCount: ((controller.bookItem.value.chapters?.length ?? 1 - 1)),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.goToChapterReadingBook(
+                              bookId: controller.bookItem.value.id.toString(),
+                              chapterId: controller.bookItem.value.chapters?.elementAt(index).id.toString());
+                        },
+                        child: Card(
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(32),
+                              bottomLeft: Radius.circular(32),
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                  "Chapter ${index + 1} : ${controller.bookItem.value.chapters?.elementAt(index).name ?? '---'}"),
+                              subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
+                                  ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
+                                  : Text('---'),
+                              trailing: const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.headline5,
+                          children: const [
+                            TextSpan(
+                              text: "Có thể bạn cũng ",
+                            ),
+                            TextSpan(
+                              text: "thích...",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //          SizedBox(height: 20),
                     ],
                   ),
-                  Obx(() => ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: ((controller.bookItem.value.chapters?.length ?? 1 - 1)),
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            controller.goToChapterReadingBook(
-                                bookId: controller.bookItem.value.id.toString(),
-                                chapterId: controller.bookItem.value.chapters?.elementAt(index).id.toString());
-                          },
-                          child: Card(
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(32),
-                                bottomLeft: Radius.circular(32),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                    "Chapter ${index + 1} : ${controller.bookItem.value.chapters?.elementAt(index).name ?? '---'}"),
-                                subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
-                                    ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
-                                    : Text('---'),
-                                trailing: const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      })),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.headline5,
-                            children: const [
-                              TextSpan(
-                                text: "Có thể bạn cũng ",
-                              ),
-                              TextSpan(
-                                text: "thích...",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //          SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
-                  Obx(() => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: RelatedBook(
-                          bookTitle: controller.bookWithCategory.value.name,
-                          authorName: controller.bookWithCategory.value.author?.full_name,
-                          imgPath: controller.bookWithCategory.value.image,
-                          onPressed: () {
-                            Get.back();
-                            Get.toNamed(AppRoutes.detailBook, arguments: controller.bookWithCategory.value);
-                          },
-                        ),
-                      )),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                ],
-              ),
+                ),
+                Obx(() => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: RelatedBook(
+                        bookTitle: controller.bookWithCategory.value.name,
+                        authorName: controller.bookWithCategory.value.author?.full_name,
+                        imgPath: controller.bookWithCategory.value.image,
+                        onPressed: () {
+                          Get.back();
+                          Get.toNamed(AppRoutes.detailBook, arguments: controller.bookWithCategory.value);
+                        },
+                      ),
+                    )),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
             ),
-          );
-       
+          ),
+        );
+      },
+    );
   }
 }
 

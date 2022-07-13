@@ -44,6 +44,9 @@ class ApiConfig {
    static const String setFavourite = '/books/%s/like';
    
    static const String updateVip = '/users/upgrade-vip';
+   
+   static const String postTransaction = '/transactions';
+
 
   
 }

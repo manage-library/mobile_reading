@@ -1,3 +1,4 @@
+import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/book_overview_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/comment.dart';
@@ -8,10 +9,11 @@ import '../core/util/alert_utils.dart';
 
 class BookOverViewController extends GetxController {
   var bookOverView = Book().obs;
-  var star = 0.0;
+  var star = 0.0.obs;
   var comment = '';
   RxList<Comment?> commentList = RxList();
   final BookOverViewImpl _bookOverViewImpl = BookOverViewImpl();
+  Rx<Book?> currentBook = Get.find<HomeController>().bookById;
   @override
   void onInit() {
     super.onInit();
@@ -30,10 +32,8 @@ class BookOverViewController extends GetxController {
     commentList.value = listComment;
   }
 
-  void postRateAndComment() {}
-
   void updateRating(double value) {
-    star = value;
+    star.value = value;
   }
 
   void updateComment(String value) {
@@ -41,7 +41,7 @@ class BookOverViewController extends GetxController {
   }
 
   void submitComment() async {
-    BookRatingModel rate = BookRatingModel(comment: 'string', rate: star, content: 'string');
+    BookRatingModel rate = BookRatingModel(comment: 'string', rate: star.value, content: 'string');
     var response = await _bookOverViewImpl.addRate(bookOverView.value.id!, rate);
     if (response != null) {
       AlertUtils.showError(
@@ -65,10 +65,11 @@ class BookOverViewController extends GetxController {
 
   void submitCommentWithoutRate() async {
     if (comment != null) {
-      BookRatingModel rate = BookRatingModel(comment: comment, rate: star, content: comment);
+      BookRatingModel rate = BookRatingModel(comment: comment, rate: star.value, content: comment);
       Comment? resultComment = await _bookOverViewImpl.addComment(bookOverView.value.id!, rate);
       if (resultComment?.content != "") {
         getComment();
+
       } else {
         AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
       }

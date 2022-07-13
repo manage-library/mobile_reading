@@ -16,8 +16,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       gender: json['gender'] as int? ?? UserGender.female,
       avatar: json['avatar'] as String?,
       vip_id: json['vip_id'] as int? ?? 0,
-      id: json['id'] as int?,
       code: json['code'] as String?,
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -27,7 +27,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'dateOfBirth': instance.date_of_birth?.toIso8601String(),
       'gender': instance.gender,
       'avatar': instance.avatar,
-      'vipId': instance.vip_id,
+      'vip_id': instance.vip_id,
       'id': instance.id,
-      'code' : instance.code,
+      'code': instance.code,
     };

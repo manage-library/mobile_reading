@@ -165,7 +165,7 @@ class VerifyCodePage extends StatelessWidget {
                 height: 32,
               ),
 
-              Obx(() => InkWell(
+              InkWell(
                   onTap: () {
                     // if (controller.isButtonDisabled.value) {
                     //   // If the form is valid, display a snackbar. In the real world,
@@ -205,7 +205,7 @@ class VerifyCodePage extends StatelessWidget {
                       'Xác nhận',
                       style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                     ),
-                  )))
+                  ))
             ]),
           )),
     );

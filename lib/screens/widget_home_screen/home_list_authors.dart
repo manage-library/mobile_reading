@@ -21,7 +21,7 @@ class ListOfAuthors extends StatelessWidget {
                 text: TextSpan(
                   style: TextStyle(fontSize: 25, color: Colors.black),
                   children: [
-                    TextSpan(text:"Người dùng "),
+                    TextSpan(text: "Người dùng "),
                     TextSpan(
                       text: "nổi bật",
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -29,10 +29,6 @@ class ListOfAuthors extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                "Xem tất cả",
-                style: const TextStyle(fontSize: 16, color: kBlackColor, fontWeight: FontWeight.w400),
-              )
             ],
           ),
         ),

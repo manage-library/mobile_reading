@@ -6,13 +6,6 @@ import '../data/rest_api/repositories_impl/user_repository_impl.dart';
 class ProfileController extends GetxController {
  final UserRepositoryImpl _repositoryImpl = UserRepositoryImpl();
  var userInfor = User().obs;
-  // @override
-  // void onInit() {
-  //   if(Get.arguments != null) {
-  //     userInfor.value = Get.arguments;
-  //   }
-  //   super.onInit();
-  // }
 
    @override
   void onInit() {

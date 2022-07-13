@@ -81,7 +81,7 @@ class HomeController extends BaseController with StreamSubscriptionsMixin{
         isVip: userInfor.value.vip_id == 0 ? false : true,
         sortBy: ESortBy.like.eSortByteNumber,
         sortType: ESortType.asc.eSortType));
-    bestOfBook.value = bookList.first ?? Book();
+    bestOfBook.value = bookList.isNotEmpty ? bookList.first! : Book();
   }
 
   void getBookByCategory(int? categoryId) async {

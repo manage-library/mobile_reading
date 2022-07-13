@@ -63,8 +63,9 @@ class BookOverView extends StatelessWidget {
                             ),
                             tooltip: 'Show Snackbar',
                             onPressed: () {
+                              _onTap();
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(content: Text('This is a snackbar')));
+                                  .showSnackBar(const SnackBar(content: Text('Đang tải xuống')));
                             },
                           )
                         ],
@@ -174,7 +175,11 @@ class BookOverView extends StatelessWidget {
               ),
             ),
           );
+
+          
         });
+
+      
   }
 
   Future<void> showCommentBottomSheet(BuildContext context) {
@@ -454,6 +459,10 @@ class BookOverView extends StatelessWidget {
   }
 }
 
+void _onTap() {
+  
+}
+
 class AuthorTab extends StatelessWidget {
   final String? authorDescription;
   final String? description;
@@ -502,4 +511,5 @@ class AuthorTab extends StatelessWidget {
       ),
     );
   }
+
 }

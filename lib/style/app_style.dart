@@ -278,7 +278,7 @@ class AppStyles {
   );
 
   static TextStyle styleSize16SemiBoldClever = TextStyle(
-    color: AppColors.colorOverlayLight,
+    color: AppColors.colorTextTitleMethodClever,
     fontSize: fontSizeBase,
     fontWeight: fontWeightSemiBold,
   );
