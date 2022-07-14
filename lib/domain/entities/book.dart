@@ -11,21 +11,21 @@ part 'book.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Book {
-   int? id;
-   String? name;
-   String? description;
-   String? image;
-   bool? is_vip;
-   int? release_status;
-   Author? author;
-   String? author_description;
-   List<BookCategory>? bookCategory;
-   int? isLike;
-   int? countChapter;
-   int? countLike;
-   int? countDownload;
-   BookRatingModel? rate;
-   List<Chapter>? chapters;
+  int? id;
+  String? name;
+  String? description;
+  String? image;
+  bool? is_vip;
+  int? release_status;
+  Author? author;
+  String? author_description;
+  List<BookCategory>? bookCategory;
+  int? isLike;
+  int? countChapter;
+  int? countLike;
+  int? countDownload;
+  BookRatingModel? rate;
+  List<Chapter>? chapters;
 
   Book({
     this.bookCategory,
@@ -57,7 +57,7 @@ class Book {
     countLike = (countLike ?? 0) + 1;
   }
 
-    void toggleFavourite() {
+  void toggleFavourite() {
     if (isFavourite) {
       unsetFavourite();
     } else {
@@ -65,7 +65,6 @@ class Book {
     }
   }
 
-  
   Color get imgFavoriteColor => isFavourite ? AppColors.darkGreyColor : AppColors.redColor;
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

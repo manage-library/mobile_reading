@@ -11,12 +11,12 @@ import '../style/app_colors.dart';
 import '../style/app_icons.dart';
 
 class ReadingListCard extends StatefulWidget {
- 
   final Book book;
   final VoidCallback? pressDetails;
   final VoidCallback? pressRead;
+  final Function()? onTapFavorite;
   final HomeController controller = Get.put(HomeController());
-  ReadingListCard({Key? key, this.pressDetails, this.pressRead, required this.book})
+  ReadingListCard({Key? key, this.pressDetails, this.pressRead, required this.book, this.onTapFavorite})
       : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class ReadingListCard extends StatefulWidget {
 
 class _ReadingListCard extends State<ReadingListCard> {
   void onTapHeartButton() async {
-    widget.book.toggleFavourite();
+    widget.onTapFavorite?.call();
     // widget.controller.updateFavouriteForItem(
     //      onSuccess: () {}, bookId: widget.book.id ?? 1);
     //widget.controller.setFavouriteItem;
@@ -68,21 +68,16 @@ class _ReadingListCard extends State<ReadingListCard> {
             right: 10,
             child: Column(
               children: <Widget>[
-                 InkWell(
-                  onTap:() { 
-                    onTapHeartButton() ;
-                    setState(() {
-                    });
-                    
-                   },
-                   child: SvgIconWidget(
-                      name: widget.book.isFavourite ? AppIcons.iconNFTHeartFill : AppIcons.icHeart,
-                      color: widget.book.isFavourite
-                          ? AppColors.redColor
-                          : AppColors.labelColor,
-                    ),
-                 ),
-              
+                InkWell(
+                  onTap: () {
+                    onTapHeartButton();
+                    setState(() {});
+                  },
+                  child: SvgIconWidget(
+                    name: widget.book.isFavourite ? AppIcons.iconNFTHeartFill : AppIcons.icHeart,
+                    color: widget.book.isFavourite ? AppColors.redColor : AppColors.labelColor,
+                  ),
+                ),
                 BookRating(score: widget.book.rate?.rate ?? 4.9),
               ],
             ),

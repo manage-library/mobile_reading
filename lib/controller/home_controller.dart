@@ -7,11 +7,13 @@ import 'package:book_reading_mobile_app/domain/entities/category.dart';
 import 'package:book_reading_mobile_app/domain/entities/enum.dart';
 import 'package:book_reading_mobile_app/domain/entities/history_chapter.dart';
 import 'package:book_reading_mobile_app/domain/entities/user.dart';
+import 'package:book_reading_mobile_app/event/favorite_change_event.dart';
 import 'package:book_reading_mobile_app/favourite_logic/stream_subcrptions_mixins.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 
-class HomeController extends BaseController with StreamSubscriptionsMixin{
+class HomeController extends BaseController with StreamSubscriptionsMixin {
   final HomeRepositoryImpl _homeRepositoryImpl = HomeRepositoryImpl();
   var userInfor = User().obs;
   RxList<Category?> bookCategory = RxList();
@@ -22,9 +24,9 @@ class HomeController extends BaseController with StreamSubscriptionsMixin{
   var isSelect = false.obs;
   var selectedCategoryId = 0.obs;
   var bookById = Book().obs;
-   int currentSelectedIndex = 0;
+  int currentSelectedIndex = 0;
 
-
+  final eventBus = Get.find<EventBus>();
   @override
   void onInit() {
     getInfoUser();
@@ -34,9 +36,18 @@ class HomeController extends BaseController with StreamSubscriptionsMixin{
     getListAthor();
     super.onInit();
     getHistory();
+    eventBus.on<BookFavoriteChangeEvent>().listen((event) {
+      // All events are of type UserLoggedInEvent (or subtypes of it).
+      print("${runtimeType} ==> ${event.book.toJson()}");
+      final tmp = listBooks.toList();
+      for (int i = 0; i < tmp.length; i++) {
+        if (tmp[i]?.id == event.book?.id) {
+          tmp[i] = event.book;
+        }
+      }
+      listBooks.value = tmp;
+    });
   }
-
- 
 
   void loadData() {
     getInfoUser();
@@ -57,7 +68,6 @@ class HomeController extends BaseController with StreamSubscriptionsMixin{
     // TODO: implement onClose
     bag.dispose;
     super.onClose();
-
   }
 
   void getInfoUser() async {
@@ -110,19 +120,18 @@ class HomeController extends BaseController with StreamSubscriptionsMixin{
 
   void goToDetailScreen(Book book) async {
     currentSelectedIndex = book.id ?? 1;
-                       final result =
-                                      await Get.toNamed(AppRoutes.detailBook, arguments: book);
-                                  if (result == 'go back to home') {
-                                    loadData();
-                                  } else {
-                                    //Get.toNamed()
-                                  }
-                     // Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
-                    }
+    final result = await Get.toNamed(AppRoutes.detailBook, arguments: book);
+    if (result == 'go back to home') {
+      loadData();
+    } else {
+      //Get.toNamed()
+    }
+    // Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
+  }
 
-   //call back to handle request reload state listview from another page
+  //call back to handle request reload state listview from another page
   void handleRequestReloadState(bool favState) {
-    if(favState) {
+    if (favState) {
       listBooks.elementAt(currentSelectedIndex)?.setFavourite();
     } else {
       listBooks.elementAt(currentSelectedIndex)?.unsetFavourite();

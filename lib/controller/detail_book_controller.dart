@@ -3,8 +3,10 @@ import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/detail_repository_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/chapter.dart';
+import 'package:book_reading_mobile_app/event/favorite_change_event.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/style/app_icons.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:get/get.dart';
 import '../favourite_logic/stream_subcrptions_mixins.dart';
 
@@ -19,7 +21,7 @@ class DetailBookController extends BaseController with StreamSubscriptionsMixin 
   RxString imgFavoriteIcon = AppIcons.icHeart.obs;
 
   // var page =
-
+  final eventBus = Get.find<EventBus>();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -29,6 +31,10 @@ class DetailBookController extends BaseController with StreamSubscriptionsMixin 
       getBookById();
       getBookInCategory();
     }
+    eventBus.on<BookFavoriteChangeEvent>().listen((event) {
+      // All events are of type UserLoggedInEvent (or subtypes of it).
+      print(event.book);
+    });
   }
 
   @override
@@ -56,11 +62,11 @@ class DetailBookController extends BaseController with StreamSubscriptionsMixin 
   }
 
   void onTapFavouriteButton() {
-    currentBook.value.toggleFavourite();
+    bookItem.value.toggleFavourite();
     imgFavoriteIcon.value = currentBook.value.isFavourite ? AppIcons.iconNFTHeartFill : AppIcons.icHeart;
-
+    eventBus.fire(BookFavoriteChangeEvent(bookItem.value));
     updateFavouriteForItem(
-        bookId: currentBook.value.id ?? 1,
+        bookId: bookItem.value.id ?? 1,
         onSuccess: () {
           _updateFavoriteState();
         });

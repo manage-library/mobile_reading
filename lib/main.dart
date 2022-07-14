@@ -6,6 +6,7 @@ import 'package:book_reading_mobile_app/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
+import 'app_binding.dart';
 import 'constants.dart';
 
 void main() {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Book App',
       initialRoute: AppRoutes.introScreen,
+      initialBinding: AppBinding(),
       routes: listRoutes,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -71,8 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                 height: 100,
               ),
               GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRoutes.signInScreen),
+                onTap: () => Navigator.pushNamed(context, AppRoutes.signInScreen),
                 child: Container(
                   alignment: Alignment.center,
                   width: double.infinity,
@@ -100,8 +101,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Đăng nhập',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600, color: Colors.white),
+                    style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                   ),
                 ),
               ),
@@ -109,21 +109,18 @@ class WelcomeScreen extends StatelessWidget {
                 height: 25,
               ),
               GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRoutes.signUpScreen),
+                onTap: () => Navigator.pushNamed(context, AppRoutes.signUpScreen),
                 child: Container(
                   alignment: Alignment.center,
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    border:
-                        Border.all(color: const Color(0xffDBDBDB), width: 1),
+                    border: Border.all(color: const Color(0xffDBDBDB), width: 1),
                     color: const Color(0xffFAFAFA),
                   ),
                   child: const Text(
                     'Đăng ký',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400, color: Color(0xff5A6273)),
+                    style: TextStyle(fontWeight: FontWeight.w400, color: Color(0xff5A6273)),
                   ),
                 ),
               ),

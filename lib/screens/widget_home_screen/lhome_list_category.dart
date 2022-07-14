@@ -2,8 +2,10 @@ import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/category.dart';
+import 'package:book_reading_mobile_app/event/favorite_change_event.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -109,12 +111,18 @@ class ListCategory extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.only(right: 30),
               itemBuilder: (BuildContext context, int index) {
+                final model = listBooks?[index];
                 return ReadingListCard(
-                    book: listBooks?[index] ?? Book(),
-                    pressDetails: () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
-                    pressRead: () {
-                      Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
-                    });
+                  book: listBooks?[index] ?? Book(),
+                  pressDetails: () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
+                  pressRead: () {
+                    Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
+                  },
+                  onTapFavorite: () {
+                    model?.toggleFavourite();
+                    Get.find<EventBus>().fire(BookFavoriteChangeEvent(model!));
+                  },
+                );
               }),
         ),
       ],

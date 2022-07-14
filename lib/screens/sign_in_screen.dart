@@ -12,8 +12,8 @@ import '../style/app_icons.dart';
 // validate in form login with Global key is not beautyfull -> use enable login button when email and pass is filled
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
-  final TextEditingController controlEmail = TextEditingController();
-  final TextEditingController controlPassword = TextEditingController();
+  final TextEditingController controlEmail = TextEditingController(text: "tamntt2710@gmail.com");
+  final TextEditingController controlPassword = TextEditingController(text: "1111");
   final _formKey = GlobalKey<FormState>();
   final AuthController authController = Get.put(AuthController());
   @override
@@ -80,42 +80,43 @@ class SignInScreen extends StatelessWidget {
                   height: 8,
                 ),
                 Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: const Color(0xffDBDBDB), width: 1),
-                    color: const Color(0xffFAFAFA),
-                  ),
-                  child: Obx(() => TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    // validator: (value) {
-                    //   if (value == null || value.isEmpty) {
-                    //     return 'Please enter some text';
-                    //   }
-                    //   return null;
-                    // },
-
-                    onChanged: (value) => authController.updatePassword(value),
-                    obscureText: authController.isObscureText.value ,
-                    controller: controlPassword,
-                    decoration: InputDecoration(
-                      errorStyle: TextStyle(fontSize: 10, height: 0.3),
-                      border: InputBorder.none,
-                      hintText: 'Mật khẩu',
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      suffixIcon: IconButton(icon: SvgIconWidget(
-                                        name: authController.isObscureText.value
-                                            ? AppIcons.iconEyeOpen
-                                            : AppIcons.iconEyeClose,
-                                        size: 16,
-                                        color: AppColors.labelColor,
-                                      ), onPressed: () {
-                                        authController.setObsecureText();
-                                       },)
+                    alignment: Alignment.center,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+                      color: const Color(0xffFAFAFA),
                     ),
-                  ),
-             )   ),
+                    child: Obx(
+                      () => TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter some text';
+                        //   }
+                        //   return null;
+                        // },
+
+                        onChanged: (value) => authController.updatePassword(value),
+                        obscureText: authController.isObscureText.value,
+                        controller: controlPassword,
+                        decoration: InputDecoration(
+                            errorStyle: TextStyle(fontSize: 10, height: 0.3),
+                            border: InputBorder.none,
+                            hintText: 'Mật khẩu',
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            suffixIcon: IconButton(
+                              icon: SvgIconWidget(
+                                name: authController.isObscureText.value ? AppIcons.iconEyeOpen : AppIcons.iconEyeClose,
+                                size: 16,
+                                color: AppColors.labelColor,
+                              ),
+                              onPressed: () {
+                                authController.setObsecureText();
+                              },
+                            )),
+                      ),
+                    )),
                 const SizedBox(
                   height: 8,
                 ),
