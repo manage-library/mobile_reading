@@ -7,8 +7,9 @@ import '../../constants.dart';
 // ignore: must_be_immutable
 class SearchHomeScreen extends StatelessWidget {
   String? name;
+  String? vipId;
   VoidCallback? onPressed;
-  SearchHomeScreen({Key? key, this.name, this.onPressed}) : super(key: key);
+  SearchHomeScreen({Key? key, this.name, this.onPressed, this.vipId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class SearchHomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Xin chào, " + (name ?? 'reader'),
+                    "Xin chào, " + (name ?? 'reader') + ' ' + vipId!.toString(),
                     style: const TextStyle(color: kBlackColor, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],

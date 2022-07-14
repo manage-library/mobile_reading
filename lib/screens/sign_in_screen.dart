@@ -12,8 +12,8 @@ import '../style/app_icons.dart';
 // validate in form login with Global key is not beautyfull -> use enable login button when email and pass is filled
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
-  final TextEditingController controlEmail = TextEditingController(text: "tamntt2710@gmail.com");
-  final TextEditingController controlPassword = TextEditingController(text: "1111");
+  final TextEditingController controlEmail = TextEditingController();
+  final TextEditingController controlPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AuthController authController = Get.put(AuthController());
   @override

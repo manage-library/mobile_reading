@@ -49,6 +49,17 @@ class HomeController extends BaseController with StreamSubscriptionsMixin {
     });
   }
 
+  String getVipId(int vipId) {
+    if (vipId == 0) {
+      return ' ';
+    } else if (vipId == 1) {
+      return 'Vip 1';
+    } else if (vipId == 3) {
+      return 'Vip 2';
+    } else
+      return 'Vip 3';
+  }
+
   void loadData() {
     getInfoUser();
     getCategory();
@@ -91,7 +102,13 @@ class HomeController extends BaseController with StreamSubscriptionsMixin {
         isVip: userInfor.value.vip_id == 0 ? false : true,
         sortBy: ESortBy.like.eSortByteNumber,
         sortType: ESortType.asc.eSortType));
-    bestOfBook.value = bookList.isNotEmpty ? bookList.first! : Book();
+    bestOfBook.value = bookList.isNotEmpty
+        ? bookList.first!
+        : Book(
+            id: 17,
+            name: "Việt Nam sử lược",
+            description: "– xuất bản năm 1919 của",
+            image: "https://www.sachhayonline.com/data/book-photos/14.jpg");
   }
 
   void getBookByCategory(int? categoryId) async {

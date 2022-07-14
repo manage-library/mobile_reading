@@ -175,11 +175,7 @@ class BookOverView extends StatelessWidget {
               ),
             ),
           );
-
-          
         });
-
-      
   }
 
   Future<void> showCommentBottomSheet(BuildContext context) {
@@ -239,7 +235,8 @@ class BookOverView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 20.0),
                       child: Text(
                         "Vui lòng đánh giá sách",
-                        style: AppStyles.styleAppBarTitle.copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 20),
+                        style: AppStyles.styleAppBarTitle
+                            .copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 20),
                       ),
                     ),
                     Center(
@@ -294,7 +291,9 @@ class BookOverView extends StatelessWidget {
                     //     ),
                     //   ),
                     // ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     GestureDetector(
                       onTap: () {
                         controller.submitComment();
@@ -328,140 +327,135 @@ class BookOverView extends StatelessWidget {
   Widget CommentTab() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Đánh giá',
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                  controller.commentList.value.length != 0
-                      ? Obx(() => Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                controller.bookOverView.value.rate?.rate.toString() ?? '4.9',
-                                style:
-                                    TextStyle(color: kProgressIndicator, fontSize: 16, fontWeight: FontWeight.w600),
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                '(${controller.commentList.value.length} đánh giá)',
-                                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ))
-                      : Container()
-                ],
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Đánh giá',
+                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
               ),
-            ),
-            controller.commentList.value.length != 0
-                ? Obx(() => Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(top: 15.0, left: 14, bottom: 15),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: controller.commentList.value.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          Comment comment = controller.commentList.value.elementAt(index) ?? Comment();
-                          return CommentItem(
-                            userName: comment.user?.full_name,
-                            time: comment.createdAt,
-                            comment: comment.content,
-                            deleteComment: () {
-                              controller.deleteComment(controller.commentList.value.elementAt(index)!.id);
-                            },
-                          );
-                        },
-                      ),
-                    ))
-                : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Text(
-                      'Hãy là người bình luận đầu tiên!',
-                      style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xffDBDBDB), width: 1),
-                      color: const Color(0xffFAFAFA),
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 3,
-                      maxLength: 200,
-                      onChanged: (value) => {controller.updateComment(value)},
-                      decoration: const InputDecoration(
-                        errorStyle: TextStyle(fontSize: 10, height: 0.3),
-                        border: InputBorder.none,
-                        hintText: 'Hãy nhập bình luận của bạn',
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        controller.submitCommentWithoutRate();
-                      },
-                      child: Container(
-                          //  height: 45,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: kProgressIndicator,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
+              controller.commentList.value.length != 0
+                  ? Obx(() => Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 20,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                'Đánh giá',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
-                              ),
-                            ),
-                          )),
-                    ),
-                  )
-                ],
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            '4.9',
+                            style: TextStyle(color: kProgressIndicator, fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            '(${controller.commentList.value.length} đánh giá)',
+                            style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ))
+                  : Container()
+            ],
+          ),
+        ),
+        controller.commentList.value.length != 0
+            ? Obx(() => Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.only(top: 15.0, left: 14, bottom: 15),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.commentList.value.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Comment comment = controller.commentList.value.elementAt(index) ?? Comment();
+                      return CommentItem(
+                        userName: comment.user?.full_name,
+                        time: comment.createdAt,
+                        comment: comment.content,
+                        deleteComment: () {
+                          controller.deleteComment(controller.commentList.value.elementAt(index)!.id);
+                        },
+                      );
+                    },
+                  ),
+                ))
+            : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Hãy là người bình luận đầu tiên!',
+                  style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-          ]),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
+          child: Column(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: const Color(0xffDBDBDB), width: 1),
+                  color: const Color(0xffFAFAFA),
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 3,
+                  maxLength: 200,
+                  onChanged: (value) => {controller.updateComment(value)},
+                  decoration: const InputDecoration(
+                    errorStyle: TextStyle(fontSize: 10, height: 0.3),
+                    border: InputBorder.none,
+                    hintText: 'Hãy nhập bình luận của bạn',
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () {
+                    controller.submitCommentWithoutRate();
+                  },
+                  child: Container(
+                      //  height: 45,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: kProgressIndicator,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            'Đánh giá',
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
+                          ),
+                        ),
+                      )),
+                ),
+              )
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
 
-void _onTap() {
-  
-}
+void _onTap() {}
 
 class AuthorTab extends StatelessWidget {
   final String? authorDescription;
@@ -511,5 +505,4 @@ class AuthorTab extends StatelessWidget {
       ),
     );
   }
-
 }

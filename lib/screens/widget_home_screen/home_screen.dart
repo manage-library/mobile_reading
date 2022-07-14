@@ -64,6 +64,7 @@ class HomeScreen extends StatelessWidget {
                       Obx(
                         () => SearchHomeScreen(
                           name: controller.userInfor.value.full_name,
+                          vipId: controller.getVipId(controller.userInfor.value.vip_id!),
                           onPressed: () async {
                             final result =
                                 await Get.toNamed(AppRoutes.menuProfile, arguments: controller.userInfor.value);

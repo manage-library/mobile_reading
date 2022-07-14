@@ -13,6 +13,7 @@ class VipUpdateController extends GetxController {
   RxList<int> vip = [1, 2, 3].obs;
   RxInt selectedIndex = 0.obs;
   RxList<double> fee = [99.000, 199.000, 399.000].obs;
+  var vipId = 0.obs;
 
   RxList<int> month = [1, 3, 6].obs;
   var code = ''.obs;
@@ -48,6 +49,22 @@ class VipUpdateController extends GetxController {
   void postTransaction() async {
     TransactionModel? user = await _vipRepositoryImpl.postTransaction(vipId: getValue());
     code.value = user?.code ?? '';
+    vipId.value = user?.vip_id ?? 0;
     Get.toNamed(AppRoutes.qrCode, arguments: user);
+  }
+
+  void verify() async {
+    User? user = await _vipRepositoryImpl.getUserInfo();
+    if (user?.vip_id != vipId.value) {
+      AlertUtils.showError(
+          titleError: 'Thành công',
+          desc: 'Bạn đã nâng Vip thành công !',
+          okButtonTitle: 'Đồng ý',
+          onOkButtonPressed: () async {
+            Get.back();
+          });
+    } else {
+      AlertUtils.showError(titleError: 'Đang xử lý', desc: 'Vui lòng chờ trong giây lát', okButtonTitle: 'Xác nhận');
+    }
   }
 }

@@ -9,6 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 class VipUpdatePage extends StatelessWidget {
   VipUpdateController controller = Get.put(VipUpdateController());
   VipUpdatePage({Key? key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class VipUpdatePage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: GestureDetector(
-          onTap: () {
+          onTap: () async {
+
             Get.back();
           },
           child: const Icon(

@@ -94,7 +94,7 @@ class VerifyCodePage extends StatelessWidget {
                   keyboardType: TextInputType.visiblePassword,
                   onChanged: (value) => controller.updatePassword(value),
                   obscureText: controller.isObscureText.value,
-                  controller: controlPassword,
+                  //    controller: controlPassword,
                   decoration: InputDecoration(
                       errorStyle: TextStyle(fontSize: 10, height: 0.3),
                       border: InputBorder.none,

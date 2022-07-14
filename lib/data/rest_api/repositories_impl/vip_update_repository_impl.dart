@@ -11,7 +11,7 @@ import '../datasources/rest_client.dart';
 class VipUpdateRepositoryImp extends VipUpdateRepository {
   final RestClient _restClient = RestClient();
   @override
-  Future<int?> upgradeVip({required VipModel vipModel}) async{
+  Future<int?> upgradeVip({required VipModel vipModel}) async {
     try {
       var responseRegister = await _restClient.postMethod(ApiConfig.updateVip, data: vipModel.toJson());
       print("response updateInfor ${responseRegister.data['statusCode']}");
@@ -25,8 +25,8 @@ class VipUpdateRepositoryImp extends VipUpdateRepository {
 
   @override
   Future<TransactionModel?> postTransaction({required int vipId}) async {
-     try {
-      var response = await _restClient.postMethod(ApiConfig.postTransaction, data : {'vipId' : vipId});
+    try {
+      var response = await _restClient.postMethod(ApiConfig.postTransaction, data: {'vipId': vipId});
       print('response transaction: $response');
       return ApiResponse.withResult(
           response: response.data,
@@ -41,4 +41,21 @@ class VipUpdateRepositoryImp extends VipUpdateRepository {
     return null;
   }
 
+  @override
+  Future<User?> getUserInfo() async {
+    try {
+      var response = await _restClient.getMethod(ApiConfig.getInfoUser, params: {});
+      print('response : $response');
+      return ApiResponse.withResult(
+          response: response.data,
+          resultConverter: (json) => ApiResultSingle<User>(
+                json: json,
+                jsonConverter: (json) => User.fromJson(json),
+              )).result?.data;
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('apiResponse.error : ${apiResponse.error}');
+    }
+    return null;
+  }
 }

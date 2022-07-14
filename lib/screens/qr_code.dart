@@ -47,7 +47,8 @@ class QrCodePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   QrImage(
-                    data: "2|99|0941716670|0941716670|neucodethi@gmail.com|0|0|100000",
+                    data:
+                        "2|99|0941716670|0941716670|neucodethi@gmail.com|0|0|${controller.fee.value[controller.selectedIndex.value]}00",
                     version: QrVersions.auto,
                     size: 200.0,
                   ),
@@ -71,7 +72,7 @@ class QrCodePage extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  '${controller.code.value}',
+                  'bk-${controller.code.value}',
                   //   controller.currentUser.value?.cardId ?? '',
                   style: AppStyles.styleSize16SemiBoldClever,
                 ),
@@ -111,7 +112,7 @@ class QrCodePage extends StatelessWidget {
             style: AppStyles.styleSize16SemiBoldClever.copyWith(color: AppColors.redColor),
           ),
           Obx(
-            () => Text("- Giao dịch chuyển tiền phải có nội dung là '${controller.code.value}'.",
+            () => Text("- Giao dịch chuyển tiền phải có nội dung là 'bk-${controller.code.value}'.",
                 textAlign: TextAlign.justify,
                 style: AppStyles.styleSize16SemiBoldClever.copyWith(color: AppColors.redColor)),
           ),
@@ -146,9 +147,9 @@ class QrCodePage extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all(AppColors.colorDepositIcon),
                         minimumSize: MaterialStateProperty.all(Size(Get.width - 40, 54))),
                     onPressed: () {
-                      controller.postTransaction();
+                      controller.verify();
                     },
-                    child: Text("Đồng ý",
+                    child: Text("Xác nhận",
                         style: AppStyles.styleTextTitleMethod.copyWith(color: AppColors.colorTextTitleMethod)),
                   )
                 ],
