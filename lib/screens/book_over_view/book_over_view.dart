@@ -74,17 +74,20 @@ class _BookOverViewState extends State<BookOverView> {
                           },
                         ),
                         actions: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.download,
-                              color: kProgressIndicator,
+                          Visibility(
+                            visible: false,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.download,
+                                color: kProgressIndicator,
+                              ),
+                              tooltip: 'Show Snackbar',
+                              onPressed: () {
+                                _onTap();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(content: Text('Đang tải xuống')));
+                              },
                             ),
-                            tooltip: 'Show Snackbar',
-                            onPressed: () {
-                              _onTap();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(content: Text('Đang tải xuống')));
-                            },
                           )
                         ],
                         expandedHeight: size.height * .65,
