@@ -158,6 +158,7 @@ class HomeScreen extends StatelessWidget {
                                 authorName: controller.bestOfBook.value.author?.full_name,
                                 rate: controller.bestOfBook.value.rate?.rate,
                                 pressDetails: () => controller.goToDetailScreen(controller.bestOfBook.value),
+                                isVip: controller.bestOfBook.value.is_vip ?? false,
                               ),
                             ),
                             Obx(() => (controller.listHistoryBook.value.length) > 0

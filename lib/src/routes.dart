@@ -10,6 +10,7 @@ import 'package:book_reading_mobile_app/screens/sign_in_screen.dart';
 import 'package:book_reading_mobile_app/screens/sign_up_screen.dart';
 import 'package:book_reading_mobile_app/screens/vip_update_screen.dart';
 import 'package:flutter/widgets.dart';
+import '../screens/forgot_password_page/change_pass_screen.dart';
 import '../screens/forgot_password_page/forgot_password_page.dart';
 import '../screens/forgot_password_page/verify_pin_code.dart';
 import '../screens/qr_code.dart';
@@ -30,6 +31,7 @@ class AppRoutes {
   static const forgotPassword = '/forgotPassword';
   static const verifyPin = '/verifyPin';
   static const qrCode = '/qrCode';
+  static const changPassword = '/changePassword';
 }
 
 Map<String, Widget Function(BuildContext)> listRoutes = {
@@ -46,4 +48,5 @@ Map<String, Widget Function(BuildContext)> listRoutes = {
   AppRoutes.forgotPassword : (context) => ForgotPasswordPage(),
   AppRoutes.verifyPin : (context) => VerifyCodePage(),
    AppRoutes.qrCode : (context) => QrCodePage(),
+   AppRoutes.changPassword : (context) => ChangePassword(),
 };

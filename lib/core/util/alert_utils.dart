@@ -36,6 +36,9 @@ class AlertUtils {
       Get.back();
     }
   }
+  static void showToastSuccess({String? message = 'Wonderful! You have completed successfully', double? maxWidth}) {
+    showToast(message, AppToastType.success, maxWidth: maxWidth);
+  }
 
   static void showToastError({String? message = 'Unknown error', double? maxWidth}) async {
     if (message == null) return;

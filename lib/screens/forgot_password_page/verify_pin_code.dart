@@ -10,10 +10,23 @@ import '../../widgets/pin_code_fields.dart';
 import '../../widgets/pin_theme.dart';
 import '../../widgets/svg_icon.dart';
 
-class VerifyCodePage extends StatelessWidget {
-  final TextEditingController controlPassword = TextEditingController();
-  final VerifyCodeController controller = Get.put(VerifyCodeController());
+class VerifyCodePage extends StatefulWidget {
   VerifyCodePage({Key? key}) : super(key: key);
+
+  @override
+  State<VerifyCodePage> createState() => _VerifyCodePageState();
+}
+
+class _VerifyCodePageState extends State<VerifyCodePage> {
+  final TextEditingController controlPassword = TextEditingController();
+
+  final VerifyCodeController controller = Get.put(VerifyCodeController());
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controlPassword.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

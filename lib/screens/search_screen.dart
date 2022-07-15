@@ -8,9 +8,16 @@ import 'package:book_reading_mobile_app/screens/detail_book_screen/details_scree
 import 'package:book_reading_mobile_app/screens/widget_home_screen/filter_screen.dart';
 import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:get/get.dart';
+import 'package:loadmore/loadmore.dart';
+
+import '../controller/home_controller.dart';
+import '../core/util/alert_utils.dart';
+import '../domain/entities/user.dart';
+import '../event/favorite_change_event.dart';
 
 class SearchScreen extends StatelessWidget {
   final double defaultPadding = 20;
@@ -27,6 +34,8 @@ class SearchScreen extends StatelessWidget {
   final Duration navigationBarTitleAnimatedDuration = const Duration(milliseconds: 70);
   SearchScreen({Key? key}) : super(key: key);
   final SearchController controller = Get.put(SearchController());
+
+  Rx<User?> currentUser = Get.find<HomeController>().userInfor;
   @override
   Widget build(BuildContext context) {
     FilterParam filterParam = FilterParam();
@@ -68,7 +77,7 @@ class SearchScreen extends StatelessWidget {
                                   color: const Color.fromARGB(255, 247, 239, 239),
                                 ),
                                 child: TextField(
-                               //   controller: bookName,
+                                  //   controller: bookName,
                                   onChanged: (text) {
                                     text.isNotEmpty
                                         ? controller.showClearButton.value = true
@@ -109,14 +118,13 @@ class SearchScreen extends StatelessWidget {
                           Map<String, String> apiParam = filterParam.buildParams();
                           controller.getBookFilter(filterParam);
                         },
-                       
                         child: SvgIconWidget(
                           name: "assets/images/ic_filter.svg",
                           size: 20.0,
                           color: Colors.white,
                         ),
                       ),
-                     const SizedBox(
+                      const SizedBox(
                         width: 16,
                       )
                     ],
@@ -131,7 +139,6 @@ class SearchScreen extends StatelessWidget {
                       controller: controller.tabController,
                       tabs: tabs.map((String name) => Tab(text: name)).toList(),
                     ),
-                    
                   );
                 })
               ];
@@ -140,12 +147,20 @@ class SearchScreen extends StatelessWidget {
               controller: controller.tabController,
               // These are the contents of the tab views, below the tabs.
               children: [
-                Obx(() => controller.listFilterBook.value.length != 0
-                    ? ListBookSortByName()
-                    : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
-                Obx(() => controller.listFilterBook.value.length != 0
-                    ? ListBookSortByName()
-                    : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
+                TabSearchPage(
+                  controller: controller,
+                  showListView: true,
+                ),
+                TabSearchPage(
+                  controller: controller,
+                  showListView: true,
+                )
+                // Obx(() => controller.listFilterBook.isNotEmpty
+                //     ? ListBookSortByName()
+                //     : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
+                // Obx(() => controller.listFilterBook.isNotEmpty
+                //     ? ListBookSortByName()
+                //     : const Center(child: Text('Chưa có dữ liệu tìm kiếm'))),
               ],
             ),
           ),
@@ -153,33 +168,83 @@ class SearchScreen extends StatelessWidget {
       },
     );
   }
+}
 
-  RefreshIndicator ListBookSortByName() {
-    return RefreshIndicator(
-      color: kProgressIndicator,
-      onRefresh: () async {
-        controller.loadData();
-      },
-      child: Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 15.0),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: controller.listFilterBook.value.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Center(
-              child: ReadingListCard(
-                 book: controller.listFilterBook.elementAt(index) ?? Book(),
-                  pressDetails: () {
-                    Get.toNamed(AppRoutes.detailBook, arguments: controller.listFilterBook.elementAt(index));
-                  },
-                  pressRead: () {
-                    Get.toNamed(AppRoutes.bookOverView, arguments: controller.listFilterBook.elementAt(index));
-                  }, ),
-            );
+class TabSearchPage extends StatelessWidget {
+  TabSearchPage({Key? key, required this.controller, required this.showListView}) : super(key: key);
+  final SearchController controller;
+  final bool showListView;
+
+  Rx<User?> currentUser = Get.find<HomeController>().userInfor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => RefreshIndicator(
+          color: kProgressIndicator,
+          onRefresh: () async {
+            controller.loadData();
           },
-        ),
-      ),
-    );
+          child: Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(top: 15.0),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: controller.listFilterBook.value.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Center(
+                  child: ReadingListCard(
+                    onTapFavorite: () {
+                      controller.listFilterBook.elementAt(index)?.toggleFavourite();
+                      Get.find<EventBus>().fire(BookFavoriteChangeEvent(controller.listFilterBook.elementAt(index)!));
+                    },
+                    book: controller.listFilterBook.elementAt(index) ?? Book(),
+
+/*
+if (currentUser.value!.is_vip_user == controller.bookWithCategory.value.is_vip) {
+                            Get.toNamed(AppRoutes.detailBook, arguments: controller.bookWithCategory.value);
+                          } else {
+                            AlertUtils.showError(
+                                titleError: 'Thông báo',
+                                desc: 'Yêu cầu đăng kí Vip',
+                                okButtonTitle: 'Thử lại',
+                                onOkButtonPressed: () {
+                                  Get.toNamed(AppRoutes.vipUpdate);
+                                });
+                          }
+ */
+
+                    pressDetails: () {
+                      if (currentUser.value!.is_vip_user == controller.listFilterBook.elementAt(index)?.is_vip) {
+                        Get.toNamed(AppRoutes.detailBook, arguments: controller.listFilterBook.elementAt(index));
+                      } else {
+                        AlertUtils.showError(
+                            titleError: 'Thông báo',
+                            desc: 'Yêu cầu đăng kí Vip',
+                            okButtonTitle: 'Thử lại',
+                            onOkButtonPressed: () {
+                              Get.toNamed(AppRoutes.vipUpdate);
+                            });
+                      }
+                      //    if(currentUser.value?.vip_id != 0 == controller.listFilterBook.elementAt(index)?.is_vip)
+                    },
+                    pressRead: () {
+                      if (currentUser.value!.is_vip_user == controller.listFilterBook.elementAt(index)?.is_vip) {
+                        Get.toNamed(AppRoutes.bookOverView, arguments: controller.listFilterBook.elementAt(index));
+                      } else {
+                        AlertUtils.showError(
+                            titleError: 'Thông báo',
+                            desc: 'Yêu cầu đăng kí Vip',
+                            okButtonTitle: 'Thử lại',
+                            onOkButtonPressed: () {
+                              Get.toNamed(AppRoutes.vipUpdate);
+                            });
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ));
   }
 }

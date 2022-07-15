@@ -19,6 +19,8 @@ class DetailBookController extends BaseController with StreamSubscriptionsMixin 
   var bookWithCategory = Book().obs;
   var parseChapter = Chapter().obs;
   RxString imgFavoriteIcon = AppIcons.icHeart.obs;
+  int page = 1;
+  int perPage = 4;
 
   // var page =
   final eventBus = Get.find<EventBus>();
@@ -44,7 +46,10 @@ class DetailBookController extends BaseController with StreamSubscriptionsMixin 
   }
 
   void getBookById() async {
+    await Future.delayed(Duration(seconds: 0, milliseconds: 2000));
     Book? book = await _detailBookImpl.getBookById(id: bookId?.id.toString());
+    page += 1;
+    perPage = 2;
     bookItem.value = book ?? Book();
   }
 

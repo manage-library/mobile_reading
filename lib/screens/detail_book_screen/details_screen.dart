@@ -6,16 +6,26 @@ import 'package:book_reading_mobile_app/src/routes.dart';
 import 'package:book_reading_mobile_app/widgets/svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loadmore/loadmore.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constants.dart';
+import '../../controller/home_controller.dart';
+import '../../core/util/alert_utils.dart';
+import '../../domain/entities/user.dart';
 import '../../widgets/book_rating.dart';
 import '../../widgets/rounded_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   final DetailBookController controller = Get.put(DetailBookController());
+
+  final pageController = PageController(viewportFraction: 0.8, keepPage: true);
+  Rx<User?> currentUser = Get.find<HomeController>().userInfor;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    int count = 0;
+
     return GetBuilder(
       init: controller,
       global: false,
@@ -75,40 +85,44 @@ class DetailsScreen extends StatelessWidget {
                         )),
                   ],
                 ),
-                Obx(() => ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: ((controller.bookItem.value.chapters?.length ?? 1 - 1)),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.goToChapterReadingBook(
-                              bookId: controller.bookItem.value.id.toString(),
-                              chapterId: controller.bookItem.value.chapters?.elementAt(index).id.toString());
-                        },
-                        child: Card(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(32),
-                              bottomLeft: Radius.circular(32),
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                  "Chapter ${index + 1} : ${controller.bookItem.value.chapters?.elementAt(index).name ?? '---'}"),
-                              subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
-                                  ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
-                                  : Text('---'),
-                              trailing: const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 18,
-                              ),
+                Obx(() => Column(children: [
+                      SizedBox(
+                          height: 350,
+                          child: PageView.builder(
+                              controller: pageController,
+                              itemCount: (controller.bookItem.value.countChapter ?? 1).toInt(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  children: [
+                                    if (4 * index < (controller.bookItem.value.countChapter ?? 1).toInt())
+                                      _buildChapterList(4 * index),
+                                    if (4 * index + 1 < (controller.bookItem.value.countChapter ?? 1).toInt())
+                                      _buildChapterList(4 * index + 1),
+                                    if (4 * index + 2 < (controller.bookItem.value.countChapter ?? 1).toInt())
+                                      _buildChapterList(4 * index + 2),
+                                    if (4 * index + 3 < (controller.bookItem.value.countChapter ?? 1).toInt())
+                                      _buildChapterList(4 * index + 3),
+                                  ],
+                                );
+                              })),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: Center(
+                          child: SmoothPageIndicator(
+                            controller: pageController,
+                            count: ((controller.bookItem.value.countChapter ?? 1).toInt() / 4).toInt() + 1,
+                            axisDirection: Axis.horizontal,
+                            effect: const JumpingDotEffect(
+                              activeDotColor: kProgressIndicator,
+                              dotHeight: 10,
+                              dotWidth: 10,
+                              jumpScale: .7,
+                              verticalOffset: 15,
                             ),
                           ),
                         ),
-                      );
-                    })),
+                      ),
+                    ])),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                   child: Column(
@@ -140,7 +154,17 @@ class DetailsScreen extends StatelessWidget {
                         imgPath: controller.bookWithCategory.value.image,
                         onPressed: () {
                           Get.back();
-                          Get.toNamed(AppRoutes.detailBook, arguments: controller.bookWithCategory.value);
+                          if (currentUser.value!.is_vip_user == controller.bookWithCategory.value.is_vip) {
+                            Get.toNamed(AppRoutes.detailBook, arguments: controller.bookWithCategory.value);
+                          } else {
+                            AlertUtils.showError(
+                                titleError: 'Thông báo',
+                                desc: 'Yêu cầu đăng kí Vip',
+                                okButtonTitle: 'Thử lại',
+                                onOkButtonPressed: () {
+                                  Get.toNamed(AppRoutes.vipUpdate);
+                                });
+                          }
                         },
                       ),
                     )),
@@ -152,6 +176,34 @@ class DetailsScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildChapterList(int index) {
+    return GestureDetector(
+      onTap: () {
+        controller.goToChapterReadingBook(
+            bookId: controller.bookItem.value.id.toString(),
+            chapterId: controller.bookItem.value.chapters?.elementAt(index).id.toString());
+      },
+      child: Card(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            bottomLeft: Radius.circular(32),
+          ),
+          child: ListTile(
+            title: Text("Chapter ${index + 1} : ${controller.bookItem.value.chapters?.elementAt(index).name ?? '---'}"),
+            subtitle: controller.bookItem.value.chapters?.elementAt(index).description != null
+                ? Text('${controller.bookItem.value.chapters?.elementAt(index).description}')
+                : Text('---'),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

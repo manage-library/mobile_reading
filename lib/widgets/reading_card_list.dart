@@ -63,6 +63,20 @@ class _ReadingListCard extends State<ReadingListCard> {
             width: 150,
             height: 150,
           ),
+          if (widget.book.is_vip ?? false)
+            Positioned(
+              top: 10,
+              right: 0,
+              child: SizedBox(
+                height: 40,
+                width: 53,
+                child: TwoSideRoundedButton(
+                  text: "Vip",
+                  radious: 24,
+                  press: () {},
+                ),
+              ),
+            ),
           Positioned(
             top: 55,
             right: 10,

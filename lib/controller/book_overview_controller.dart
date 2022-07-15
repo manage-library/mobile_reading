@@ -1,9 +1,11 @@
+import 'package:book_reading_mobile_app/configs/api_config.dart';
 import 'package:book_reading_mobile_app/controller/home_controller.dart';
 import 'package:book_reading_mobile_app/data/rest_api/repositories_impl/book_overview_impl.dart';
 import 'package:book_reading_mobile_app/domain/entities/book.dart';
 import 'package:book_reading_mobile_app/domain/entities/comment.dart';
 import 'package:book_reading_mobile_app/domain/entities/rate.dart';
 import 'package:get/get.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../core/util/alert_utils.dart';
 
@@ -12,6 +14,7 @@ class BookOverViewController extends GetxController {
   var star = 0.0.obs;
   var comment = '';
   RxList<Comment?> commentList = RxList();
+
   final BookOverViewImpl _bookOverViewImpl = BookOverViewImpl();
   Rx<Book?> currentBook = Get.find<HomeController>().bookById;
   @override
@@ -69,12 +72,18 @@ class BookOverViewController extends GetxController {
       Comment? resultComment = await _bookOverViewImpl.addComment(bookOverView.value.id!, rate);
       if (resultComment?.content != "") {
         getComment();
-
       } else {
         AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
       }
     } else {
       AlertUtils.showError(titleError: 'Đã lỗi', desc: 'Xin lời nhập đầy đủ đánh giá', okButtonTitle: 'Thử lại');
     }
+  }
+
+  String get fileUrl {
+    String urlFile = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+    //   String urlFile = 'http://34.211.57.240:3000/api/books/${bookOverView.value.id}/download';
+    return urlFile;
   }
 }

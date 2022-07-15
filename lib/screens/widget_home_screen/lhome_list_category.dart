@@ -8,13 +8,17 @@ import 'package:book_reading_mobile_app/widgets/reading_card_list.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loadmore/loadmore.dart';
 
+import '../../core/util/alert_utils.dart';
+import '../../domain/entities/user.dart';
 import '../search_screen.dart';
 
 class ListCategory extends StatelessWidget {
   final List<Category?>? categoryName;
   final List<Book?>? listBooks;
   final HomeController? controller;
+  Rx<User?> currentUser = Get.find<HomeController>().userInfor;
 
   ListCategory({Key? key, this.controller, this.categoryName, this.listBooks}) : super(key: key);
 
@@ -58,6 +62,12 @@ class ListCategory extends StatelessWidget {
             ),
           ),
         ),
+        // LoadMore(
+        //   onLoadMore: ()async {
+        //     controller?.getBookByCategory();
+        //      return true;
+        //    },
+        //   child:
         SizedBox(
           height: 60,
           child: ListView.builder(
@@ -103,6 +113,7 @@ class ListCategory extends StatelessWidget {
                 );
               }),
         ),
+        //   ),
         const SizedBox(height: 30),
         SizedBox(
           height: 285,
@@ -114,9 +125,33 @@ class ListCategory extends StatelessWidget {
                 final model = listBooks?[index];
                 return ReadingListCard(
                   book: listBooks?[index] ?? Book(),
-                  pressDetails: () async => controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book()),
-                  pressRead: () {
-                    Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
+                  pressRead: () async {
+                    //  controller?.goToDetailScreen(listBooks?.elementAt(index) ?? Book());
+
+                    if (currentUser.value!.is_vip_user == listBooks?.elementAt(index)?.is_vip) {
+                      Get.toNamed(AppRoutes.bookOverView, arguments: listBooks?.elementAt(index));
+                    } else {
+                      AlertUtils.showError(
+                          titleError: 'Thông báo',
+                          desc: 'Yêu cầu đăng kí Vip',
+                          okButtonTitle: 'Thử lại',
+                          onOkButtonPressed: () {
+                            Get.toNamed(AppRoutes.vipUpdate);
+                          });
+                    }
+                  },
+                  pressDetails: () {
+                    if (currentUser.value!.is_vip_user == listBooks?.elementAt(index)?.is_vip) {
+                      Get.toNamed(AppRoutes.detailBook, arguments: listBooks?.elementAt(index));
+                    } else {
+                      AlertUtils.showError(
+                          titleError: 'Thông báo',
+                          desc: 'Yêu cầu đăng kí Vip',
+                          okButtonTitle: 'Thử lại',
+                          onOkButtonPressed: () {
+                            Get.toNamed(AppRoutes.vipUpdate);
+                          });
+                    }
                   },
                   onTapFavorite: () {
                     model?.toggleFavourite();

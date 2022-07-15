@@ -11,7 +11,7 @@ abstract class ApiResult<T> {
 //khi dữ liệu API trả về dang list
 class ApiResultList<T> extends ApiResult<List<T>> {
   Metadata? _metadata;
-
+  
   ApiResultList({
     List? json,
    // required String rootName,

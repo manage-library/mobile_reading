@@ -10,12 +10,30 @@ import '../style/app_colors.dart';
 import '../style/app_icons.dart';
 
 // validate in form login with Global key is not beautyfull -> use enable login button when email and pass is filled
-class SignInScreen extends StatelessWidget {
+
+class SignInScreen extends StatefulWidget {
   SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController controlEmail = TextEditingController();
+
   final TextEditingController controlPassword = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   final AuthController authController = Get.put(AuthController());
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controlEmail.dispose();
+    controlPassword.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

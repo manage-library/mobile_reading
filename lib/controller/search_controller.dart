@@ -24,6 +24,8 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
   ];
   RxList<Category?> bookCategory = RxList();
   RxMap<String, int> listReadingBook = RxMap();
+  var page = 0;
+  var perPage = 0;
 
   @override
   void onClose() {
@@ -44,8 +46,11 @@ class SearchController extends GetxController with GetSingleTickerProviderStateM
 
   final DetailBookImpl _detailBookImpl = DetailBookImpl();
   void getBookInCategory() async {
-    List<Book?> listBook = await _detailBookImpl.getBooks();
+    List<Book?> listBook = await _detailBookImpl.getBooks(page: page.toString(), perPage: perPage.toString());
+    page += 1;
+    perPage = 2;
     listFilterBook.value = listBook;
+    print('list lenght' + listFilterBook.length.toString());
   }
 
   void loadData() {

@@ -34,4 +34,17 @@ class SignUpRepositoryImpl extends SignUpRepository {
     }
     return null;
   }
+  
+  @override
+  Future<int?> changePassword({required String oldPass, required String newPass}) async {
+     try {
+      var responseRegister = await _restClient.putMethod(ApiConfig.changePassword, data: {'oldPassword' : oldPass, 'password' : newPass});
+      print("response updateInfor ${responseRegister.data['statusCode']}");
+      return responseRegister.data['statusCode'];
+    } catch (error) {
+      ApiResponse apiResponse = ApiResponse.withError(error);
+      print('apiResponse updateInfor .error: ${apiResponse.error.toString()}');
+    }
+    return null;
+  }
 }

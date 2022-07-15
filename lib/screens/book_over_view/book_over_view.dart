@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:io';
+
 import 'package:book_reading_mobile_app/constants.dart';
 import 'package:book_reading_mobile_app/controller/book_overview_controller.dart';
 import 'package:book_reading_mobile_app/domain/entities/comment.dart';
@@ -7,11 +9,27 @@ import 'package:book_reading_mobile_app/style/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
+import '../../core/util/alert_utils.dart';
+import '../../core/util/download_utils.dart';
 import '../../style/app_colors.dart';
 
-class BookOverView extends StatelessWidget {
+import 'package:path_provider/path_provider.dart';
+
+class BookOverView extends StatefulWidget {
   BookOverView({Key? key}) : super(key: key);
+
+  @override
+  State<BookOverView> createState() => _BookOverViewState();
+}
+
+class _BookOverViewState extends State<BookOverView> {
+  bool isDownloading = false;
+
+  bool downloadCompleted = false;
+
   final BookOverViewController controller = Get.put(BookOverViewController());
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -453,9 +471,50 @@ class BookOverView extends StatelessWidget {
       ]),
     );
   }
-}
 
-void _onTap() {}
+  _onTap() async {
+    if (downloadCompleted) {
+      _openFile();
+      return;
+    }
+
+    _downloadFile();
+  }
+
+  _openFile() async {
+    var downloadingFileName = controller.fileUrl.split('/').last;
+    String filePath = '';
+
+    if (Platform.isAndroid) {
+      filePath = '/storage/emulated/0/Download/$downloadingFileName';
+    } else {
+      Directory directory = await getApplicationDocumentsDirectory();
+      filePath = directory.path + '/$downloadingFileName';
+    }
+    final openResult = await OpenFile.open(filePath);
+    if (openResult.message != 'done') {
+      AlertUtils.showToastError(message: openResult.message);
+    }
+    return;
+  }
+
+  _downloadFile() async {
+    //Download file logic
+    if (isDownloading) return;
+    setState(() {
+      isDownloading = true;
+    });
+    await DownloadUtils.shared.download(
+        fromURL: controller.fileUrl,
+        onDownloadSuccessful: () {
+          setState(() {
+            isDownloading = false;
+            downloadCompleted = true;
+          });
+          AlertUtils.showToastSuccess(message: 'Tải xuống thành công'.tr);
+        });
+  }
+}
 
 class AuthorTab extends StatelessWidget {
   final String? authorDescription;

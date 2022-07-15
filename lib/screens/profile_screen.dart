@@ -117,6 +117,13 @@ class MenuProfile extends StatelessWidget {
                         height: 16,
                       ),
                       ProfileItem(
+                        title: 'Thay đổi mật khẩu',
+                        onClick: () => Get.toNamed(AppRoutes.changPassword),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ProfileItem(
                         title: 'Đăng xuất',
                         onClick: () => AppBottomSheet(
                           title: "Đăng xuất",

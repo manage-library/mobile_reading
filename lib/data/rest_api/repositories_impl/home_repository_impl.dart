@@ -56,24 +56,39 @@ class HomeRepositoryImpl  with RepositoryMixin implements HomeRepository{
   }
 
   @override
-  Future<List<Book?>> getBooks({bool? isVip, int? sortBy, String? sortType, int? categoryId}) async {
+  Future<List<Book?>> getBooks({String? isVip, int? sortBy, String? sortType, int? categoryId, required String page, required String perPage}) async {
     var response;
+
+     Map<String, String> result = {};
+
+    if (isVip != null) {
+      result['isVip'] = isVip;
+    }
+
+    if (sortBy != null) {
+      result['sortBy'] = sortBy.toString();
+    }
+    if (sortType != null) {
+      result['sortType'] = sortType.toString();
+    }
+   
     try {
-      if (isVip == null && sortBy == null && sortType == null) {
-        response = await _restClient.getMethod(ApiConfig.getBooks, params: {});
-      } else {
-        response = await _restClient
-            .getMethod(ApiConfig.getBooks, params: {'isVip': isVip, 'sortBy': sortBy, 'sortType': sortType});
-      }
-      if (categoryId != null && isVip != null) {
-        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId, 'isVip': isVip});
-      }
-       if (categoryId != null) {
-        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});
-      }
-        if (isVip != null) {
-        response = await _restClient.getMethod(ApiConfig.getBooks, params: {'isVip': isVip});
-      }
+      // if (isVip == null && sortBy == null && sortType == null) {
+      //   response = await _restClient.getMethod(ApiConfig.getBooks, params: {});
+      // } else {
+      //   response = await _restClient
+      //       .getMethod(ApiConfig.getBooks, params: {'isVip': isVip, 'sortBy': sortBy, 'sortType': sortType});
+      // }
+      // if (categoryId != null && isVip != null) {
+      //   response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId, 'isVip': isVip});
+      // }
+      //  if (categoryId != null) {
+      //   response = await _restClient.getMethod(ApiConfig.getBooks, params: {'categoryId': categoryId});
+      // }
+      //   if (isVip != null) {
+      //   response = await _restClient.getMethod(ApiConfig.getBooks, params: {'isVip': isVip});
+      // }
+      var response =  await _restClient.getMethod(ApiConfig.getBooks, params: result);
       print("responseBookList : $response");
       return ApiResponse.withResult(
               response: response.data,

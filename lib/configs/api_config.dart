@@ -46,6 +46,8 @@ class ApiConfig {
    static const String updateVip = '/users/upgrade-vip';
    
    static const String postTransaction = '/transactions';
+   
+   static const String download = '/books/%s/download';
 
 
   

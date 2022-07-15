@@ -11,8 +11,11 @@ class BookItems extends StatelessWidget {
   final String? description;
   final String? imageUrl;
   final VoidCallback? pressDetails;
+  bool isVip;
   final double? rate;
-  const BookItems({Key? key, this.title, this.authorName, this.description, this.imageUrl, this.pressDetails, this.rate}) : super(key: key);
+  BookItems(
+      {Key? key, this.title, this.authorName, this.description, this.imageUrl, this.pressDetails, this.rate, required this.isVip})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +56,8 @@ class BookItems extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    title ?? 
-                   "How To Win \nFriends &  Influence",
-                        //  style: Theme.of(context).textTheme.title,
+                    title ?? "How To Win \nFriends &  Influence",
+                    //  style: Theme.of(context).textTheme.title,
                   ),
                   Text(
                     authorName ?? '---',
@@ -71,8 +73,8 @@ class BookItems extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            description ?? 
-                            "Đây là một tác phẩm đặc biệt và xuất sắc, mang đến cho người đọc những cảm xúc thú vị….",
+                            description ??
+                                "Đây là một tác phẩm đặc biệt và xuất sắc, mang đến cho người đọc những cảm xúc thú vị….",
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -93,7 +95,7 @@ class BookItems extends StatelessWidget {
             top: 0,
             child: Image.network(
               imageUrl ?? '---',
-             // "assets/images/book-3.png",
+              // "assets/images/book-3.png",
               width: size.width * .3,
             ),
           ),
@@ -105,6 +107,19 @@ class BookItems extends StatelessWidget {
               width: size.width * .3,
               child: TwoSideRoundedButton(
                 text: "Đọc sách",
+                radious: 24,
+                press: pressDetails,
+              ),
+            ),
+          ),
+        if(isVip) Positioned(
+            bottom: 0,
+            left: 0,
+            child: SizedBox(
+              height: 40,
+              width: size.width * .3,
+              child: TwoSideRoundedButton(
+                text: "Vip",
                 radious: 24,
                 press: pressDetails,
               ),

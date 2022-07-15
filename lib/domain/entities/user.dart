@@ -14,6 +14,8 @@ class User {
   int? id;
   String? code;
 
+  bool get is_vip_user => vip_id != 0;
+
   User(
       {this.email,
       this.password,

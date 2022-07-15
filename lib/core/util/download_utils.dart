@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:path/path.dart';
-import 'package:logger/logger.dart';
 
 class DownloadUtils {
   final _dio = Dio();
@@ -15,17 +14,16 @@ class DownloadUtils {
 
   download(
       {required String fromURL,
-        String? savePath,
-        CancelToken? cancelToken,
-        int? previousFileSize,
-        Function(int downloadedFileSize, int totalFizeSize)? completion,
-        Function? onDownloadSuccessful}) async {
+      String? savePath,
+      CancelToken? cancelToken,
+      int? previousFileSize,
+      Function(int downloadedFileSize, int totalFizeSize)? completion,
+      Function? onDownloadSuccessful}) async {
     String? path;
 
     Stream.value(savePath).flatMap((value) {
       if (value == null) {
-        final directory = Platform.isAndroid ? getAndroidDownloadDirectory()
-          :getApplicationDocumentsDirectory();
+        final directory = Platform.isAndroid ? getAndroidDownloadDirectory() : getApplicationDocumentsDirectory();
         return Stream.fromFuture(directory);
       }
 
@@ -43,25 +41,21 @@ class DownloadUtils {
       final options = Options(headers: {HttpHeaders.acceptEncodingHeader: '*'});
 
       if (previousFileSize != null) {
-        options.headers
-            ?.addAll({HttpHeaders.rangeHeader: 'bytes=$previousFileSize-'});
+        options.headers?.addAll({HttpHeaders.rangeHeader: 'bytes=$previousFileSize-'});
       }
 
       return options;
     }).flatMap((options) {
-      return _dio.download(fromURL, '$path',
-          cancelToken: cancelToken,
-          options: options, onReceiveProgress: (count, total) {
-            if (total != -1) {
-              completion?.call(count, total);
-            }
-          }).asStream();
+      return _dio.download(fromURL, '$path', cancelToken: cancelToken, options: options,
+          onReceiveProgress: (count, total) {
+        if (total != -1) {
+          completion?.call(count, total);
+        }
+      }).asStream();
     }).listen((response) {
-      if (response.statusCode == 200 || response.statusCode == 206) {
-        onDownloadSuccessful?.call();
-      }
+      onDownloadSuccessful?.call();
     }, onError: (e) {
-      AlertUtils.showToastError(message: 'Please try again later');
+      AlertUtils.showToastError(message: 'Vui lòng thử lại sau');
       // logger.e(e.toString());
       cancelToken?.cancel(e.toString());
     });
@@ -70,5 +64,4 @@ class DownloadUtils {
   Future<Directory> getAndroidDownloadDirectory() async {
     return Directory('/storage/emulated/0/Download');
   }
-
 }

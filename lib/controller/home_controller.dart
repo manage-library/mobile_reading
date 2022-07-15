@@ -93,15 +93,13 @@ class HomeController extends BaseController with StreamSubscriptionsMixin {
   }
 
   void getBooks() async {
-    List<Book?> bookList = await _homeRepositoryImpl.getBooks();
+    List<Book?> bookList = await _homeRepositoryImpl.getBooks(page: '1', perPage: '100');
     listBooks.value = bookList;
   }
 
   void getBestOfBook() async {
     List<Book?> bookList = (await _homeRepositoryImpl.getBooks(
-        isVip: userInfor.value.vip_id == 0 ? false : true,
-        sortBy: ESortBy.like.eSortByteNumber,
-        sortType: ESortType.asc.eSortType));
+        sortBy: ESortBy.like.eSortByteNumber, sortType: ESortType.asc.eSortType, page: '1', perPage: '5'));
     bestOfBook.value = bookList.isNotEmpty
         ? bookList.first!
         : Book(
@@ -113,7 +111,7 @@ class HomeController extends BaseController with StreamSubscriptionsMixin {
 
   void getBookByCategory(int? categoryId) async {
     if (categoryId != null) {
-      List<Book?> bookList = await _homeRepositoryImpl.getBooks(categoryId: categoryId);
+      List<Book?> bookList = await _homeRepositoryImpl.getBooks(categoryId: categoryId, page: '1', perPage: '100');
       listBooks.value = bookList;
     } else {
       getBooks();

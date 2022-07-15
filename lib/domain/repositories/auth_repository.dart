@@ -7,4 +7,5 @@ abstract class AuthRepository {
   //Future<ApiResponse<User>>? signUp({required user});
   Future<Security?> login({required User user});
   Future<User?> autoLogin({required User user});
+  
 }
