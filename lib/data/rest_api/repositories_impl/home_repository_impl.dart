@@ -68,6 +68,10 @@ class HomeRepositoryImpl  with RepositoryMixin implements HomeRepository{
     if (sortBy != null) {
       result['sortBy'] = sortBy.toString();
     }
+
+    if(categoryId != null) {
+       result['categoryId'] = categoryId.toString();
+    }
     if (sortType != null) {
       result['sortType'] = sortType.toString();
     }

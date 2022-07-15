@@ -10,7 +10,8 @@ class CommentItem extends StatelessWidget {
   String? comment;
   String? rate;
   VoidCallback deleteComment;
-  CommentItem({Key? key, this.comment, this.time, this.userName, this.rate, required this.deleteComment}) : super(key: key);
+  CommentItem({Key? key, this.comment, this.time, this.userName, this.rate, required this.deleteComment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class CommentItem extends StatelessWidget {
                             children: [
                               TextSpan(text: userName ?? "Độc giả "),
                               TextSpan(
-                                text: time ?? '\nDec 10 2014',
+                                text: time ?? '\n15/7/2022',
                                 style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w200),
                               ),
                             ],

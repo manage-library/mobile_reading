@@ -12,12 +12,12 @@ class ChangePasswordController extends GetxController {
   var isObscureText = true.obs;
   void updateOldPass(String? value) {
     oldPass.value = value?.trim() ?? '';
-    isDisabled.value = !_isValidated;
+ 
   }
 
   void updateNewPass(String? value) {
     newPass.value = value ?? '';
-    isDisabled.value = !_isValidated;
+ 
   }
 
   bool get _isValidated {
@@ -29,7 +29,7 @@ class ChangePasswordController extends GetxController {
   }
 
   void verify() async {
-    var response = _signUpRepositoryImpl.changePassword(oldPass: oldPass.value, newPass: newPass.value);
+    var response = await _signUpRepositoryImpl.changePassword(oldPass: oldPass.value, newPass: newPass.value);
     if (response != null) {
       AlertUtils.showError(
           titleError: 'Thành công',

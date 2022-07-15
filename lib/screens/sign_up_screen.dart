@@ -8,13 +8,30 @@ import 'package:get/get.dart';
 import '../style/app_colors.dart';
 import '../widgets/svg_icon.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController controlEmail = TextEditingController();
+
   final TextEditingController controlPassword = TextEditingController();
+
   final TextEditingController controlFullName = TextEditingController();
 
   final SignUpController signUpController = Get.put(SignUpController());
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controlEmail.dispose();
+    controlPassword.dispose();
+    controlFullName.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -110,72 +127,76 @@ class SignUpScreen extends StatelessWidget {
                         color: const Color(0xffFAFAFA),
                       ),
                       child: Obx(() => TextField(
-                        controller: controlPassword,
-                        obscureText: signUpController.isObscureText.value,
-                        onChanged: (value) {
-                          signUpController.updatePassword(value);
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Password',
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                           isDense: true,
-                           
-                          suffixIcon: IconButton(icon: SvgIconWidget(
-                                        name: signUpController.isObscureText.value
-                                            ? AppIcons.iconEyeOpen
-                                            : AppIcons.iconEyeClose,
-                                        size: 16,
-                                        color: AppColors.labelColor,
-                                      ), onPressed: () {
-                                        signUpController.setObsecureText();
-                                       },)
-                        ),
-                      )),
-                    ), 
+                            controller: controlPassword,
+                            obscureText: signUpController.isObscureText.value,
+                            onChanged: (value) {
+                              signUpController.updatePassword(value);
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Password',
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                isDense: true,
+                                suffixIcon: IconButton(
+                                  icon: SvgIconWidget(
+                                    name: signUpController.isObscureText.value
+                                        ? AppIcons.iconEyeOpen
+                                        : AppIcons.iconEyeClose,
+                                    size: 16,
+                                    color: AppColors.labelColor,
+                                  ),
+                                  onPressed: () {
+                                    signUpController.setObsecureText();
+                                  },
+                                )),
+                          )),
+                    ),
                     const SizedBox(
                       height: 32,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        if (!signUpController.isDisabled.value) {
-                          signUpController.signUp(
-                              email: controlEmail.text, password: controlPassword.text, fullName: controlFullName.text);
-                        }
-                      },
-                      child: Obx(() => Container(
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        height: 50,
-                        decoration: signUpController.isDisabled.value
-                            ? BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.black26)
-                            : BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xff51C1B0),
-                                      Color(0xff4FC1B4),
-                                      Color(0xff4BC1BE),
-                                      Color(0xff42C2CF),
-                                      Color(0xff2BAFCC),
-                                    ],
-                                    begin: FractionalOffset(
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    end: FractionalOffset(
-                                      0.0,
-                                      0.0,
-                                    ),
-                                    stops: [0.5, 1.0, 0.5, 1.0, 0.5],
-                                    tileMode: TileMode.clamp),
-                              ),
-                        child: const Text(
-                          'Đăng ký',
-                          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-                        ),
-                      ),
-                )    ),
+                        onTap: () {
+                          if (!signUpController.isDisabled.value) {
+                            signUpController.signUp(
+                                email: controlEmail.text,
+                                password: controlPassword.text,
+                                fullName: controlFullName.text);
+                          }
+                        },
+                        child: Obx(
+                          () => Container(
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            height: 50,
+                            decoration: signUpController.isDisabled.value
+                                ? BoxDecoration(borderRadius: BorderRadius.circular(40), color: Colors.black26)
+                                : BoxDecoration(
+                                    borderRadius: BorderRadius.circular(40),
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xff51C1B0),
+                                          Color(0xff4FC1B4),
+                                          Color(0xff4BC1BE),
+                                          Color(0xff42C2CF),
+                                          Color(0xff2BAFCC),
+                                        ],
+                                        begin: FractionalOffset(
+                                          0.0,
+                                          0.0,
+                                        ),
+                                        end: FractionalOffset(
+                                          0.0,
+                                          0.0,
+                                        ),
+                                        stops: [0.5, 1.0, 0.5, 1.0, 0.5],
+                                        tileMode: TileMode.clamp),
+                                  ),
+                            child: const Text(
+                              'Đăng ký',
+                              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+                            ),
+                          ),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),

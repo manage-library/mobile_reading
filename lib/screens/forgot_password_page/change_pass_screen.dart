@@ -70,7 +70,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     color: const Color(0xffFAFAFA),
                   ),
                   child: TextFormField(
-                    // controller: controlEmail,
+                    controller: controlEmail,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Mật khẩu cũ',
@@ -101,7 +101,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         keyboardType: TextInputType.visiblePassword,
                         onChanged: (value) => authController.updateNewPass(value),
                         obscureText: authController.isObscureText.value,
-                        // controller: controlPassword,
+                        controller: controlPassword,
                         decoration: InputDecoration(
                             errorStyle: TextStyle(fontSize: 10, height: 0.3),
                             border: InputBorder.none,
@@ -127,11 +127,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
                 InkWell(
                     onTap: () {
-                      if (!authController.isDisabled.value) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        authController.verify();
-                      }
+                      // if (!authController.isDisabled.value) {
+                      //   // If the form is valid, display a snackbar. In the real world,
+                      //   // you'd often call a server or save the information in a database.
+                      authController.verify();
+                      //   }
                     },
                     child: Container(
                       alignment: Alignment.center,
